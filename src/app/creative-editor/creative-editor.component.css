@@ -1,8 +1,9 @@
 /* Reset some default styling */
 
 .gjs-editor-cont {
-    width: 320px!important;
+    width: 300px!important;
     height: 250px!important;
+    border : 1px solid gray;
 }
 .gjs-block {
     width: auto;
