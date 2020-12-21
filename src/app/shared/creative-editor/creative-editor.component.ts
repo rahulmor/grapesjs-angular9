@@ -31,6 +31,14 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     this._editor = this.initializeEditor();
     this.blockManager = this.editor.BlockManager;
     this.panelManager = this.editor.Panels;
+    const deviceManager = this.editor.DeviceManager;
+    deviceManager.add('basic', '300px', {
+      height: '250px',
+      // At first, GrapesJS tries to localize the name by device id.
+      // In case is not found, the `name` property is used (or `id` if name is missing)
+      name: 'Basic',
+      widthMedia: '250px', // the width that will be used for the CSS media
+     });
     const blocks = this.blockManager.add('text', {
       label: 'Text',
       content: '<p>Put your title here</p>',
@@ -109,7 +117,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       container: '#gjs',
       autorender: true,
       forceClass: false,
-      // height: '300px',
+      height: '100vh',
       components: '',
       style: '',
       panels: { defaults: [] },
