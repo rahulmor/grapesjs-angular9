@@ -10,7 +10,7 @@ import 'grapesjs-preset-webpage';
 export class CreativeEditorComponent implements OnInit,AfterViewInit  {
 
   private _editor: any;
-  filtered:any;
+  filtered:any = [];
   blockManager:any;
   styleManager:any;
   customStyle:any;
@@ -18,7 +18,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
   customPanel:any;
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
-  @ViewChild("panel") panel:ElementRef;
+  // @ViewChild("panel") panel:ElementRef;
   constructor(private renderer: Renderer2,) {
 
   }
@@ -30,8 +30,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
   ngOnInit(): void {
     this._editor = this.initializeEditor();
     this.blockManager = this.editor.BlockManager;
-    this.panelManager = this.editor.Panels;
+    // this.panelManager = this.editor.Panels;
     const deviceManager = this.editor.DeviceManager;
+    this.styleManager = this.editor.StyleManager;
     deviceManager.add('basic', '300px', {
       height: '250px',
       // At first, GrapesJS tries to localize the name by device id.
@@ -39,17 +40,55 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       name: 'Basic',
       widthMedia: '250px', // the width that will be used for the CSS media
      });
-    const blocks = this.blockManager.add('text', {
+     var block1 = this.blockManager.add('image', {
+       id: 'image',
+       label: 'Image',
+       // Select the component once it's dropped
+       select: true,
+       // You can pass components as a JSON instead of a simple HTML string,
+       // in this case we also use a defined component type `image`
+       content: { type: 'image' },
+       // This triggers `active` event on dropped components and the `image`
+       // reacts by opening the AssetManager
+       activate: true,
+       attributes: {
+        title: 'Image',
+        // style:'width:40px!important;display:inline'
+      }
+     });
+     var block2 = this.blockManager.add('text', {
       label: 'Text',
       content: '<p>Put your title here</p>',
       category: 'Ad Elements',
       attributes: {
         title: 'Insert text',
-        style:'color: #ffffff;width:20px!important;'
+        // style:'color: #ffffff;width:20px!important;'
       }
     });
-    console.log("blocks==",JSON.stringify(blocks))
-    this.filtered = blocks;
+    var block3 = this.blockManager.add('button', {
+      label: 'Button',
+      content: '<button>Button</button>',
+      category: 'Ad Elements',
+      attributes: {
+        title: 'Button',
+        // style:'color: #ffffff;width:20px!important;'
+      }
+    });
+    var block4 = this.blockManager.add('shape', {
+      label: 'Shape',
+      content: '',
+      category: 'Ad Elements',
+      attributes: {
+        title: 'Shape',
+        // style:'color: #ffffff;width:20px!important;'
+      }
+    });
+    
+    this.filtered.push(block1);
+    this.filtered.push(block2);
+    this.filtered.push(block3);
+    this.filtered.push(block4);
+    console.log("blocks==",JSON.stringify(this.filtered))
     // this.filtered = blocks.filter(block => {
     //   console.log("blocks123==",block.getConfig('id'))
     //   if(block.get('id') == 'column1'){
@@ -82,19 +121,19 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     // }, { at: 0 });
     // console.log("sector==",JSON.stringify(sector))
     // this.customStyle = sector;
-    this.customPanel = this.panelManager.addPanel({
-      id: 'myNewPanel',
-      visible: true,
-      buttons: [
-        {
-          id: 'myNewButton',
-          className: 'someClass',
-          command: 'someCommand',
-          attributes: { title: 'Some title' },
-          active: false,
-        },
-      ],
-    });
+    // this.customPanel = this.panelManager.addPanel({
+    //   id: 'myNewPanel',
+    //   visible: true,
+    //   buttons: [
+    //     {
+    //       id: 'myNewButton',
+    //       className: 'someClass',
+    //       command: 'someCommand',
+    //       attributes: { title: 'Some title' },
+    //       active: false,
+    //     },
+    //   ],
+    // });
   }
   ngAfterViewInit(){
     const newBlocksEl = this.blockManager.render(this.filtered, { external: true });
@@ -107,9 +146,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     const newSector = this.styleManager.render(this.customStyle, { external: true });
     console.log("newSector==",newSector);
     this.renderer.appendChild(this.textStyle.nativeElement, newSector);
-    const newPanel = this.panelManager.render(this.customPanel, { external: true });
-    console.log("newPanel==",newPanel);
-    this.renderer.appendChild(this.panel.nativeElement, newPanel);
+    // const newPanel = this.panelManager.render(this.customPanel, { external: true });
+    // console.log("newPanel==",newPanel);
+    // this.renderer.appendChild(this.panel.nativeElement, newPanel);
   }
   private initializeEditor(): any {
     console.dir(window);
@@ -117,7 +156,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       container: '#gjs',
       autorender: true,
       forceClass: false,
-      height: '100vh',
+      // height: '100vh',
       components: '',
       style: '',
       panels: { defaults: [] },
@@ -183,35 +222,63 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
         sectors: [{
           id:"general",
           name: 'General',
-          open: false,
-          buildProps: ['float', 'display', 'position', 'top', 'right', 'left', 'bottom']
-        }, {
-          name: 'Dimension',
-          open: false,
-          buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding']
-        }, {
-          name: 'Typography',
-          open: false,
-          buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align']
+          open: true,
+          buildProps: ['float', 'display', 'position', 'width', 'height', 'top', 'left','transform'],
+          // properties:[
+          //   {
+          //       property:'transform',
+          //       properties:[
+          //           {
+          //               name:'Translate Y',
+          //               property:'transform-translate-y',
+          //               functionName: 'translateY',
+          //               defaults: 0,
+          //               type: 'integer',
+          //               units: ['px', '%'],
+          //               unit: 'px'
+          //           },
+          //           {
+          //               name:'Translate X',
+          //               property:'transform-translate-x',
+          //               functionName: 'translateX',
+          //               defaults: 0,
+          //               type: 'integer',
+          //               units: ['px', '%'],
+          //               unit: 'px'
+          //           },
+          //       ]
+          //   }
+        // ]
+        },
+        //  {
+        //   name: 'Dimension',
+        //   open: false,
+        //   buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding']
+        // },
+         {
+          name: 'Text Style',
+          open: true,
+          buildProps: ['font-family','font-weight', 'font-size','line-height', 'letter-spacing','text-align', 'color',  ]
         }
         // , {
         //   name: 'Decorations',
         //   open: false,
         //   buildProps: ['border-radius-c', 'background-color', 'border-radius', 'border', 'box-shadow', 'background'],
         // }
-        , {
-          name: 'Extra',
-          open: false,
-          buildProps: ['opacity', 'transition', 'perspective', 'transform'],
-          properties: [{
-            type: 'slider',
-            property: 'opacity',
-            defaults: 1,
-            step: 0.01,
-            max: 1,
-            min: 0,
-          }]
-        }],
+        // , {
+        //   name: 'Extra',
+        //   open: false,
+        //   buildProps: ['opacity', 'transition', 'perspective', 'transform'],
+        //   properties: [{
+        //     type: 'slider',
+        //     property: 'opacity',
+        //     defaults: 1,
+        //     step: 0.01,
+        //     max: 1,
+        //     min: 0,
+        //   }]
+        // }
+      ],
       },
       // plugins: ['gjs-preset-webpage'],
       // pluginsOpts: {
