@@ -1,22 +1,36 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-
-import { LoginService } from './login.service';
+import { first } from 'rxjs/operators';
+import { LoginService } from '../services/login.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
+    user:any;
     constructor(
         private router: Router,
         private loginService: LoginService
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const user = this.loginService.sendGetRequest;
-        console.log("user==",user);
-        if (user) {
-            return true;
-        }
-        this.router.navigate(['https://login-test.plista.com/de/'], { queryParams: { returnUrl: state.url }});
-        return false;
+        setInterval(()=>{
+            this.loginService.login_check();
+        },3000)
+        
+        // .subscribe(
+        //   data => {
+        //     // this.router.navigate([this.returnUrl]);
+        //     console.log("data==",data);
+        //     return data;
+        //   },
+        //   error => {
+        //     // this.error = error;
+        //     // this.loading = false;
+        //   });
+        // console.log("user==",this.user);
+        // if (this.user) {
+        //     return true;
+        // }
+        // window.location.href = "https://login-test.plista.com/de/";
+        return true;
     }
 }
