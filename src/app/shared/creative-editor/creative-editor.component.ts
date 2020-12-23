@@ -1,6 +1,7 @@
 import { Component, OnInit,ElementRef,AfterViewInit,ViewChild ,Renderer2 } from '@angular/core';
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
+import * as $ from 'jquery';
 // import 'gjs-blocks-basic';
 @Component({
   selector: 'app-creative-editor',
@@ -16,6 +17,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
   customStyle:any;
   panelManager:any;
   customPanel:any;
+  canvasHeight:any;
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
   // @ViewChild("panel") panel:ElementRef;
@@ -29,6 +31,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
 
   ngOnInit(): void {
     this._editor = this.initializeEditor();
+    this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     // this.panelManager = this.editor.Panels;
     const deviceManager = this.editor.DeviceManager;
@@ -134,6 +137,72 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     //     },
     //   ],
     // });
+
+
+    
+    this.canvasHeight = 250;
+    
+    //To set the base style of the wrapper  
+      const $currentIFrame = $('iframe');
+      $currentIFrame.contents().find("body").css('overflow', 'hidden');
+      this.editor.getWrapper().set({'badgable': false, 'highlightable': false}).setStyle({
+        overflow: 'hidden',
+        height: '250px'
+      })
+    //This is to update the style in styleManager after drag end in designer mode 
+    this.editor.on('stop:core:component-drag',() => { this.editor.trigger('component:toggled') });
+    
+    //Event when a component is selected
+    this.editor.on('component:selected', (component) => {
+      // alert('selected')
+      this.editor.StyleManager.addSector('Typography', {
+          name: 'Typography',
+          open: true,
+          buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align']
+        }, { at: 0 });
+    });
+
+      //Drag Event of component 
+      this.editor.on('component:drag', (component) => {
+          var domElement = this.editor.getSelected();
+        if(domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
+            var domElementStyle = this.editor.getSelected().getStyle();
+            domElementStyle.left = '0px'
+            this.editor.getSelected().setStyle({...domElementStyle});
+        }
+      });
+      //Drag End Event of component 
+    this.editor.on('component:drag:end', (component) => {
+      var domElement = this.editor.getSelected().getStyle();
+      //const style = window.getComputedStyle(domElement)
+      const $currentIFrame = $('iframe');
+      const wrapperHeight = $currentIFrame.contents().find("body #wrapper").height();
+      
+      // To check if the element is going out of canvas from bottom limit
+      if(parseInt(domElement.top) > this.canvasHeight ) {        
+        alert("Height Exceeded");
+        domElement.top = this.canvasHeight*95/100;
+        console.log(this.canvasHeight, domElement.top)
+        this.editor.getSelected().setStyle({...domElement})
+      }
+      
+      // To check if the element is going out of canvas from left limit
+      if(domElement !== undefined && parseInt(domElement.left) < 0) {      
+        domElement.left = '0px'
+        this.editor.getSelected().setStyle({...domElement});
+      }
+      // Commented this as updated logic above for the same
+      /*if(wrapperHeight > this.canvasHeight) {
+        let allComponents  = this.editor.getComponents();
+        let componentsToBeRemoved = allComponents.filter(
+          componentModel => (
+            componentModel.attributes['tagName']));
+        const lastComponentIndex = componentsToBeRemoved.length - 1;
+        componentsToBeRemoved = componentsToBeRemoved[lastComponentIndex];
+        componentsToBeRemoved.collection.remove(componentsToBeRemoved);
+        alert("Height Exceeded");
+      }*/
+    });
   }
   ngAfterViewInit(){
     const newBlocksEl = this.blockManager.render(this.filtered, { external: true });

@@ -12,9 +12,9 @@ export class AuthGuard implements CanActivate {
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        setInterval(()=>{
-            this.loginService.login_check();
-        },3000)
+        // setInterval(()=>{
+        //     this.loginService.login_check();
+        // },3000)
         
         // .subscribe(
         //   data => {
