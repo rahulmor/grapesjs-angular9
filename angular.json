@@ -24,10 +24,10 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/styles/scss/main.scss",
               "src/styles.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/grapesjs/dist/css/grapes.min.css",
-              "./node_modules/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",

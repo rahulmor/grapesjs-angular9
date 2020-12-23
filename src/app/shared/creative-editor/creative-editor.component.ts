@@ -46,6 +46,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
      var block1 = this.blockManager.add('image', {
        id: 'image',
        label: 'Image',
+       category: 'Ad Elements',
        // Select the component once it's dropped
        select: true,
        // You can pass components as a JSON instead of a simple HTML string,
@@ -60,6 +61,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       }
      });
      var block2 = this.blockManager.add('text', {
+      id: 'text',
       label: 'Text',
       content: '<p>Put your title here</p>',
       category: 'Ad Elements',
@@ -69,6 +71,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       }
     });
     var block3 = this.blockManager.add('button', {
+      id: 'button',
       label: 'Button',
       content: '<button>Button</button>',
       category: 'Ad Elements',
@@ -78,6 +81,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       }
     });
     var block4 = this.blockManager.add('shape', {
+      id: 'shape',
       label: 'Shape',
       content: '',
       category: 'Ad Elements',
@@ -117,6 +121,18 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
         }
       });
       console.log("customestyle==",this.customStyle);
+      const parserCss = (css, editor) => {
+        const result = [];
+        // ... parse the CSS string
+          result.push({
+            selectors: '.gjs-blocks-cs',
+            style: { color: 'red' }
+          })
+        // ...
+        return result; // Result should be ALWAYS an array
+      };
+      console.log("parserCss=",parserCss);
+      this.editor.setCustomParserCss(parserCss);      
     // var sector = this.styleManager.addSector('mySector',{
     //   name: 'My sector',
     //   open: true,
@@ -137,9 +153,20 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     //     },
     //   ],
     // });
-
-
-    
+    // const canvas = this.editor.Canvas;
+    // this.editor.on('canvas:dragenter', (data) => {
+    //   alert('selected = '+data)
+    //   console.log("data=",data)
+    //   this.editor.StyleManager.addSector('Typography1', {
+    //       name: 'Typography',
+    //       open: true,
+    //       buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align']
+    //     }, { at: 0 });
+    // });
+    // var focus = canvas.hasFocus(function(component){
+    //   return component;
+    //  });
+    //  console.log("canvas=",focus)
     this.canvasHeight = 250;
     
     //To set the base style of the wrapper  
