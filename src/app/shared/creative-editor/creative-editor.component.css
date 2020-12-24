@@ -1,65 +1,99 @@
 /* Reset some default styling */
 
 .gjs-editor-cont {
-    width: 300px!important;
-    height: 250px!important;
-    border : 1px solid gray;
+  width: 300px !important;
+  height: 250px !important;
+  border: 1px solid gray;
 }
 .gjs-block {
-    width: auto;
-    height: auto;
-    min-height: auto;
-  }
-  .panel__top {
-    padding: 0;
-    width: 100%;
-    display: flex;
-    position: initial;
-    justify-content: center;
-    justify-content: space-between;
-  }
-  .panel__basic-actions {
-    position: initial;
-  }
-  .editor-box{
-    margin-top: 5%;
-  }
-  .step-info{
-    background-color:#547fde;
-  }
-  .step-info-text{
-    font-size: 10px;
-    color: #93ade3;
-    text-align: left;
-    margin-left: -65%;
-    margin-top: -5%;
-  }
-  .step-info-header{
-    font-size: 16px;
-    color: white;
-    margin: 0px 5px 0px -55%;
-    font-weight: 500;
-  }
-  .step-info-content{
-    font-size: 13px;
-    color: #abbee6;
-    margin-left: -2%;
-  }
-  .step-info-button{
-    color:#abbee6;
-    border: 1px solid #000000;
-    padding: 5px;
-    width: 100%;
-    border-radius: 2px;
-    font-size: 14px;
+  width: auto;
+  height: auto;
+  min-height: auto;
 }
-.close-checkbox{
+.panel__top {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  position: initial;
+  justify-content: center;
+  justify-content: space-between;
+}
+.panel__basic-actions {
+  position: initial;
+}
+.editor-box {
+  margin-top: 5%;
+}
+.step-info {
+  background-color: #547fde;
+}
+.step-info-text {
+  font-size: 10px;
+  color: #93ade3;
+  text-align: left;
+  margin-left: -65%;
+  margin-top: -5%;
+}
+.step-info-header {
+  font-size: 16px;
+  color: white;
+  margin: 0px 5px 0px -55%;
+  font-weight: 500;
+}
+.step-info-content {
+  font-size: 13px;
+  color: #abbee6;
+  margin-left: -2%;
+}
+.step-info-button {
+  color: #abbee6;
+  border: 1px solid #000000;
+  padding: 5px;
+  width: 100%;
+  border-radius: 2px;
+  font-size: 14px;
+}
+.close-checkbox {
   margin-left: -30%;
 }
-.checkbox-text{
+.checkbox-text {
   font-size: 14px;
   color: #abbee6;
 }
-.editor{
+.editor {
   margin-top: 50%;
+}
+.block-manager {
+  background-color: #7a808d;
+}
+.block-text {
+  font-size: 12px;
+  color: #d7dce0;
+  text-align: left;
+  margin-left: -65%;
+}
+.ad-element-button{
+  color: #7a808d;
+  border: 1px solid #424752;
+  padding: 5px;
+  width: 100%;
+  border-radius: 2px;
+  font-size: 14px;
+  background-color: #424752;
+}
+.ad-button{
+  color: #ffffff;
+  border: 1px solid #535a69;
+  padding: 5px;
+  width: 100%;
+  border-radius: 2px;
+  font-size: 14px;
+  background-color: #7a808d;
+  margin: 5%;
+}
+.ad-button:hover{
+  background-color: #99a0ad;
+}
+.ad-button::selection{
+  background-color: #99a0ad;
 }

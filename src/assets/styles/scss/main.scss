@@ -77,12 +77,6 @@ $colorsAll: (one, $primaryColor),
 body{
   background-color: $bodyBgColor;
 }
-.gjs-two-color {
-  color: #ffffff;
-}
-.gjs-one-bg {
-  background-color: #7a808d;
-} 
 .#{$app-prefix}bg {
   &-main {
     background-color: $mainColor;
@@ -147,9 +141,9 @@ body{
 
   &::btn { color: '#fff';}
 
-  &input {}
+  // &input {}
 
-  &header {}
+  // &header {}
 }
 .opac50{
 	@include opacity(0.50);

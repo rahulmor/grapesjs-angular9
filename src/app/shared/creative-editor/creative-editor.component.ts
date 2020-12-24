@@ -45,8 +45,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
      });
      var block1 = this.blockManager.add('image', {
        id: 'image',
-       label: 'Image',
-       category: 'Ad Elements',
+       label: 'IMAGE',
+      //  category: 'Ad Elements',
        // Select the component once it's dropped
        select: true,
        // You can pass components as a JSON instead of a simple HTML string,
@@ -62,19 +62,20 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
      });
      var block2 = this.blockManager.add('text', {
       id: 'text',
-      label: 'Text',
+      label: `TEXT`,
       content: '<p>Put your title here</p>',
-      category: 'Ad Elements',
+      // category: 'Ad Elements',
       attributes: {
         title: 'Insert text',
+        // class: 'gjs-fonts gjs-f-h1p'
         // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block3 = this.blockManager.add('button', {
       id: 'button',
-      label: 'Button',
+      label: 'BUTTON',
       content: '<button>Button</button>',
-      category: 'Ad Elements',
+      // category: 'Ad Elements',
       attributes: {
         title: 'Button',
         // style:'color: #ffffff;width:20px!important;'
@@ -82,19 +83,41 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     });
     var block4 = this.blockManager.add('shape', {
       id: 'shape',
-      label: 'Shape',
+      label: 'SHAPE',
       content: '',
-      category: 'Ad Elements',
+      // category: 'Ad Elements',
       attributes: {
         title: 'Shape',
         // style:'color: #ffffff;width:20px!important;'
       }
     });
-    
+    var block5 = this.blockManager.add('video', {
+      id: 'video',
+      label: 'VIDEO',
+      content: '',
+      // category: 'Ad Elements',
+      attributes: {
+        title: 'Video',
+        // style:'color: #ffffff;width:20px!important;'
+      }
+    });
+    var block6 = this.blockManager.add('third-party', {
+      id: 'third_party',
+      label: 'SHUTTERSTOCK',
+      content: '',
+      // category: 'Ad Elements',
+      attributes: {
+        title: 'Shutterstock',
+        // style:'color: #ffffff;width:20px!important;'
+      }
+    });
+    this.filtered.push(block4);
+    this.filtered.push(block5);
     this.filtered.push(block1);
     this.filtered.push(block2);
+    this.filtered.push(block6);
     this.filtered.push(block3);
-    this.filtered.push(block4);
+    
     console.log("blocks==",JSON.stringify(this.filtered))
     // this.filtered = blocks.filter(block => {
     //   console.log("blocks123==",block.getConfig('id'))
