@@ -14,12 +14,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
   filtered:any = [];
   blockManager:any;
   styleManager:any;
-  customStyle:any;
+  customStyle:any = [];
   panelManager:any;
   customPanel:any;
   canvasHeight:any;
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
+  // @ViewChild("fontfamily") fontfamily:ElementRef;
   // @ViewChild("panel") panel:ElementRef;
   constructor(private renderer: Renderer2,) {
 
@@ -36,13 +37,14 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     // this.panelManager = this.editor.Panels;
     const deviceManager = this.editor.DeviceManager;
     this.styleManager = this.editor.StyleManager;
-    deviceManager.add('basic', '300px', {
-      height: '250px',
-      // At first, GrapesJS tries to localize the name by device id.
-      // In case is not found, the `name` property is used (or `id` if name is missing)
-      name: 'Basic',
-      widthMedia: '250px', // the width that will be used for the CSS media
-     });
+    console.log("commands==",this.editor.Commands.getAll())
+    // deviceManager.add('basic', '300px', {
+    //   height: '250px',
+    //   // At first, GrapesJS tries to localize the name by device id.
+    //   // In case is not found, the `name` property is used (or `id` if name is missing)
+    //   name: 'Basic',
+    //   widthMedia: '250px', // the width that will be used for the CSS media
+    //  });
      var block1 = this.blockManager.add('image', {
        id: 'image',
        label: 'IMAGE',
@@ -130,32 +132,29 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     // const panelManager = this.editor.Panels;
     // console.log("panels=",panelManager.getPanels());
     // panelManager.getPanels().remove([]);
-    this.editor.on('asset:add', () => {
-      console.log('Asset add fired');
-      // this.editor.runCommand('open-assets');
-    });
-    this.styleManager = this.editor.StyleManager;
-    const propView = this.styleManager.getSectors();
-    console.log("stylemanager=",propView);
-    this.customStyle = propView.filter(block => {
-        console.log("sector==",block)
-        if(block.get('id') == 'general'){
-          return block;
-        }
-      });
-      console.log("customestyle==",this.customStyle);
-      const parserCss = (css, editor) => {
-        const result = [];
-        // ... parse the CSS string
-          result.push({
-            selectors: '.gjs-blocks-cs',
-            style: { color: 'red' }
-          })
-        // ...
-        return result; // Result should be ALWAYS an array
-      };
-      console.log("parserCss=",parserCss);
-      this.editor.setCustomParserCss(parserCss);      
+    
+    // this.styleManager = this.editor.StyleManager;
+    // const propView = this.styleManager.getSectors();
+    // console.log("stylemanager=",propView);
+    // this.customStyle = propView.filter(block => {
+    //     console.log("sector==",block)
+    //     if(block.get('id') == 'general'){
+    //       return block;
+    //     }
+    //   });
+    //   console.log("customestyle==",this.customStyle);
+      // const parserCss = (css, editor) => {
+      //   const result = [];
+      //   // ... parse the CSS string
+      //     result.push({
+      //       selectors: '.gjs-blocks-cs',
+      //       style: { color: 'red' }
+      //     })
+      //   // ...
+      //   return result; // Result should be ALWAYS an array
+      // };
+      // console.log("parserCss=",parserCss);
+      // this.editor.setCustomParserCss(parserCss);      
     // var sector = this.styleManager.addSector('mySector',{
     //   name: 'My sector',
     //   open: true,
@@ -253,6 +252,28 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
         alert("Height Exceeded");
       }*/
     });
+    
+  }
+  onClickAlignLeft(){
+    const component = this.editor.getSelected();
+    console.log("component=",component);
+    component && component.addAttributes({ style: {align:"left"}});
+  }
+  onClickAlignCenter(){
+    const component = this.editor.getSelected();
+    console.log("component=",component);
+    component && component.addAttributes({ style: {align:"center"}});
+  }
+  onClickAlignRight(){
+    const component = this.editor.getSelected();
+    console.log("component=",component);
+    component && component.addAttributes({ style: {align:"right"}});
+  }
+  changeHeight(e){
+    console.log("height==",e.target.value)
+    const component = this.editor.getSelected();
+    console.log("component=",component);
+    component && component.addAttributes({ style: {height:e.target.value+"px"}});
   }
   ngAfterViewInit(){
     const newBlocksEl = this.blockManager.render(this.filtered, { external: true });
@@ -268,6 +289,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     // const newPanel = this.panelManager.render(this.customPanel, { external: true });
     // console.log("newPanel==",newPanel);
     // this.renderer.appendChild(this.panel.nativeElement, newPanel);
+    
   }
   private initializeEditor(): any {
     console.dir(window);
@@ -336,38 +358,41 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
         //   }
         // ]
       // },
+      // traitManager: {
+      //   appendTo: '#traits-container',
+      // },
       styleManager: {
-        // appendTo: '#style-manager-container',
+        appendTo: '#style-manager-container',
         sectors: [{
           id:"general",
           name: 'General',
           open: true,
           buildProps: ['float', 'display', 'position', 'width', 'height', 'top', 'left','transform'],
-          // properties:[
-          //   {
-          //       property:'transform',
-          //       properties:[
-          //           {
-          //               name:'Translate Y',
-          //               property:'transform-translate-y',
-          //               functionName: 'translateY',
-          //               defaults: 0,
-          //               type: 'integer',
-          //               units: ['px', '%'],
-          //               unit: 'px'
-          //           },
-          //           {
-          //               name:'Translate X',
-          //               property:'transform-translate-x',
-          //               functionName: 'translateX',
-          //               defaults: 0,
-          //               type: 'integer',
-          //               units: ['px', '%'],
-          //               unit: 'px'
-          //           },
-          //       ]
-          //   }
-        // ]
+          properties:[
+            {
+                property:'transform',
+                properties:[
+                    {
+                        name:'Translate Y',
+                        property:'transform-translate-y',
+                        functionName: 'translateY',
+                        defaults: 0,
+                        type: 'integer',
+                        units: ['px', '%'],
+                        unit: 'px'
+                    },
+                    {
+                        name:'Translate X',
+                        property:'transform-translate-x',
+                        functionName: 'translateX',
+                        defaults: 0,
+                        type: 'integer',
+                        units: ['px', '%'],
+                        unit: 'px'
+                    },
+                ]
+            }
+        ]
         },
         //  {
         //   name: 'Dimension',

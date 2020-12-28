@@ -33,6 +33,33 @@
             </div>
         </div>
         <div class="col-md-3">
+            <div class="card block-manager">
+                <div class="upper-button">
+                    <button class="btn align-button" (click)="onClickAlignLeft()"><i class="fa fa-align-left" aria-hidden="true"></i></button>
+                    <button class="btn align-button" (click)="onClickAlignCenter()"><i class="fa fa-align-center" aria-hidden="true"></i></button>
+                    <button class="btn align-button" (click)="onClickAlignRight()"><i class="fa fa-align-right" aria-hidden="true"></i></button>
+                    <button class="btn align-button"><i class="fa fa-align-left" aria-hidden="true"></i></button>
+                    <button class="btn align-button"><i class="fa fa-align-center" aria-hidden="true"></i></button>
+                    <button class="btn align-button"><i class="fa fa-align-right" aria-hidden="true"></i></button>
+
+                    <button class="btn align-button align-center"><i class="fa fa-align-right" aria-hidden="true"></i></button>
+                    <button class="btn align-button"><i class="fa fa-align-right" aria-hidden="true"></i></button>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="height">Height</label>
+                            <input type="number" class="form-control ad-element-input" #height (mouseout)="changeHeight($event)" id="height" aria-describedby="height">
+                          </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="width">Width</label>
+                            <input type="number" class="form-control ad-element-input" id="width" aria-describedby="width">
+                          </div>
+                    </div>
+                </div>
+            </div>
             <!-- <div id="traits-container"></div> -->
             <div id="style-manager-container"></div>
             <div #styletext></div>
