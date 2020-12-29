@@ -24,7 +24,16 @@
     margin: 5px 5px 3px 0;
   }
 }
+#gjs-sm-general> .#{$sm-prefix}title{
+ display: none;
+}
 
+#gjs-sm-float> .#{$sm-prefix}label{
+  display: none;
+}
+#gjs-sm-position> .#{$sm-prefix}label{
+  display: none;
+}
 .#{$sm-prefix}close-btn {
   display: block;
   font-size: 23px;
@@ -44,18 +53,31 @@
   clear: both;
   font-weight: lighter;
   text-align: left;
+  background-color: #7a808d;
+  margin-bottom: 50px;
+  transition: all 0.2s ease-in-out;
+  line-height: 24px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  padding: 10px 10px 4px 5px;
+  text-align: left;
+  position: relative;
 
   ##{$sm-prefix}caret {
     padding-right: 5px;
     font-size: 11px;
+    display: none;
   }
 
-  &.#{$sm-prefix}open {
-    @extend .#{$app-prefix}category-open;
-  }
+  // &.#{$sm-prefix}open {
+  //   @extend .#{$app-prefix}category-open;
+  // }
 
   .#{$sm-prefix}title {
-    @extend .#{$app-prefix}category-title;
+    margin-left: 10px;
+    // @extend .#{$app-prefix}category-title;
   }
 
   /* ------------------Field-------------------- */
@@ -376,7 +398,12 @@
       }
     }
   }
-
+  .#{$sm-prefix}icon {
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: #e0e4ec;
+  }
   ##{$sm-prefix}text-shadow ##{$sm-prefix}preview::after {
     color: #000;
     content: "T";

@@ -56,7 +56,8 @@
 
       color: inherit;
       border: none;
-      background-color: transparent;
+      background-color: #3f434c;
+      border-radius: 5px;
       box-sizing: border-box;
       width: 100%;
       position: relative;
@@ -224,8 +225,15 @@
 
   &:first-child {
     border: none;
+    
   }
-
+  // #float-none-c61{
+  //   background-image: url("../../images/left-align.svg");
+  // }
+  // label[for="float-none-c61"]
+  // {
+  //   display:none;
+  // }
   &:hover {
     background: $mainDkColor;
   }

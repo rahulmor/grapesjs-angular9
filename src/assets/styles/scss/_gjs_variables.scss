@@ -19,7 +19,7 @@ $trt-prefix:        $app-prefix + 'trt-' !default;
   With this should be easier to overwrite colors
   not only in SCSS but even CSS
 */
-$primaryColor:      #7a808d !default;
+$primaryColor:      "transparent" !default;
 $secondaryColor:    #ffffff !default;
 $tertiaryColor:     #804f7b !default;
 $quaternaryColor:   #ffffff !default;
