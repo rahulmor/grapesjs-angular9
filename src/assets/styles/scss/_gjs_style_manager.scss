@@ -53,9 +53,8 @@
 .#{$sm-prefix}sector {
   clear: both;
   font-weight: lighter;
-  text-align: left;
   background-color: #7a808d;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   transition: all 0.2s ease-in-out;
   line-height: 24px;
   border-radius: 4px;
@@ -272,7 +271,7 @@
   .#{$sm-prefix}property {
     box-sizing: border-box;
     float: left;
-    width: 33%;
+    width: 50%;
     margin-bottom: 5px;
     padding: 0 5px;
 
@@ -509,4 +508,7 @@
 
 #gjs-sm-text-align > div.gjs-field{
   background-color: #818693;
+}
+#gjs-sm-font-size,#gjs-sm-line-height,#gjs-sm-letter-spacing{
+  width:33%!important;
 }

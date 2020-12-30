@@ -2,7 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-top: 5%;
+  border: 1px solid #424752;
+  background-color: #424752;
   // border: 2px solid #424752;
   // border-radius: 5%;
   // margin-left: -5px;
@@ -33,7 +34,7 @@
 .#{$app-prefix}block {
   @include user-select(none);
 
-  width: 33%;
+  width: 73px;
   min-width: 45px;
   padding: 1em;
   box-sizing: border-box;
@@ -54,6 +55,7 @@
   background-color: #8d93a0;
   &:hover {
     box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.15);
+    background: #56bce5;
   }
 
   svg {
@@ -92,4 +94,7 @@
 .#{$app-prefix}block.#{$app-prefix}bdrag {
   width: auto;
   padding: 0;
+}
+.block-manager-gjs{
+  margin-top:21px;
 }

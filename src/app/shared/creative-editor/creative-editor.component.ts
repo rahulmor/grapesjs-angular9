@@ -140,6 +140,21 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
             domElementStyle.left = '0px'
             this.editor.getSelected().setStyle({...domElementStyle});
         }
+        if(domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.top = '0px'
+          this.editor.getSelected().setStyle({...domElementStyle});
+        }
+        if(domElement !== undefined && parseInt(domElement.getStyle().left) > 250) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.left = '245px'
+          this.editor.getSelected().setStyle({...domElementStyle});
+        }
+        if(domElement !== undefined && parseInt(domElement.getStyle().top) > 235) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.top = '228px'
+          this.editor.getSelected().setStyle({...domElementStyle});
+        }
       });
       //Drag End Event of component 
     this.editor.on('component:drag:end', (component) => {
@@ -150,8 +165,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       
       // To check if the element is going out of canvas from bottom limit
       if(parseInt(domElement.top) > this.canvasHeight ) {        
-        alert("Height Exceeded");
         domElement.top = this.canvasHeight*95/100;
+        console.log("top==",domElement.top)
         console.log(this.canvasHeight, domElement.top)
         this.editor.getSelected().setStyle({...domElement})
       }
@@ -159,6 +174,18 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       // To check if the element is going out of canvas from left limit
       if(domElement !== undefined && parseInt(domElement.left) < 0) {      
         domElement.left = '0px'
+        this.editor.getSelected().setStyle({...domElement});
+      }
+      if(domElement !== undefined && parseInt(domElement.top) < 0) {
+        domElement.top = '0px'
+        this.editor.getSelected().setStyle({...domElement});
+      }
+      if(domElement !== undefined && parseInt(domElement.left) > 250) {
+        domElement.left = '245px'
+        this.editor.getSelected().setStyle({...domElement});
+      }
+      if(domElement !== undefined && parseInt(domElement.top) > 235) {
+        domElement.top = '228px'
         this.editor.getSelected().setStyle({...domElement});
       }
     });
@@ -229,25 +256,25 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
             {
                 property:'transform',
                 properties:[
-                    {
-                        name:'Rotate Y',
-                        property:'transform-rotate-y',
-                        functionName: 'rotateY',
-                        defaults: 0,
-                        type: 'integer',
-                        units: ['px', '%'],
-                        unit: 'px'
-                    },
-                    {
-                        name:'Rotate X',
-                        property:'transform-rotate-x',
-                        functionName: 'rotateX',
-                        defaults: 0,
-                        type: 'integer',
-                        units: ['px', '%'],
-                        unit: 'px'
-                    },
-                ]
+                  {
+                      name:'Translate Y',
+                      property:'transform-translate-y',
+                      functionName: 'translateY',
+                      defaults: 0,
+                      type: 'integer',
+                      units: ['px', '%'],
+                      unit: 'px'
+                  },
+                  {
+                      name:'Translate X',
+                      property:'transform-translate-x',
+                      functionName: 'translateX',
+                      defaults: 0,
+                      type: 'integer',
+                      units: ['px', '%'],
+                      unit: 'px'
+                  },
+              ]
             }
         ]
         },
