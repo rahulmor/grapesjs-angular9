@@ -178,7 +178,7 @@ app-creative-editor{
     align-items: center;
     transition: all 0.2s ease-in-out;
     line-height: 24px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    
   }
 
   .card-container .card:not(:last-child) {
@@ -216,7 +216,9 @@ app-creative-editor{
   .card.card.highlight-card span {
     margin-left: 60px;
   }
-
+  .card:hover{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
   a,
   a:visited,
   a:hover {

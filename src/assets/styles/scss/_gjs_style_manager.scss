@@ -58,7 +58,6 @@
   margin-bottom: 50px;
   transition: all 0.2s ease-in-out;
   line-height: 24px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   border-radius: 4px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
@@ -71,7 +70,9 @@
     font-size: 11px;
     display: none;
   }
-
+  &:hover {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
   // &.#{$sm-prefix}open {
   //   @extend .#{$app-prefix}category-open;
   // }
@@ -271,7 +272,7 @@
   .#{$sm-prefix}property {
     box-sizing: border-box;
     float: left;
-    width: 50%;
+    width: 33%;
     margin-bottom: 5px;
     padding: 0 5px;
 
@@ -492,4 +493,20 @@
   &:hover {
     @include opacity(0.9);
   }
+}
+#gjs-sm-font-family{
+  width:100%!important;
+}
+#gjs-sm-font-family > div.gjs-fields > div.gjs-select select{
+  background-color: #8e93a0;
+}
+#gjs-sm-font-weight{
+  width:100%!important;
+}
+#gjs-sm-font-weight > div.gjs-fields > div.gjs-select select{
+  background-color: #8e93a0;
+}
+
+#gjs-sm-text-align > div.gjs-field{
+  background-color: #818693;
 }

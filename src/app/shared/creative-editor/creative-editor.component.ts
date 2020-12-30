@@ -128,7 +128,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
       this.editor.StyleManager.addSector('TextStyle', {
           name: 'TEXT STYLE',
           open: true,
-          buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align']
+          buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
         }, { at: 1 });
     });
 
