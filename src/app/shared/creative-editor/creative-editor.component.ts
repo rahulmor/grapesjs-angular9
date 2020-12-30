@@ -93,13 +93,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
         // style:'color: #ffffff;width:20px!important;'
       }
     });
-    var block6 = this.blockManager.add('third-party', {
-      id: 'third_party',
-      label: 'SHUTTERSTOCK',
+    var block6 = this.blockManager.add('Logo', {
+      id: 'Logo',
+      label: 'LOGO',
       content: '',
       // category: 'Ad Elements',
       attributes: {
-        title: 'Shutterstock',
+        title: 'Logo',
         // style:'color: #ffffff;width:20px!important;'
       }
     });
@@ -224,7 +224,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
           id:"general",
           name: 'General',
           open: true,
-          buildProps: ['float', 'position', 'width', 'height', 'top', 'left','transform'],
+          buildProps: ['width', 'height', 'top', 'left','transform'],
           properties:[
             {
                 property:'transform',
