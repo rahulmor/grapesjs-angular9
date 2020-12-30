@@ -125,11 +125,11 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     //Event when a component is selected
     this.editor.on('component:selected', (component) => {
       // alert('selected')
-      this.editor.StyleManager.addSector('TextStyle', {
-          name: 'TEXT STYLE',
-          open: true,
-          buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
-        }, { at: 1 });
+      // this.editor.StyleManager.addSector('TextStyle', {
+      //     name: 'TEXT STYLE',
+      //     open: true,
+      //     buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
+      //   }, { at: 1 });
     });
 
       //Drag Event of component 
@@ -278,11 +278,11 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
             }
         ]
         },
-      //   {
-      //     name: 'Text Style',
-      //     open: true,
-      //     buildProps: ['font-family','font-weight', 'font-size','line-height', 'letter-spacing','text-align', 'color',  ]
-        // }
+        {
+          name: 'TEXT STYLE',
+          open: true,
+          buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
+        }
       ],
       },
       assetManager: {
