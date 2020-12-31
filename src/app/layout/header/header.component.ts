@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FilterService } from './../../services/filter.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+	public filterView: string = 'basic';
+	constructor(private filterService: FilterService) { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+	}
+
+	getView(viewName) {
+		this.filterView = viewName;
+		this.sendData(viewName);
+	}
+
+	sendData(viewName){
+		this.filterService.sendData(viewName);
+	}
 
 }
