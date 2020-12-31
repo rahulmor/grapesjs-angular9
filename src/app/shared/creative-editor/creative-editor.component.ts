@@ -1,14 +1,16 @@
-import { Component, OnInit,ElementRef,AfterViewInit,ViewChild ,Renderer2 } from '@angular/core';
+import { Component, OnInit,ElementRef,AfterViewInit,ViewChild ,Renderer2, OnDestroy } from '@angular/core';
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
 // import 'gjs-blocks-basic';
+import { FilterService } from './../../services/filter.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-creative-editor',
   templateUrl: './creative-editor.component.html',
   styleUrls: ['./creative-editor.component.css']
 })
-export class CreativeEditorComponent implements OnInit,AfterViewInit  {
+export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
 
   private _editor: any;
   filtered:any = [];
@@ -18,11 +20,12 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
   panelManager:any;
   customPanel:any;
   canvasHeight:any;
+  subscription: Subscription;
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
   // @ViewChild("panel") panel:ElementRef;
-  constructor(private renderer: Renderer2,) {
-
+  constructor(private renderer: Renderer2, private filterService: FilterService) {
+    
   }
   get editor() {
     return this._editor;
@@ -30,18 +33,21 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
 
 
   ngOnInit(): void {
+    this.subscription = this.filterService.getData().subscribe(viewName => {
+      console.log('viewName',viewName);
+    });
     this._editor = this.initializeEditor();
     this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     // this.panelManager = this.editor.Panels;
     const deviceManager = this.editor.DeviceManager;
     this.styleManager = this.editor.StyleManager;
-    deviceManager.add('basic', '300px', {
-      height: '250px',
+    deviceManager.add('basic', '600px', {
+      height: '150px',
       // At first, GrapesJS tries to localize the name by device id.
       // In case is not found, the `name` property is used (or `id` if name is missing)
       name: 'Basic',
-      widthMedia: '250px', // the width that will be used for the CSS media
+      widthMedia: '400px', // the width that will be used for the CSS media
      });
      var block1 = this.blockManager.add('image', {
        id: 'image',
@@ -190,14 +196,14 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
     //   return component;
     //  });
     //  console.log("canvas=",focus)
-    this.canvasHeight = 250;
+    this.canvasHeight = 350;
     
     //To set the base style of the wrapper  
       const $currentIFrame = $('iframe');
       $currentIFrame.contents().find("body").css('overflow', 'hidden');
       this.editor.getWrapper().set({'badgable': false, 'highlightable': false}).setStyle({
         overflow: 'hidden',
-        height: '250px'
+        height: '450px'
       })
     //This is to update the style in styleManager after drag end in designer mode 
     this.editor.on('stop:core:component-drag',() => { this.editor.trigger('component:toggled') });
@@ -433,5 +439,10 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
         scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js']
       }
     });
+  }
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
   }
 }
