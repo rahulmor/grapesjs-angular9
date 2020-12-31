@@ -1,14 +1,16 @@
-import { Component, OnInit,ElementRef,AfterViewInit,ViewChild ,Renderer2 } from '@angular/core';
+import { Component, OnInit,ElementRef,AfterViewInit,ViewChild ,Renderer2, OnDestroy } from '@angular/core';
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
 // import 'gjs-blocks-basic';
+import { FilterService } from './../../services/filter.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-creative-editor',
   templateUrl: './creative-editor.component.html',
   styleUrls: ['./creative-editor.component.css']
 })
-export class CreativeEditorComponent implements OnInit,AfterViewInit  {
+export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
 
   private _editor: any;
   filtered:any = [];
@@ -19,9 +21,10 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
   customPanel:any;
   canvasHeight:any;
   stepinfoBox:boolean = true;
+  subscription: Subscription;
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
-  constructor(private renderer: Renderer2,) {
+  constructor(private renderer: Renderer2, private filterService: FilterService) {
 
   }
   get editor() {
@@ -30,6 +33,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
 
 
   ngOnInit(): void {
+    this.subscription = this.filterService.getData().subscribe(viewName => {
+      console.log('viewName',viewName);
+    });
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
     this.editor.getModel().set('dmode', 'absolute');
@@ -306,5 +312,10 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit  {
         scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js']
       }
     });
+  }
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
   }
 }

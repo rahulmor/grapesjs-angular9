@@ -8,6 +8,7 @@ import { HomeComponent } from './layout/home/home.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { BasicAuthInterceptor } from '../app/auth/httpconfig.interceptor';
 import { AdEditorComponent } from './layout/ad-editor/ad-editor.component';
+import { FilterService } from './services/filter.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,7 @@ import { AdEditorComponent } from './layout/ad-editor/ad-editor.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},FilterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

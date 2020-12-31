@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FilterService } from './../../services/filter.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,7 +10,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private filterService: FilterService) { }
 
   ngOnInit(): void {
     const userAgent = window.navigator.userAgent;
@@ -35,5 +37,9 @@ getCookies() {
       ret += i + ' - ' + cookies[i - 1] + "<br>"; 
   } 
   return ret; 
-} 
+}
+
+getView(viewName) {
+  console.log('viewName',viewName);
+}
 }
