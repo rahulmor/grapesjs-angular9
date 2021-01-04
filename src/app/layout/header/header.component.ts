@@ -7,20 +7,28 @@ import { FilterService } from './../../services/filter.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  public filterView: string = 'basic';
+  public style_nav: boolean = false;
+  constructor(private filterService: FilterService) {}
 
-	public filterView: string = 'basic';
-	constructor(private filterService: FilterService) { }
+  ngOnInit(): void {
+    this.filterService.data.subscribe((data) => {
+      //do what ever needs doing when data changes
+      console.log('url=', data);
+      if (data.url == 'ad-builder') {
+        this.style_nav = true;
+      } else if (data.url == 'home') {
+        this.style_nav = false;
+      }
+    });
+  }
 
-	ngOnInit(): void {
-	}
+  getView(viewName) {
+    this.filterView = viewName;
+    this.sendData(viewName);
+  }
 
-	getView(viewName) {
-		this.filterView = viewName;
-		this.sendData(viewName);
-	}
-
-	sendData(viewName){
-		this.filterService.sendData(viewName);
-	}
-
+  sendData(viewName) {
+    this.filterService.sendData(viewName);
+  }
 }

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject,BehaviorSubject } from 'rxjs';
 //import { Subject } from 'rxjs';
  
 @Injectable()
 export class FilterService {
 
   	private subject = new Subject<any>();
- 
+    private dataSource = new BehaviorSubject<any>({url:'home'});
+    data = this.dataSource.asObservable();
     sendData(message: string) {
         this.subject.next(message);
     }
@@ -17,5 +18,8 @@ export class FilterService {
  
     getData(): Observable<any> {
         return this.subject.asObservable();
+    }
+    setCurrentUrl(data){
+        this.dataSource.next(data);
     }
 }

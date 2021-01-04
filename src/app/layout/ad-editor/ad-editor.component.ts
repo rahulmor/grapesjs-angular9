@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FilterService } from './../../services/filter.service';
 @Component({
   selector: 'app-ad-editor',
   templateUrl: './ad-editor.component.html',
@@ -7,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdEditorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private filterService: FilterService) { }
 
   ngOnInit(): void {
+    this.filterService.setCurrentUrl({url:'ad-builder'});
   }
 
 }
