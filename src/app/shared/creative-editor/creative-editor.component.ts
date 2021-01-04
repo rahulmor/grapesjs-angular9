@@ -263,23 +263,17 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
                 property:'transform',
                 properties:[
                   {
-                      name:'Translate Y',
-                      property:'transform-translate-y',
-                      functionName: 'translateY',
-                      defaults: 0,
-                      type: 'integer',
-                      units: ['px', '%'],
-                      unit: 'px'
+                      name:'Rotate Y',
+                      property:'transform-rotate-y',
                   },
                   {
-                      name:'Translate X',
-                      property:'transform-translate-x',
-                      functionName: 'translateX',
-                      defaults: 0,
-                      type: 'integer',
-                      units: ['px', '%'],
-                      unit: 'px'
+                      name:'Rotate X',
+                      property:'transform-rotate-x',
                   },
+                  {
+                    name:'Rotate Z',
+                    property:'transform-rotate-z',
+                  }
               ]
             }
         ]
