@@ -57,12 +57,15 @@
       color: inherit;
       border: none;
       background-color: #3f434c;
-      border-radius: 5px;
+      border-radius: 3px;
       box-sizing: border-box;
       width: 100%;
       position: relative;
-      padding: $inputPadding;
       z-index: 1;
+      padding: 5px 10px;
+      height: 32px;
+      border: 1px solid #3f434c;
+      line-height: initial;
 
       &:focus {
         outline: none;
@@ -132,7 +135,7 @@
     position: absolute;
     height: 0;
     width: 0;
-    border-left: 3px solid transparent;
+    border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     cursor: pointer;
   }
@@ -166,17 +169,18 @@
   border-left: 1px solid $mainDkColor;
   box-sizing: border-box;
   height: 100%;
-  padding: 2px;
+  padding: 0px 5px 0px 0px;
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
   width: $colorpSize;
   z-index: 10;
+  border-radius: 4px;
 
   .#{$app-prefix}checker-bg {
     height: 100%;
     width: 100%;
-    border-radius: 1px;
+    border-radius: 4px;
   }
 }
 
@@ -194,9 +198,9 @@
   height: 100%;
   width: 100%;
   box-shadow: 0 0 1px $mainDkColor;
-  border-radius: 1px;
   position: absolute;
   top: 0;
+  border-radius: 4px;
 }
 
 /* ??? */
@@ -387,5 +391,13 @@
 
   &:active {
     background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+#gjs-sm-color{
+  .gjs-fields{
+    .gjs-field.gjs-field-color{
+      background-color:transparent;
+    }
   }
 }
