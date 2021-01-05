@@ -562,3 +562,29 @@ body{
 .cm-s-hopscotch span.cm-error {
     color: #ffffff;
 }
+.gjs-input-holder{
+  width: 70%;
+    float: right;
+}
+#gjs-sm-color{
+  .gjs-sm-property.gjs-sm-color{
+    .gjs-fields{
+      .gjs-field.gjs-field-color{
+        background-color: transparent;
+        .gjs-field-colorp{
+          left: 0;
+          border-radius: 10px;
+          .gjs-field-colorp-c{
+            border-radius: 10px;
+            .gjs-checker-bg{
+              border-radius: 10px;
+            }
+            .gjs-field-color-picker{
+              border-radius: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
