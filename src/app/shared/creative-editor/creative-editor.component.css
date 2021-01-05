@@ -21,82 +21,144 @@
 .panel__basic-actions {
   position: initial;
 }
-.editor-box {
-  margin-top: 5%;
-}
+/* .editor-box {
+ margin-top: 5%;
+} */
 .step-info {
+  width: 240px;
+  height: 252px;
+  margin: 61px 306px 23px 24px;
   padding: 5px 13px 10px 12px;
-    border-radius: 5px;
-    box-shadow: 0 3px 6px 0 rgba(58, 86, 140, 0.62);
-    background-color: #547fde;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 rgba(58, 86, 140, 0.62);
+  background-color: #547fde;
 }
 .step-info-text {
+  width: 91px;
+  height: 24px;
+  margin: 0 124px 11px 0;
   opacity: 0.45;
+  font-family: IBM Plex Sans;
   font-size: 10px;
   font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
   line-height: 2.4;
+  letter-spacing: normal;
   color: #e6eaed;
-  margin-bottom: 11px;
 }
 .step-info-header {
+  width: 128px;
+  height: 24px;
+  margin: 11px 87px 8px 0;
+  font-family: IBM Plex Sans;
   font-size: 18px;
   font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
   line-height: 1.33;
+  letter-spacing: normal;
   color: #e6eaed;
 }
 .step-info-content {
+  width: 214px;
+  height: 54px;
+  margin: 8px 1px 53px 0;
+  opacity: 0.7;
+  font-family: IBM Plex Sans;
   font-size: 14px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.29;
-    letter-spacing: normal;
-    color: #e6eaed;
-    opacity: 0.7;
-    margin-bottom: 53px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.29;
+  letter-spacing: normal;
+  color: #e6eaed;
 }
 .step-info-button {
+  width: 215px;
+  height: 32px;
+  margin: 0px 0 13px;
+  padding: 4px 73px 7px 58px;
   border-radius: 3px;
-    border: solid 1px #3f434c;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.5;
-    text-align: center;
-    color: #c6cacd;
+  border: solid 1px #3f434c;
+  background-color: transparent;
+}
+.btn-close{
+  width: 84px;
+  height: 21px;
+  font-family: IBM Plex Sans;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #c6cacd;
 }
 .close-checkbox {
   align-self: end;
 }
+.check-input{
+  width: 14px;
+  height: 14px;
+  margin: 0px 5px 2px 2px;
+  border-radius: 3px;
+  background-color: #3f434c;
+}
 .checkbox-text {
+  width: 194px;
+  height: 18px;
+  margin: 0px;
   opacity: 0.54;
+  font-family: IBM Plex Sans;
   font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
   line-height: 1.5;
+  letter-spacing: normal;
   color: #e6eaed;
-  top: -4px;
-  display: inline;
-  position: relative;
 }
 .editor {
-  margin-top: 25%;
+  /* width: 300px;
+  height: 250px; */
+  margin: 250px 0 0 0;
+  /* padding: 5px 8px 16px 22px; */
+  background-color: #ffffff;
 }
 .block-manager {
+  width: 240px;
+  height: 210px;
+  margin: 5px 306px 59px 24px;
+  padding: 16px 1px 16px 0;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 #b4babe;
   background-color: #7a808d;
   border: none;
 }
 .block-text {
+  width: 79px;
+  height: 24px;
+  margin: 0 148px 6px 12px;
+  font-family: IBM Plex Sans;
   font-size: 12px;
-  color: #d7dce0;
-  text-align: left;
-  align-self: end;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  color: #e6eaed;
 }
 .ad-element-button{
   color: #7a808d;
   border: 1px solid #424752;
   padding: 5px;
-  width: 100%;
   border-radius: 2px;
   font-size: 14px;
   background-color: #424752;
+  margin-left: 5%;
+  width: 90%;
 }
 .ad-button{
   color: #ffffff;

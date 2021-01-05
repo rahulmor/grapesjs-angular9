@@ -252,38 +252,47 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       panels: { defaults: [] },
       // plugins: ['gjs-blocks-basic'],
       styleManager: {
-      //   appendTo: '#style-manager-container',
-        sectors: [{
-          id:"general",
-          name: 'General',
-          open: true,
-          buildProps: ['width', 'height', 'top', 'left','transform'],
-          properties:[
-            {
-                property:'transform',
-                properties:[
+        //   appendTo: '#style-manager-container',
+        sectors: [
+          {
+            id: 'general',
+            name: 'General',
+            open: true,
+            buildProps: ['width', 'height', 'top', 'left', 'transform'],
+            properties: [
+              {
+                property: 'transform',
+                properties: [
                   {
-                      name:'Rotate Y',
-                      property:'transform-rotate-y',
+                    name: 'Rotate Y',
+                    property: 'transform-rotate-y',
                   },
                   {
-                      name:'Rotate X',
-                      property:'transform-rotate-x',
+                    name: 'Rotate X',
+                    property: 'transform-rotate-x',
                   },
-                  {
-                    name:'Rotate Z',
-                    property:'transform-rotate-z',
-                  }
-              ]
-            }
-        ]
-        },
-        {
-          name: 'TEXT STYLE',
-          open: true,
-          buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
-        }
-      ],
+                  // {
+                  //   name:'Rotate Z',
+                  //   property:'transform-rotate-z',
+                  // }
+                ],
+              },
+            ],
+          },
+          {
+            name: 'TEXT STYLE',
+            open: true,
+            buildProps: [
+              'font-family',
+              'font-weight',
+              'font-size',
+              'line-height',
+              'letter-spacing',
+              'text-align',
+              'color',
+            ],
+          },
+        ],
       },
       assetManager: {
         uploadText: 'Add image through link or upload image',
@@ -291,20 +300,29 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         openAssetsOnDrop: 1,
         inputPlaceholder: 'http://url/to/the/image.jpg',
         addBtnText: 'Add image',
+        storageType: '',
+        storeOnChange: true,
+        storeAfterUpload: true,
+        upload: 'https://localhost/assets/upload', //for temporary storage
+        assets: [],
         uploadFile: (e) => {
-          const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+          console.log('upload file=', e);
+          const file = e.target.files[0];
         },
         handleAdd: (textFromInput) => {
+          console.log("textFromInput==",textFromInput);
           this.editor.AssetManager.add(textFromInput);
-        }
+        },
       },
       canvas: {
         styles: [
           'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-          'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'
+          'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
         ],
-        scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js']
-      }
+        scripts: [
+          'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js',
+        ],
+      },
     });
   }
 
