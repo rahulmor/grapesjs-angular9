@@ -562,10 +562,13 @@ body{
 .cm-s-hopscotch span.cm-error {
     color: #ffffff;
 }
-.gjs-input-holder{
-  width: 70%;
-    float: right;
+.gjs-field.gjs-field-color{
+  .gjs-input-holder{
+    width: 70%;
+      float: right;
+  }
 }
+
 #gjs-sm-color{
   .gjs-sm-property.gjs-sm-color{
     .gjs-fields{
@@ -585,6 +588,32 @@ body{
           }
         }
       }
+    }
+  }
+}
+.gjs-sm-property__font-size, .gjs-sm-property__line-height, .gjs-sm-property__letter-spacing{
+  .gjs-field-units{
+    display: none;
+  }
+  .gjs-field-arrows{
+    display: none;
+  }
+}
+.gjs-radio-items{
+  border: solid 1px #50545e;
+  border-radius: 3px;
+  .gjs-radio-item{
+    &:first-child{
+      label{
+        border-radius: 3px 0px 0px 3px;
+      }
+      
+    }
+    &:last-child{
+      label{
+        border-radius: 0px 3px 3px 0px;
+      }
+     
     }
   }
 }
