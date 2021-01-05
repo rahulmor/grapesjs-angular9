@@ -63,6 +63,10 @@
   padding: 10px 10px 4px 5px;
   text-align: left;
   position: relative;
+  display: block !important;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 #b4babe;
+  background-color: #7a808d;
 
   
   ##{$sm-prefix}caret {
@@ -79,6 +83,7 @@
 
   .#{$sm-prefix}title {
     margin-left: 10px;
+    pointer-events: none;
     // @extend .#{$app-prefix}category-title;
   }
 
@@ -275,6 +280,7 @@
     width: 50%;
     margin-bottom: 5px;
     padding: 0 5px;
+    display: block !important;
 
     &--full,
     &.#{$sm-prefix}composite,

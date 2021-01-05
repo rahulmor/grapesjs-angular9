@@ -38,7 +38,7 @@
     font-weight: 500;
   }
   .navbar{
-    height: 60px;
+    height: 64px;
     padding: 0;
     margin: 0 auto;
     padding: 0 16px;
@@ -172,7 +172,6 @@ app-creative-editor{
 
   .card {
     border-radius: 4px;
-    border: 1px solid #eee;
     background-color: #fafafa;
     height: auto;
     width: auto;
@@ -181,9 +180,11 @@ app-creative-editor{
     display: flex;
     flex-direction: row;
     justify-content: left;
-    align-items: center;
     transition: all 0.2s ease-in-out;
     line-height: 24px;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 #b4babe;
+  background-color: #7a808d;
     
   }
 
@@ -287,5 +288,3 @@ app-creative-editor{
       margin-left: 72px;
     }
   }
-
-  
