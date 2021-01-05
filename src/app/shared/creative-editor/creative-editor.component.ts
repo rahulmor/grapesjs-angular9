@@ -22,6 +22,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   canvasHeight:any;
   stepinfoBox:boolean = true;
   subscription: Subscription;
+  customCommands: any;
+  viewLoaded: string = 'basic';
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
   constructor(private renderer: Renderer2, private filterService: FilterService) {
@@ -34,13 +36,40 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
 
   ngOnInit(): void {
     this.subscription = this.filterService.getData().subscribe(viewName => {
-      console.log('viewName',viewName);
+      switch (viewName) {
+        case "basic":
+            this.viewLoaded = 'basic';
+          break;
+        case "landscape":
+            this.viewLoaded = 'landscape';
+          break;
+          case "portrait":
+            this.viewLoaded = 'portrait';
+          break;
+        default:
+            this.viewLoaded = 'basic';
+          break;
+      }
+
+      let myCommand = this.customCommands.get(this.viewLoaded);
+      myCommand.run();
     });
+      
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
     this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
+    this.customCommands = this.editor.Commands;
+    this.customCommands.add('basic', {
+      run: editor => this.editor.setDevice('Basic')
+    });
+    this.customCommands.add('landscape', {
+      run: editor => this.editor.setDevice('Landscape')
+    });
+    this.customCommands.add('portrait', {
+      run: editor => this.editor.setDevice('Portrait')
+    });
     var block1 = this.blockManager.add('image', {
        id: 'image',
        label: 'IMAGE',
@@ -117,7 +146,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.filtered.push(block3);
 
     this.canvasHeight = 250;
-    
+
     //To set the base style of the wrapper  
       const $currentIFrame = $('iframe');
       $currentIFrame.contents().find("body").css('overflow', 'hidden');
@@ -239,6 +268,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     const newSector = this.styleManager.render(this.customStyle, { external: true });
     console.log("newSector==",newSector);
     this.renderer.appendChild(this.textStyle.nativeElement, newSector);
+
+    this.customCommands.run('basic');
     
   }
   private initializeEditor(): any {
@@ -249,7 +280,25 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       // height: '100vh',
       components: '',
       style: '',
-      panels: { defaults: [] },
+      deviceManager: {
+        devices: [{
+            name: 'Basic',
+            width: '300px', // default size
+            height: '250px'
+        }, 
+        {
+            name: 'Landscape',
+            width: '728px', // this value will be used on canvas width
+            height: '90px'
+        },
+        {
+            name: 'Portrait',
+            width: '300px', // this value will be used on canvas width
+            height: '600px'
+        }]
+      },
+      panels: { defaults: []
+      },
       // plugins: ['gjs-blocks-basic'],
       styleManager: {
       //   appendTo: '#style-manager-container',
@@ -307,7 +356,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       canvas: {
         styles: [
           'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-          'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'
+          'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
         ],
         scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js']
       }
