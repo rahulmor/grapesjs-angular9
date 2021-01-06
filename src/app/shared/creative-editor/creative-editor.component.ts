@@ -5,6 +5,7 @@ import * as $ from 'jquery';
 // import 'gjs-blocks-basic';
 import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
+import { STYLE } from './../constants/builder.constants'
 @Component({
   selector: 'app-creative-editor',
   templateUrl: './creative-editor.component.html',
@@ -38,20 +39,25 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.subscription = this.filterService.getData().subscribe(viewName => {
       switch (viewName) {
         case "basic":
-            this.viewLoaded = 'basic';
+            this.viewLoaded = STYLE.BASIC.VIEW_NAME;
+            this.canvasHeight = STYLE.BASIC.SIZE.CANVAS_HEIGHT;
           break;
         case "landscape":
-            this.viewLoaded = 'landscape';
+            this.viewLoaded = STYLE.LANDSCAPE.VIEW_NAME;
+            this.canvasHeight = STYLE.LANDSCAPE.SIZE.CANVAS_HEIGHT;
           break;
           case "portrait":
-            this.viewLoaded = 'portrait';
+            this.viewLoaded = STYLE.PORTRAIT.VIEW_NAME;
+            this.canvasHeight = STYLE.PORTRAIT.SIZE.CANVAS_HEIGHT;
           break;
         default:
-            this.viewLoaded = 'basic';
+            this.viewLoaded = STYLE.BASIC.VIEW_NAME;
+            this.canvasHeight = STYLE.BASIC.SIZE.CANVAS_HEIGHT;
           break;
       }
 
       let myCommand = this.customCommands.get(this.viewLoaded);
+      // This command will change view of canvas
       myCommand.run();
     });
       
@@ -61,15 +67,18 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
     this.customCommands = this.editor.Commands;
+    
+    /*Custom Commands added to toggle devices*/
     this.customCommands.add('basic', {
-      run: editor => this.editor.setDevice('Basic')
+      run: editor => this.editor.setDevice(STYLE.BASIC.NAME)
     });
     this.customCommands.add('landscape', {
-      run: editor => this.editor.setDevice('Landscape')
+      run: editor => this.editor.setDevice(STYLE.LANDSCAPE.NAME)
     });
     this.customCommands.add('portrait', {
-      run: editor => this.editor.setDevice('Portrait')
+      run: editor => this.editor.setDevice(STYLE.PORTRAIT.NAME)
     });
+
     var block1 = this.blockManager.add('image', {
        id: 'image',
        label: 'IMAGE',
@@ -145,7 +154,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.filtered.push(block6);
     this.filtered.push(block3);
 
-    this.canvasHeight = 250;
+    //this.canvasHeight = 250;
 
     //To set the base style of the wrapper  
       const $currentIFrame = $('iframe');
@@ -282,19 +291,19 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       style: '',
       deviceManager: {
         devices: [{
-            name: 'Basic',
-            width: '300px', // default size
-            height: '250px'
+            name: STYLE.BASIC.NAME,
+            width: STYLE.BASIC.SIZE.WIDTH, // default size
+            height: STYLE.BASIC.SIZE.HEIGHT
         }, 
         {
-            name: 'Landscape',
-            width: '728px', // this value will be used on canvas width
-            height: '90px'
+            name: STYLE.LANDSCAPE.NAME,
+            width: STYLE.LANDSCAPE.SIZE.WIDTH, // this value will be used on canvas width
+            height: STYLE.LANDSCAPE.SIZE.HEIGHT
         },
         {
-            name: 'Portrait',
-            width: '300px', // this value will be used on canvas width
-            height: '600px'
+            name: STYLE.PORTRAIT.NAME,
+            width: STYLE.PORTRAIT.SIZE.WIDTH, // this value will be used on canvas width
+            height: STYLE.PORTRAIT.SIZE.HEIGHT
         }]
       },
       panels: { defaults: []
@@ -356,7 +365,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       canvas: {
         styles: [
           'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-          'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
+          'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'
         ],
         scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js']
       }

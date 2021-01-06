@@ -1,10 +1,5 @@
 /* Reset some default styling */
 
-.gjs-editor-cont {
-  /*width: 300px !important;
-  height: 250px !important;
-  border: 1px solid gray;*/
-}
 .gjs-block {
   width: auto;
   height: auto;
