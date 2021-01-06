@@ -68,14 +68,14 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.styleManager = this.editor.StyleManager;
     this.customCommands = this.editor.Commands;
     
-    /*Custom Commands added to toggle devices*/
-    this.customCommands.add('basic', {
+    /*Custom Commands added to toggle view of ad sizes*/
+    this.customCommands.add(STYLE.BASIC.VIEW_NAME, {
       run: editor => this.editor.setDevice(STYLE.BASIC.NAME)
     });
-    this.customCommands.add('landscape', {
+    this.customCommands.add(STYLE.LANDSCAPE.VIEW_NAME, {
       run: editor => this.editor.setDevice(STYLE.LANDSCAPE.NAME)
     });
-    this.customCommands.add('portrait', {
+    this.customCommands.add(STYLE.PORTRAIT.VIEW_NAME, {
       run: editor => this.editor.setDevice(STYLE.PORTRAIT.NAME)
     });
 
