@@ -144,3 +144,72 @@ $layerNameSpacing: 5px !default;
     }
   }
 }
+
+//custom layer css
+.gjs-layer{
+  background-color: transparent;
+}
+.gjs-layer-children{
+  .gjs-layer{
+    border-radius: 3px;
+    border: solid 1px #555a67;
+    background-color: #7a808d;
+    margin: 8px 0px;
+    .gjs-layer-title{
+      height: 39px;
+      border-bottom: none;
+      &.gjs-layer-no-chld{
+        padding-left: 30px !important;
+      }
+    }
+    .gjs-no-app{
+      height: auto;
+      font-size: 14px;
+      color: #c6cacd;
+    }
+  }
+  .gjs-layer-vis, .gjs-layer-move{
+    transform: translate(0,-50%);
+    top: 50%;
+    color: #c6cacd;
+  }
+  .gjs-layer-title-c{
+    background-color: transparent;
+    border-radius: 3px;
+  }
+}
+.gjs-layer.gjs-selected{
+  .gjs-layer-title{
+    background-color: #99a0ad;
+    border-radius: 3px;
+    .gjs-no-app{
+      color: #ffffff;
+    }
+  }
+  .gjs-layer-vis, .gjs-layer-move{
+    color: #ffffff;
+  }
+} 
+
+//icons for layer
+.gjs-layer{
+  .fa.fa-eye{
+    pointer-events: none;
+    cursor: none;
+    font-size: 14px;
+  }
+  .gjs-layer__t-text{
+    .fa.fa-eye{
+      &::before{
+       content: "\f035";
+      }
+    }
+  }
+  .gjs-layer__t-image{
+    .fa.fa-eye{
+      &::before{
+       content: "\f03e";
+      }
+    }
+  }
+}

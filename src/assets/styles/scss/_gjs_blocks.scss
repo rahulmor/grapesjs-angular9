@@ -4,7 +4,6 @@
   justify-content: flex-start;
   border: 1px solid #424752;
   background-color: #424752;
-  margin: 9px;
   // border: 2px solid #424752;
   // border-radius: 5%;
   // margin-left: -5px;
@@ -35,7 +34,7 @@
 .#{$app-prefix}block {
   @include user-select(none);
 
-  width: 73px;
+  width: 69px;
   min-width: 45px;
   padding: 1em;
   box-sizing: border-box;
@@ -97,5 +96,5 @@
   padding: 0;
 }
 .block-manager-gjs{
-  margin-top:21px;
+  margin:10px 0px;
 }
