@@ -109,12 +109,24 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         // style:'color: #ffffff;width:20px!important;'
       }
     });
+    var block7 = this.blockManager.add('text', {
+      id: 'Div',
+      label: `TEXT`,
+      content: '<p>Put your title here</p>',
+      // category: 'Ad Elements',
+      attributes: {
+        title: 'Insert text',
+        // class: 'gjs-fonts gjs-f-h1p'
+        // style:'color: #ffffff;width:20px!important;'
+      }
+    });
     this.filtered.push(block4);
     this.filtered.push(block5);
     this.filtered.push(block1);
     this.filtered.push(block2);
     this.filtered.push(block6);
     this.filtered.push(block3);
+    this.filtered.push(block7);
 
     this.canvasHeight = 250;
     
