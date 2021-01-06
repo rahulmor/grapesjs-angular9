@@ -669,3 +669,12 @@ body{
     opacity: 1;
   }
 }
+#gjs-sm-text-align{
+  .gjs-radio-items{
+    .gjs-radio-item{
+      &:last-child{
+        display: none;
+      }
+    }
+  }
+}

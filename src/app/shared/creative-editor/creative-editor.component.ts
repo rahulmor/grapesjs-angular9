@@ -24,13 +24,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   subscription: Subscription;
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
-  constructor(private renderer: Renderer2, private filterService: FilterService) {
+  constructor(private renderer: Renderer2, private filterService: FilterService, private el: ElementRef) {
 
   }
   get editor() {
     return this._editor;
   }
-
+  
 
   ngOnInit(): void {
     this.subscription = this.filterService.getData().subscribe(viewName => {
@@ -197,11 +197,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     });
     
   }
-  heroes = [
-    { name: 'square' },
-    { name: 'circle' },
-    { name: 'text' }
-  ]
+  
   stepInfoClose(){
     console.log("closed");
     this.stepinfoBox = false;
@@ -255,8 +251,10 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       components: '',
       style: '',
       layerManager: {
-        appendTo: '.layers-container'
+        appendTo: '.layers-container',
       },
+
+        
       // We define a default panel as a sidebar to contain layers
       panels: {
         defaults: [{
