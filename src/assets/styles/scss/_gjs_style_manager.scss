@@ -54,7 +54,6 @@
   clear: both;
   font-weight: lighter;
   background-color: #7a808d;
-  margin-bottom: 25px;
   transition: all 0.2s ease-in-out;
   line-height: 24px;
   border-radius: 4px;
@@ -67,8 +66,8 @@
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 #b4babe;
   background-color: #7a808d;
-
-  
+  margin: 0px 0px 25px 0px;
+  width: 240px;
   ##{$sm-prefix}caret {
     padding-right: 5px;
     font-size: 11px;
