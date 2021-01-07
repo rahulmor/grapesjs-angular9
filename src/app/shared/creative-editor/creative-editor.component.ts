@@ -332,8 +332,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.editor.on('component:drag', (component) => {
         var domElement = this.editor.getSelected();
         let selectedEleWidth = this.currentIFrame.contents().find("body #wrapper .gjs-selected").width();
-        console.log('left',domElement.getStyle().left);
-        console.log('left``',selectedEleWidth);
+
         if(domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
             var domElementStyle = this.editor.getSelected().getStyle();
             domElementStyle.left = '0px'
