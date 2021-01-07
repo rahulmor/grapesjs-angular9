@@ -11,7 +11,8 @@ export const STYLE = {
 		SIZE : {
 			WIDTH : '300px',
 			HEIGHT : '250px',
-			CANVAS_HEIGHT : 250
+			CANVAS_HEIGHT : 250,
+			CANVAS_WIDTH : 300
 		}
 	},
 	LANDSCAPE: {
@@ -20,7 +21,8 @@ export const STYLE = {
 		SIZE : {
 			WIDTH : '728px',
 			HEIGHT : '90px',
-			CANVAS_HEIGHT : 90
+			CANVAS_HEIGHT : 90,
+			CANVAS_WIDTH : 728
 		}
 	},
 	PORTRAIT: {
@@ -29,7 +31,8 @@ export const STYLE = {
 		SIZE : {
 			WIDTH : '300px',
 			HEIGHT : '600px',
-			CANVAS_HEIGHT : 600
+			CANVAS_HEIGHT : 600,
+			CANVAS_WIDTH : 300
 		}
 	}
 }

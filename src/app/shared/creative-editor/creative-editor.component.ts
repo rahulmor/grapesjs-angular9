@@ -20,11 +20,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   customStyle:any = [];
   panelManager:any;
   customPanel:any;
-  canvasHeight:any;
+  canvasHeight: number = 250;
+  canvasWidth: number = 300;
   stepinfoBox:boolean = true;
   subscription: Subscription;
   customCommands: any;
   viewLoaded: string = 'basic';
+  currentIFrame: any;
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
   constructor(private renderer: Renderer2, private filterService: FilterService) {
@@ -37,28 +39,44 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
 
   ngOnInit(): void {
     this.subscription = this.filterService.getData().subscribe(viewName => {
+      let wrapperHeight;
       switch (viewName) {
         case "basic":
             this.viewLoaded = STYLE.BASIC.VIEW_NAME;
             this.canvasHeight = STYLE.BASIC.SIZE.CANVAS_HEIGHT;
+            this.canvasWidth = STYLE.BASIC.SIZE.CANVAS_WIDTH;
+            wrapperHeight = STYLE.BASIC.SIZE.HEIGHT;
           break;
         case "landscape":
             this.viewLoaded = STYLE.LANDSCAPE.VIEW_NAME;
             this.canvasHeight = STYLE.LANDSCAPE.SIZE.CANVAS_HEIGHT;
+            this.canvasWidth = STYLE.LANDSCAPE.SIZE.CANVAS_WIDTH;
+            wrapperHeight = STYLE.LANDSCAPE.SIZE.HEIGHT;
           break;
           case "portrait":
             this.viewLoaded = STYLE.PORTRAIT.VIEW_NAME;
             this.canvasHeight = STYLE.PORTRAIT.SIZE.CANVAS_HEIGHT;
+            this.canvasWidth = STYLE.PORTRAIT.SIZE.CANVAS_WIDTH;
+            wrapperHeight = STYLE.PORTRAIT.SIZE.HEIGHT;
           break;
         default:
             this.viewLoaded = STYLE.BASIC.VIEW_NAME;
             this.canvasHeight = STYLE.BASIC.SIZE.CANVAS_HEIGHT;
+            this.canvasWidth = STYLE.BASIC.SIZE.CANVAS_WIDTH;
+            wrapperHeight = STYLE.BASIC.SIZE.HEIGHT;
           break;
       }
 
       let myCommand = this.customCommands.get(this.viewLoaded);
       // This command will change view of canvas
       myCommand.run();
+
+      this.currentIFrame.contents().find("body").css({'overflow':'hidden','height':wrapperHeight});
+
+      this.editor.getWrapper().set({'badgable': false, 'highlightable': false}).setStyle({
+        overflow: 'hidden',
+        height: wrapperHeight
+      });
     });
       
     this._editor = this.initializeEditor();
@@ -66,18 +84,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
-    this.customCommands = this.editor.Commands;
-    
-    /*Custom Commands added to toggle view of ad sizes*/
-    this.customCommands.add(STYLE.BASIC.VIEW_NAME, {
-      run: editor => this.editor.setDevice(STYLE.BASIC.NAME)
-    });
-    this.customCommands.add(STYLE.LANDSCAPE.VIEW_NAME, {
-      run: editor => this.editor.setDevice(STYLE.LANDSCAPE.NAME)
-    });
-    this.customCommands.add(STYLE.PORTRAIT.VIEW_NAME, {
-      run: editor => this.editor.setDevice(STYLE.PORTRAIT.NAME)
-    });
 
     var block1 = this.blockManager.add('image', {
        id: 'image',
@@ -154,15 +160,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.filtered.push(block6);
     this.filtered.push(block3);
 
-    //this.canvasHeight = 250;
-
-    //To set the base style of the wrapper  
-      const $currentIFrame = $('iframe');
-      $currentIFrame.contents().find("body").css('overflow', 'hidden');
-      this.editor.getWrapper().set({'badgable': false, 'highlightable': false}).setStyle({
-        overflow: 'hidden',
-        height: '250px'
-      })
     //This is to update the style in styleManager after drag end in designer mode 
     this.editor.on('stop:core:component-drag',() => { this.editor.trigger('component:toggled') });
     
@@ -175,65 +172,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       //     buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
       //   }, { at: 1 });
     });
-
-      //Drag Event of component 
-      this.editor.on('component:drag', (component) => {
-          var domElement = this.editor.getSelected();
-        if(domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
-            var domElementStyle = this.editor.getSelected().getStyle();
-            domElementStyle.left = '0px'
-            this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
-          var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.top = '0px'
-          this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().left) > 250) {
-          var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.left = '245px'
-          this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().top) > 235) {
-          var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.top = '228px'
-          this.editor.getSelected().setStyle({...domElementStyle});
-        }
-      });
-      //Drag End Event of component 
-    this.editor.on('component:drag:end', (component) => {
-      var domElement = this.editor.getSelected().getStyle();
-      //const style = window.getComputedStyle(domElement)
-      const $currentIFrame = $('iframe');
-      const wrapperHeight = $currentIFrame.contents().find("body #wrapper").height();
-      
-      // To check if the element is going out of canvas from bottom limit
-      if(parseInt(domElement.top) > this.canvasHeight ) {        
-        domElement.top = this.canvasHeight*95/100;
-        console.log("top==",domElement.top)
-        console.log(this.canvasHeight, domElement.top)
-        this.editor.getSelected().setStyle({...domElement})
-      }
-      
-      // To check if the element is going out of canvas from left limit
-      if(domElement !== undefined && parseInt(domElement.left) < 0) {      
-        domElement.left = '0px'
-        this.editor.getSelected().setStyle({...domElement});
-      }
-      if(domElement !== undefined && parseInt(domElement.top) < 0) {
-        domElement.top = '0px'
-        this.editor.getSelected().setStyle({...domElement});
-      }
-      if(domElement !== undefined && parseInt(domElement.left) > 250) {
-        domElement.left = '245px'
-        this.editor.getSelected().setStyle({...domElement});
-      }
-      if(domElement !== undefined && parseInt(domElement.top) > 235) {
-        domElement.top = '228px'
-        this.editor.getSelected().setStyle({...domElement});
-      }
-    });
-    
   }
   stepInfoClose(){
     console.log("closed");
@@ -278,9 +216,16 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     console.log("newSector==",newSector);
     this.renderer.appendChild(this.textStyle.nativeElement, newSector);
 
-    this.customCommands.run('basic');
-    
+    // set custom commands
+    this.setDeviceToggleCommands();
+
+    // set Basic style
+    this.setDefaultView();
+
+    // setup drag event
+    this.setupDragEvent();
   }
+
   private initializeEditor(): any {
     return grapesjs.init({
       container: '#gjs',
@@ -306,8 +251,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
             height: STYLE.PORTRAIT.SIZE.HEIGHT
         }]
       },
-      panels: { defaults: []
-      },
+      panels: { defaults: [] },
       // plugins: ['gjs-blocks-basic'],
       styleManager: {
       //   appendTo: '#style-manager-container',
@@ -375,5 +319,87 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();
+  }
+
+  setDefaultView() {
+    this.customCommands.run(STYLE.BASIC.VIEW_NAME);
+    this.currentIFrame = $('iframe');
+    this.currentIFrame.contents().find("body").css({'overflow':'hidden','height':STYLE.BASIC.SIZE.HEIGHT});
+  }
+
+  setupDragEvent() {
+    //Track Drag Event of component
+    this.editor.on('component:drag', (component) => {
+        var domElement = this.editor.getSelected();
+        let selectedEleWidth = this.currentIFrame.contents().find("body #wrapper .gjs-selected").width();
+        console.log('left',domElement.getStyle().left);
+        console.log('left``',selectedEleWidth);
+        if(domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
+            var domElementStyle = this.editor.getSelected().getStyle();
+            domElementStyle.left = '0px'
+            this.editor.getSelected().setStyle({...domElementStyle});
+        }
+        if(domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.top = '0px'
+          this.editor.getSelected().setStyle({...domElementStyle});
+        }
+        if(domElement !== undefined && parseInt(domElement.getStyle().left) > this.canvasWidth) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.left = (this.canvasWidth - 15) + 'px'; //'245px'
+         this.editor.getSelected().setStyle({...domElementStyle});
+        }
+        if(domElement !== undefined && parseInt(domElement.getStyle().top) > (this.canvasHeight - 20)) {
+         var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.top = (this.canvasHeight - 22) + 'px'; //'228px'
+          this.editor.getSelected().setStyle({...domElementStyle});
+        }
+      });
+
+    //Drag End Event of component 
+    this.editor.on('component:drag:end', (component) => {
+      var domElement = this.editor.getSelected().getStyle();
+      //const style = window.getComputedStyle(domElement)
+     const wrapperHeight = this.currentIFrame.contents().find("body #wrapper").height();
+
+      // To check if the element is going out of canvas from bottom limit
+      if(parseInt(domElement.top) > this.canvasHeight ) {
+         domElement.top = this.canvasHeight*95/100;
+         this.editor.getSelected().setStyle({...domElement})
+      }
+
+      // To check if the element is going out of canvas from left limit
+      if(domElement !== undefined && parseInt(domElement.left) < 0) {
+        domElement.left = '0px'
+        this.editor.getSelected().setStyle({...domElement});
+      }
+      if(domElement !== undefined && parseInt(domElement.top) < 0) {
+        domElement.top = '0px'
+        this.editor.getSelected().setStyle({...domElement});
+      }
+      if(domElement !== undefined && parseInt(domElement.left) > this.canvasWidth) {
+        domElement.left = (this.canvasWidth - 5) + 'px' //'245px'
+        this.editor.getSelected().setStyle({...domElement});
+      }
+      if(domElement !== undefined && parseInt(domElement.top) > (this.canvasHeight - 15)) {
+        domElement.top = (this.canvasHeight - 22) + 'px' //'228px'
+        this.editor.getSelected().setStyle({...domElement});
+      }
+    });
+  }
+
+  setDeviceToggleCommands() {
+    this.customCommands = this.editor.Commands;
+
+    /*Custom Commands added to toggle view of ad sizes*/
+    this.customCommands.add(STYLE.BASIC.VIEW_NAME, {
+      run: editor => this.editor.setDevice(STYLE.BASIC.NAME)
+    });
+    this.customCommands.add(STYLE.LANDSCAPE.VIEW_NAME, {
+      run: editor => this.editor.setDevice(STYLE.LANDSCAPE.NAME)
+    });
+    this.customCommands.add(STYLE.PORTRAIT.VIEW_NAME, {
+      run: editor => this.editor.setDevice(STYLE.PORTRAIT.NAME)
+    });
   }
 }
