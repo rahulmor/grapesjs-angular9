@@ -212,4 +212,40 @@ $layerNameSpacing: 5px !default;
       }
     }
   }
+  .gjs-layer__t-link{
+    .fa.fa-eye{
+      &::before{
+       content: "\f096";
+      }
+    }
+  }
+}
+
+.gjs-layer.open > .gjs-layer-children{
+  display: block !important;
+}
+.gjs-layer > .gjs-layer-children{
+  display: block !important;
+}
+.gjs-layer__t-wrapper{
+  .gjs-layer-vis.fa.fa-eye{
+    display: none;
+  }
+  .gjs-layer-title-c.gjs-one-bg{
+    display: none;
+  }
+  .gjs-layer-count{
+    display: none;
+  }
+  .gjs-layer-children{
+    .gjs-layer-vis.fa.fa-eye{
+      display: inline-block;
+    }
+    .gjs-layer-title-c.gjs-one-bg{
+      display: block;
+    }
+    .gjs-layer-count{
+      display: block;
+    }
+  }
 }

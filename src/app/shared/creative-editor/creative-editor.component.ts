@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
 
+  
+  public element;
   private _editor: any;
   filtered:any = [];
   blockManager:any;
@@ -20,11 +22,12 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   panelManager:any;
   customPanel:any;
   canvasHeight:any;
+  layerManager:any;
   stepinfoBox:boolean = true;
   subscription: Subscription;
   @ViewChild("customid") divView: ElementRef;
   @ViewChild("styletext") textStyle:ElementRef;
-  constructor(private renderer: Renderer2, private filterService: FilterService, private el: ElementRef) {
+  constructor(private renderer: Renderer2, private filterService: FilterService, private elemRef: ElementRef) {
 
   }
   get editor() {
@@ -41,6 +44,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
+    this.layerManager = this.editor.layerManager;
     var block1 = this.blockManager.add('image', {
        id: 'image',
        label: '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-image fa-w-16"><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zM128 152c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zM96 352h320v-80l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L192 304l-39.515-39.515c-4.686-4.686-12.284-4.686-16.971 0L96 304v48z" class=""></path></svg>',
@@ -56,7 +60,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
        attributes: {
         title: 'Image',
         // style:'width:40px!important;display:inline'
-      }
+      },
      });
      var block2 = this.blockManager.add('text', {
       id: 'text',
@@ -72,7 +76,11 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     var block3 = this.blockManager.add('button', {
       id: 'button',
       label: '<svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="rectangle-wide" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svg-inline--fa fa-rectangle-wide fa-w-20"><path fill="currentColor" d="M592 96H48c-26.5 0-48 21.5-48 48v224c0 26.5 21.5 48 48 48h544c26.5 0 48-21.5 48-48V144c0-26.5-21.5-48-48-48zm16 272c0 8.8-7.2 16-16 16H48c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16h544c8.8 0 16 7.2 16 16v224z" class=""></path></svg>',
-      content: '<button>Button</button>',
+     
+      content:{
+        type:'link',
+        content:'<button>Button</button>',
+      },
       // category: 'Ad Elements',
       attributes: {
         title: 'Button',
@@ -82,7 +90,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     var block4 = this.blockManager.add('shape', {
       id: 'shape',
       label: 'SHAPE',
-      content: '',
+      content: {
+        type:'link',
+      },
       // category: 'Ad Elements',
       attributes: {
         title: 'Shape',
@@ -109,13 +119,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         // style:'color: #ffffff;width:20px!important;'
       }
     });
+
     this.filtered.push(block4);
     this.filtered.push(block5);
     this.filtered.push(block1);
     this.filtered.push(block2);
     this.filtered.push(block6);
     this.filtered.push(block3);
-
     this.canvasHeight = 250;
     
     //To set the base style of the wrapper  
@@ -127,7 +137,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       })
     //This is to update the style in styleManager after drag end in designer mode 
     this.editor.on('stop:core:component-drag',() => { this.editor.trigger('component:toggled') });
-    
+    this.editor.on('stop:core:component-drag',() => { this.editor.trigger('component:toggled') });
     //Event when a component is selected
     this.editor.on('component:selected', (component) => {
       // alert('selected')
@@ -195,6 +205,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         this.editor.getSelected().setStyle({...domElement});
       }
     });
+ 
     
   }
   
@@ -240,8 +251,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     const newSector = this.styleManager.render(this.customStyle, { external: true });
     console.log("newSector==",newSector);
     this.renderer.appendChild(this.textStyle.nativeElement, newSector);
-
   }
+
   private initializeEditor(): any {
     return grapesjs.init({
       container: '#gjs',
@@ -251,16 +262,37 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       components: '',
       style: '',
       layerManager: {
-        appendTo: '.layers-container',
+        appendTo: '#layers-container',
       },
-
+      
+      commands: {
+        defaults: [
+          {
+            // id and run are mandatory in this case
+            id: 'my-command-id',
+            run() {
+              alert('This is my command');
+            },
+          }, {
+            id: '...',
+            // ...
+          }
+        ],
+      },
         
       // We define a default panel as a sidebar to contain layers
       panels: {
         defaults: [{
-          id: 'layers'
+          id: 'layers',
+          resizable: {
+            tc: 0,
+            cr: 1,
+            bc: 0,
+            keyWidth: 'flex-basis',
+          },
           // Make the panel resizable
         }]
+          
       },
       // plugins: ['gjs-blocks-basic'],
       styleManager: {
@@ -301,8 +333,28 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
               'line-height',
               'letter-spacing',
               'text-align',
+              'text-transform',
               'color',
+              
             ],
+            properties: [
+              {
+               property: 'text-align',
+               list: [
+                   { value: 'left', className: 'fa fa-align-left' },
+                   { value: 'center', className: 'fa fa-align-center'},
+                   { value: 'right', className: 'fa fa-align-right' },
+               ],
+            },
+            {
+              property: 'text-transform',
+              type: 'radio',
+              name: 'TEXT STYLE',
+              list: [
+                  { value: 'capitalize', name:'Aa' },
+                  { value: 'uppercase', name:'AA'}
+              ],
+            }],
           },
         ],
       },
@@ -337,7 +389,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       },
     });
   }
-
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();

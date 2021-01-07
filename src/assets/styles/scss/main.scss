@@ -604,50 +604,30 @@ body{
   border-radius: 3px;
   .gjs-radio-item{
     label{
-      text-indent: -9999px;
-      background: #818693;
+      font-size: 16px;
+      font-weight: normal;
+      line-height: 1.5;
+      color: #555a67;
+      background-color: #818693;
+      &::before{
+        font-family: FontAwesome;
+      }
     }
     position: relative;
-    &::before{
-      font-family: FontAwesome;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 16px;
-    font-weight: normal;
-    line-height: 1.5;
-    color: #555a67;
-    }
     &:first-child{
-      &::before{
-        content: '\f036';
-      }
       label{
         border-radius: 3px 0px 0px 3px;
-        
-      }
-    }
-    &:nth-child(2){
-      &::before{
-        content: '\f037';
-      }
-    }
-    &:nth-child(3){
-      &::before{
-        content: '\f038';
       }
     }
     &:last-child{
       label{
         border-radius: 0px 3px 3px 0px;
       }
-      &::before{
-        content: '\f039';
-      }
-     
     }
   }
+}
+.gjs-radio-item input:checked + .gjs-radio-item-label{
+    color: #fff;
 }
 .gjs-block-label{
   transform: translate(-50%, -50%);
@@ -669,11 +649,25 @@ body{
     opacity: 1;
   }
 }
-#gjs-sm-text-align{
-  .gjs-radio-items{
-    .gjs-radio-item{
-      &:last-child{
-        display: none;
+
+.panel__right{
+  position: relative;
+  .layers-container{
+    .gjs-layer-children{
+      .gjs-layers{
+        .gjs-layer{
+          &:first-child{
+            &::before{
+              content: '';
+              width: 239px;
+              border-bottom: solid 1px #555a67;;
+              position: absolute;
+              left: -15px;
+              top: -12px;
+              z-index: 1;
+            }
+          }
+        }
       }
     }
   }

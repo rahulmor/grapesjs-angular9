@@ -2,8 +2,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  border: 1px solid #424752;
   background-color: #424752;
+  padding: 3px;
+  border-radius: 3px;
   // border: 2px solid #424752;
   // border-radius: 5%;
   // margin-left: -5px;
@@ -34,7 +35,7 @@
 .#{$app-prefix}block {
   @include user-select(none);
 
-  width: 69px;
+  width: 33.33%;
   min-width: 45px;
   padding: 1em;
   box-sizing: border-box;
@@ -97,4 +98,5 @@
 }
 .block-manager-gjs{
   margin:10px 0px;
+  margin-bottom: 20px;
 }
