@@ -1,48 +1,44 @@
-import { Component, OnInit,ElementRef,AfterViewInit,ViewChild ,Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Renderer2, OnDestroy } from '@angular/core';
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
-// import 'gjs-blocks-basic';
+import grapesjsTabs from 'grapesjs-tabs';
 import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
+import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
 @Component({
   selector: 'app-creative-editor',
   templateUrl: './creative-editor.component.html',
   styleUrls: ['./creative-editor.component.css']
 })
-export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
-
-  
-  public element;
+export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private _editor: any;
-  filtered:any = [];
-  blockManager:any;
-  styleManager:any;
-  customStyle:any = [];
-  panelManager:any;
-  customPanel:any;
-  canvasHeight:any;
+  filtered: any = [];
+  blockManager: any;
+  styleManager: any;
+  customStyle: any = [];
+  panelManager: any;
+  customPanel: any;
+  canvasHeight: any;
   layerManager:any;
   commands:any;
-  stepinfoBox:boolean = true;
+  stepinfoBox: boolean = true;
   subscription: Subscription;
   @ViewChild("customid") divView: ElementRef;
-  @ViewChild("styletext") textStyle:ElementRef;
-  constructor(private renderer: Renderer2, private filterService: FilterService, private elemRef: ElementRef) {
+  @ViewChild("styletext") textStyle: ElementRef;
+  constructor(private renderer: Renderer2, private filterService: FilterService) {
 
   }
   get editor() {
     return this._editor;
   }
-  
 
   ngOnInit(): void {
     this.subscription = this.filterService.getData().subscribe(viewName => {
-      console.log('viewName',viewName);
+      console.log('viewName', viewName);
     });
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
-    this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
     this.layerManager = this.editor.layerManager;
@@ -68,11 +64,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       id: 'text',
       label: `<svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="text" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-text fa-w-14"><path fill="currentColor" d="M448 48v72a8 8 0 0 1-8 8h-16a8 8 0 0 1-8-8V64H240v384h72a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8H136a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8h72V64H32v56a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V48a16 16 0 0 1 16-16h416a16 16 0 0 1 16 16z" class=""></path></svg>`,
       content: '<p>Put your title here</p>',
-      // category: 'Ad Elements',
       attributes: {
         title: 'Insert text',
-        // class: 'gjs-fonts gjs-f-h1p'
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block3 = this.blockManager.add('button', {
@@ -86,7 +79,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       // category: 'Ad Elements',
       attributes: {
         title: 'Button',
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block4 = this.blockManager.add('shape', {
@@ -98,7 +90,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       // category: 'Ad Elements',
       attributes: {
         title: 'Shape',
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block5 = this.blockManager.add('video', {
@@ -108,7 +99,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       // category: 'Ad Elements',
       attributes: {
         title: 'Video',
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block6 = this.blockManager.add('Logo', {
@@ -118,10 +108,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       // category: 'Ad Elements',
       attributes: {
         title: 'Logo',
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
-
     this.filtered.push(block4);
     this.filtered.push(block5);
     this.filtered.push(block1);
@@ -129,82 +117,73 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.filtered.push(block6);
     this.filtered.push(block3);
     this.canvasHeight = 250;
-    
+
     //To set the base style of the wrapper  
-      const $currentIFrame = $('iframe');
-      $currentIFrame.contents().find("body").css('overflow', 'hidden');
-      this.editor.getWrapper().set({'badgable': false, 'highlightable': false}).setStyle({
-        overflow: 'hidden',
-        height: '250px'
-      })
+    const $currentIFrame = $('iframe');
+    $currentIFrame.contents().find("body").css('overflow', 'hidden');
+    this.editor.getWrapper().set({ 'badgable': false, 'highlightable': false }).setStyle({
+      overflow: 'hidden',
+      height: '250px'
+    })
     //This is to update the style in styleManager after drag end in designer mode 
-    this.editor.on('stop:core:component-drag',() => { this.editor.trigger('component:toggled') });
-    this.editor.on('stop:core:component-drag',() => { this.editor.trigger('component:toggled') });
-    //Event when a component is selected
-    this.editor.on('component:selected', (component) => {
-      // alert('selected')
-      // this.editor.StyleManager.addSector('TextStyle', {
-      //     name: 'TEXT STYLE',
-      //     open: true,
-      //     buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
-      //   }, { at: 1 });
+    this.editor.on('stop:core:component-drag', () => { this.editor.trigger('component:toggled') });
+
+    //Drag Event of component 
+    this.editor.on('component:drag', (component) => {
+      var domElement = this.editor.getSelected();
+
+      if (domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.left = '0px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
+      }
+      if (domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.top = '0px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
+      }
+      if (domElement !== undefined && parseInt(domElement.getStyle().left) > 250) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.left = '245px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
+      }
+      if (domElement !== undefined && parseInt(domElement.getStyle().top) > 235) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.top = '228px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
+      }
     });
 
-      //Drag Event of component 
-      this.editor.on('component:drag', (component) => {
-          var domElement = this.editor.getSelected();
-        if(domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
-            var domElementStyle = this.editor.getSelected().getStyle();
-            domElementStyle.left = '0px'
-            this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
-          var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.top = '0px'
-          this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().left) > 250) {
-          var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.left = '245px'
-          this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().top) > 235) {
-          var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.top = '228px'
-          this.editor.getSelected().setStyle({...domElementStyle});
-        }
-      });
-      //Drag End Event of component 
+    //Drag End Event of component 
     this.editor.on('component:drag:end', (component) => {
       var domElement = this.editor.getSelected().getStyle();
+
       //const style = window.getComputedStyle(domElement)
       const $currentIFrame = $('iframe');
       const wrapperHeight = $currentIFrame.contents().find("body #wrapper").height();
-      
+
       // To check if the element is going out of canvas from bottom limit
-      if(parseInt(domElement.top) > this.canvasHeight ) {        
-        domElement.top = this.canvasHeight*95/100;
-        console.log("top==",domElement.top)
-        console.log(this.canvasHeight, domElement.top)
-        this.editor.getSelected().setStyle({...domElement})
+      if (parseInt(domElement.top) > this.canvasHeight) {
+        domElement.top = this.canvasHeight * 95 / 100;
+        this.editor.getSelected().setStyle({ ...domElement })
       }
-      
+
       // To check if the element is going out of canvas from left limit
-      if(domElement !== undefined && parseInt(domElement.left) < 0) {      
+      if (domElement !== undefined && parseInt(domElement.left) < 0) {
         domElement.left = '0px'
-        this.editor.getSelected().setStyle({...domElement});
+        this.editor.getSelected().setStyle({ ...domElement });
       }
-      if(domElement !== undefined && parseInt(domElement.top) < 0) {
+      if (domElement !== undefined && parseInt(domElement.top) < 0) {
         domElement.top = '0px'
-        this.editor.getSelected().setStyle({...domElement});
+        this.editor.getSelected().setStyle({ ...domElement });
       }
-      if(domElement !== undefined && parseInt(domElement.left) > 250) {
+      if (domElement !== undefined && parseInt(domElement.left) > 250) {
         domElement.left = '245px'
-        this.editor.getSelected().setStyle({...domElement});
+        this.editor.getSelected().setStyle({ ...domElement });
       }
-      if(domElement !== undefined && parseInt(domElement.top) > 235) {
+      if (domElement !== undefined && parseInt(domElement.top) > 235) {
         domElement.top = '228px'
-        this.editor.getSelected().setStyle({...domElement});
+        this.editor.getSelected().setStyle({ ...domElement });
       }
     });
     this.editor.on('component:selected', () => {
@@ -244,43 +223,32 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     console.log("closed");
     this.stepinfoBox = false;
   }
-  checkCheckBoxvalue(event){
-    console.log(event.target.checked);
+  checkCheckBoxvalue(event) {
   }
-  onClickAlignLeft(){
+  onClickAlignLeft() {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {"text-align":"left"}});
+    component && component.addAttributes({ style: { "text-align": "left" } });
   }
-  onClickAlignCenter(){
+  onClickAlignCenter() {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {"text-align":"center"}});
+    component && component.addAttributes({ style: { "text-align": "center" } });
   }
-  onClickAlignRight(){
+  onClickAlignRight() {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {"text-align":"right"}});
+    component && component.addAttributes({ style: { "text-align": "right" } });
   }
-  changeHeight(e){
-    console.log("height==",e.target.value)
+  changeHeight(e) {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {"height":e.target.value+"px","margin":"50px"}});
+    component && component.addAttributes({ style: { "height": e.target.value + "px", "margin": "50px" } });
   }
-  changeWidth(e){
-    console.log("width==",e.target.value)
+  changeWidth(e) {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {width:e.target.value+"px"}});
+    component && component.addAttributes({ style: { width: e.target.value + "px" } });
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     const newBlocksEl = this.blockManager.render(this.filtered, { external: true });
-    console.log("newblock==",newBlocksEl);
     this.renderer.appendChild(this.divView.nativeElement, newBlocksEl);
-
     const newSector = this.styleManager.render(this.customStyle, { external: true });
-    console.log("newSector==",newSector);
     this.renderer.appendChild(this.textStyle.nativeElement, newSector);
   }
 
@@ -289,7 +257,12 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       container: '#gjs',
       autorender: true,
       forceClass: false,
-      // height: '100vh',
+      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs],
+      pluginsOpts: {
+        grapesjsTabs: {
+          // options
+        }
+      },
       components: '',
       style: '',
       layerManager: {
@@ -327,7 +300,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       },
       // plugins: ['gjs-blocks-basic'],
       styleManager: {
-        //   appendTo: '#style-manager-container',
         sectors: [
           {
             id: 'general',
@@ -399,26 +371,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
             }],
           },
         ],
-      },
-      assetManager: {
-        uploadText: 'Add image through link or upload image',
-        modalTitle: 'Select Image',
-        openAssetsOnDrop: 1,
-        inputPlaceholder: 'http://url/to/the/image.jpg',
-        addBtnText: 'Add image',
-        storageType: '',
-        storeOnChange: true,
-        storeAfterUpload: true,
-        upload: 'https://localhost/assets/upload', //for temporary storage
-        assets: [],
-        uploadFile: (e) => {
-          console.log('upload file=', e);
-          const file = e.target.files[0];
-        },
-        handleAdd: (textFromInput) => {
-          console.log("textFromInput==",textFromInput);
-          this.editor.AssetManager.add(textFromInput);
-        },
       },
       canvas: {
         styles: [
