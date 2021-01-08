@@ -54,7 +54,6 @@
   clear: both;
   font-weight: lighter;
   background-color: #7a808d;
-  margin-bottom: 25px;
   transition: all 0.2s ease-in-out;
   line-height: 24px;
   border-radius: 4px;
@@ -63,7 +62,12 @@
   padding: 10px 10px 4px 5px;
   text-align: left;
   position: relative;
-
+  display: block !important;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 #b4babe;
+  background-color: #7a808d;
+  margin: 0px 0px 25px 30px;
+  width: 240px;
   ##{$sm-prefix}caret {
     padding-right: 5px;
     font-size: 11px;
@@ -78,6 +82,7 @@
 
   .#{$sm-prefix}title {
     margin-left: 10px;
+    pointer-events: none;
     // @extend .#{$app-prefix}category-title;
   }
 
@@ -274,6 +279,7 @@
     width: 50%;
     margin-bottom: 5px;
     padding: 0 5px;
+    display: block !important;
 
     &--full,
     &.#{$sm-prefix}composite,
@@ -480,7 +486,6 @@
     padding: 2px 0;
   }
 }
-
 .#{$sm-prefix}layer > ##{$sm-prefix}move {
   @include opacity(0.7);
 

@@ -1,8 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
-
 :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: IBM Plex Sans,Arial,Helvetica,sans-serif;
     font-size: 14px;
     color: #333;
     box-sizing: border-box;
@@ -10,9 +9,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
   body{
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: IBM Plex Sans,Arial,Helvetica,sans-serif;
   }
-
+  div{
+    font-family: IBM Plex Sans,Arial,Helvetica,sans-serif;
+  }
   h1,
   h2,
   h3,
@@ -20,19 +21,23 @@
   h5,
   h6 {
     margin: 8px 0;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: IBM Plex Sans,Arial,Helvetica,sans-serif;
     font-weight: 500;
   }
 
   p {
     margin: 0;
+    font-family: IBM Plex Sans,Arial,Helvetica,sans-serif;
+  }
+  button{
+    font-family: IBM Plex Sans,Arial,Helvetica,sans-serif;
   }
   h1{
     font-size: 32px;
     font-weight: 500;
   }
   .navbar{
-    height: 60px;
+    height: 64px;
     padding: 0;
     margin: 0 auto;
     padding: 0 16px;
@@ -81,6 +86,9 @@ body{
 app-creative-editor{
     width:100%;
     height: 100%;
+}
+.main-content{
+  width:1440px;
 }
 :host {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -166,7 +174,6 @@ app-creative-editor{
 
   .card {
     border-radius: 4px;
-    border: 1px solid #eee;
     background-color: #fafafa;
     height: auto;
     width: auto;
@@ -175,9 +182,11 @@ app-creative-editor{
     display: flex;
     flex-direction: row;
     justify-content: left;
-    align-items: center;
     transition: all 0.2s ease-in-out;
     line-height: 24px;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 #b4babe;
+  background-color: #7a808d;
     
   }
 
@@ -281,5 +290,3 @@ app-creative-editor{
       margin-left: 72px;
     }
   }
-
-  

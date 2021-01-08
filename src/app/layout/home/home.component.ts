@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
     const userAgent = window.navigator.userAgent;
     console.log(userAgent);
     console.log("cookie==",this.getCookies());
+    this.filterService.setCurrentUrl({url:'home'});
   }
   onAdBuilder(){
     this.router.navigate(['ad-builder']);

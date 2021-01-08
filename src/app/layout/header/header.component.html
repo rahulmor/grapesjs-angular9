@@ -3,12 +3,15 @@
         <img alt="Plista Logo" class="logo m-t-4" src="../../../assets/images/plista-logo-white.svg">
         <div class="logo-text">Ad Set Builder</div>
     </div>
-    <div id="style_nav">
+    <div id="style_nav" *ngIf="style_nav">
     	<ul>
-    		<li [ngClass]="{'active': filterView ==='basic'}"><span class="lbl_txt">1.Basic Style</span><span class="nxt_style_txt" (click)="getView('landscape')">Next Style</span></li>
-    		<li [ngClass]="{'active': filterView === 'landscape'}"><span class="lbl_txt">2.Landscape</span><span class="nxt_style_txt" (click)="getView('portrait')">Next Style</span></li>
-    		<li [ngClass]="{'active': filterView === 'portrait'}"><span class="lbl_txt">3.Portrait</span><span class="nxt_style_txt" (click)="getView('get_all')">Generate All Styles</span></li>
-    	</ul>
+    		<li [ngClass]="{'active': filterView ==='basic'}"><span class="lbl_txt">1. Basic Style</span><span class="nxt_style_txt" (click)="getView('landscape')">Next Style</span></li>
+    		<li [ngClass]="{'active': filterView === 'landscape'}"><span class="lbl_txt">2. Landscape</span><span class="nxt_style_txt" (click)="getView('portrait')">Next Style</span></li>
+    		<li [ngClass]="{'active': filterView === 'portrait'}"><span class="lbl_txt">3. Portrait</span><span class="nxt_style_txt" (click)="getView('get_all')">Generate All Styles</span></li>
+        </ul>
+    </div>
+    <div *ngIf="style_nav">
+        <button class="btn button-save">Save as draft</button>
     </div>
     <button class="btn button-exit">Exit</button>
 </nav>

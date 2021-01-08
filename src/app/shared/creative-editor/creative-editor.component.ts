@@ -1,18 +1,19 @@
-import { Component, OnInit,ElementRef,AfterViewInit,ViewChild ,Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Renderer2, OnDestroy } from '@angular/core';
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
-// import 'gjs-blocks-basic';
+import grapesjsTabs from 'grapesjs-tabs';
 import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
-import { STYLE } from './../constants/builder.constants'
+import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
+import { STYLE } from './../constants/builder.constants';
+
 @Component({
   selector: 'app-creative-editor',
   templateUrl: './creative-editor.component.html',
   styleUrls: ['./creative-editor.component.css']
 })
-export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
-
+export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private _editor: any;
   filtered:any = [];
   blockManager:any;
@@ -28,14 +29,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   viewLoaded: string = 'basic';
   currentIFrame: any;
   @ViewChild("customid") divView: ElementRef;
-  @ViewChild("styletext") textStyle:ElementRef;
+  @ViewChild("styletext") textStyle: ElementRef;
   constructor(private renderer: Renderer2, private filterService: FilterService) {
 
   }
   get editor() {
     return this._editor;
   }
-
 
   ngOnInit(): void {
     this.subscription = this.filterService.getData().subscribe(viewName => {
@@ -81,76 +81,67 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
-    this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
 
     var block1 = this.blockManager.add('image', {
-       id: 'image',
-       label: 'IMAGE',
-      //  category: 'Ad Elements',
-       // Select the component once it's dropped
-       select: true,
-       // You can pass components as a JSON instead of a simple HTML string,
-       // in this case we also use a defined component type `image`
-       content: { type: 'image' },
-       // This triggers `active` event on dropped components and the `image`
-       // reacts by opening the AssetManager
-       activate: true,
-       attributes: {
+      id: 'image',
+      label: 'IMAGE',
+      select: true,
+      content: { type: 'image' },
+      activate: true,
+      attributes: {
         title: 'Image',
-        // style:'width:40px!important;display:inline'
       }
-     });
-     var block2 = this.blockManager.add('text', {
+    });
+    var block2 = this.blockManager.add('text', {
       id: 'text',
       label: `TEXT`,
       content: '<p>Put your title here</p>',
-      // category: 'Ad Elements',
       attributes: {
         title: 'Insert text',
-        // class: 'gjs-fonts gjs-f-h1p'
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block3 = this.blockManager.add('button', {
       id: 'button',
       label: 'BUTTON',
       content: '<button>Button</button>',
-      // category: 'Ad Elements',
       attributes: {
         title: 'Button',
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block4 = this.blockManager.add('shape', {
       id: 'shape',
       label: 'SHAPE',
-      content: '',
-      // category: 'Ad Elements',
+      content: { type: 'shape' },
       attributes: {
         title: 'Shape',
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block5 = this.blockManager.add('video', {
       id: 'video',
       label: 'VIDEO',
-      content: '',
-      // category: 'Ad Elements',
+      select: true,
+      content: { type: 'video' },
+      activate: true,
       attributes: {
         title: 'Video',
-        // style:'color: #ffffff;width:20px!important;'
       }
     });
     var block6 = this.blockManager.add('Logo', {
       id: 'Logo',
       label: 'LOGO',
-      content: '',
-      // category: 'Ad Elements',
+      content: { type: 'logo' },
       attributes: {
         title: 'Logo',
-        // style:'color: #ffffff;width:20px!important;'
+      }
+    });
+    var block7 = this.blockManager.add('text', {
+      id: 'Div',
+      label: `TEXT`,
+      content: '<p>Put your title here</p>',
+      attributes: {
+        title: 'Insert text',
       }
     });
     this.filtered.push(block4);
@@ -159,64 +150,41 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.filtered.push(block2);
     this.filtered.push(block6);
     this.filtered.push(block3);
+    this.filtered.push(block7);
 
-    //This is to update the style in styleManager after drag end in designer mode 
-    this.editor.on('stop:core:component-drag',() => { this.editor.trigger('component:toggled') });
-    
-    //Event when a component is selected
-    this.editor.on('component:selected', (component) => {
-      // alert('selected')
-      // this.editor.StyleManager.addSector('TextStyle', {
-      //     name: 'TEXT STYLE',
-      //     open: true,
-      //     buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
-      //   }, { at: 1 });
-    });
   }
-  stepInfoClose(){
-    console.log("closed");
+  stepInfoClose() {
     this.stepinfoBox = false;
   }
-  checkCheckBoxvalue(event){
-    console.log(event.target.checked);
+  checkCheckBoxvalue(event) {
   }
-  onClickAlignLeft(){
+  onClickAlignLeft() {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {"text-align":"left"}});
+    component && component.addAttributes({ style: { "text-align": "left" } });
   }
-  onClickAlignCenter(){
+  onClickAlignCenter() {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {"text-align":"center"}});
+    component && component.addAttributes({ style: { "text-align": "center" } });
   }
-  onClickAlignRight(){
+  onClickAlignRight() {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {"text-align":"right"}});
+    component && component.addAttributes({ style: { "text-align": "right" } });
   }
-  changeHeight(e){
-    console.log("height==",e.target.value)
+  changeHeight(e) {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {"height":e.target.value+"px","margin":"50px"}});
+    component && component.addAttributes({ style: { "height": e.target.value + "px", "margin": "50px" } });
   }
-  changeWidth(e){
-    console.log("width==",e.target.value)
+  changeWidth(e) {
     const component = this.editor.getSelected();
-    console.log("component=",component);
-    component && component.addAttributes({ style: {width:e.target.value+"px"}});
+    component && component.addAttributes({ style: { width: e.target.value + "px" } });
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     const newBlocksEl = this.blockManager.render(this.filtered, { external: true });
-    console.log("newblock==",newBlocksEl);
     this.renderer.appendChild(this.divView.nativeElement, newBlocksEl);
-
     const newSector = this.styleManager.render(this.customStyle, { external: true });
-    console.log("newSector==",newSector);
     this.renderer.appendChild(this.textStyle.nativeElement, newSector);
 
-    // set custom commands
+     // set custom commands
     this.setDeviceToggleCommands();
 
     // set Basic style
@@ -231,7 +199,12 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       container: '#gjs',
       autorender: true,
       forceClass: false,
-      // height: '100vh',
+      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs],
+      pluginsOpts: {
+        grapesjsTabs: {
+          // options
+        }
+      },
       components: '',
       style: '',
       deviceManager: {
@@ -252,67 +225,53 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         }]
       },
       panels: { defaults: [] },
-      // plugins: ['gjs-blocks-basic'],
       styleManager: {
-      //   appendTo: '#style-manager-container',
-        sectors: [{
-          id:"general",
-          name: 'General',
-          open: true,
-          buildProps: ['width', 'height', 'top', 'left','transform'],
-          properties:[
-            {
-                property:'transform',
-                properties:[
+        sectors: [
+          {
+            id: 'general',
+            name: 'General',
+            open: true,
+            buildProps: ['width', 'height', 'top', 'left', 'transform'],
+            properties: [
+              {
+                property: 'transform',
+                properties: [
                   {
-                      name:'Translate Y',
-                      property:'transform-translate-y',
-                      functionName: 'translateY',
-                      defaults: 0,
-                      type: 'integer',
-                      units: ['px', '%'],
-                      unit: 'px'
+                    name: 'Rotate Y',
+                    property: 'transform-rotate-y',
                   },
                   {
-                      name:'Translate X',
-                      property:'transform-translate-x',
-                      functionName: 'translateX',
-                      defaults: 0,
-                      type: 'integer',
-                      units: ['px', '%'],
-                      unit: 'px'
+                    name: 'Rotate X',
+                    property: 'transform-rotate-x',
                   },
-              ]
-            }
-        ]
-        },
-        {
-          name: 'TEXT STYLE',
-          open: true,
-          buildProps: ['font-family', 'font-weight','font-size','line-height', 'letter-spacing','text-align', 'color']
-        }
-      ],
-      },
-      assetManager: {
-        uploadText: 'Add image through link or upload image',
-        modalTitle: 'Select Image',
-        openAssetsOnDrop: 1,
-        inputPlaceholder: 'http://url/to/the/image.jpg',
-        addBtnText: 'Add image',
-        uploadFile: (e) => {
-          const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
-        },
-        handleAdd: (textFromInput) => {
-          this.editor.AssetManager.add(textFromInput);
-        }
+                ],
+              },
+            ],
+          },
+          {
+            name: 'TEXT STYLE',
+            open: true,
+            buildProps: [
+              'font-family',
+              'font-weight',
+              'font-size',
+              'line-height',
+              'letter-spacing',
+              'text-align',
+              'color',
+            ],
+          },
+        ],
       },
       canvas: {
         styles: [
           'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-          'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'
+          'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
         ],
-        scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js']
-      }
+        scripts: [
+          'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js',
+        ],
+      },
     });
   }
 
