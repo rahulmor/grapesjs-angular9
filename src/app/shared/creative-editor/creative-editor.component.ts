@@ -2,9 +2,10 @@ import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Renderer2, OnD
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
+import grapesjsTabs from 'grapesjs-tabs';
 import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
-import myPlugin from '../plugins/popup-plugin';
+import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
 @Component({
   selector: 'app-creative-editor',
   templateUrl: './creative-editor.component.html',
@@ -214,7 +215,12 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       container: '#gjs',
       autorender: true,
       forceClass: false,
-      plugins: [myPlugin],
+      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs],
+      pluginsOpts: {
+        grapesjsTabs: {
+          // options
+        }
+      },
       components: '',
       style: '',
       panels: { defaults: [] },

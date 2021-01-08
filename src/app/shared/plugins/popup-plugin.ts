@@ -1,6 +1,7 @@
 import grapesjs from 'grapesjs';
-export default grapesjs.plugins.add('my-plugin-name', (editor, options) => {
+export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options) => {
     // Get the Asset Manager module first
+    
     editor.on('block:drag:stop', model => {
       const modal = editor.Modal;
       /**

@@ -1,14 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreativeEditorComponent } from './creative-editor.component';
-
+import { FilterService } from './../../services/filter.service';
 describe('CreativeEditorComponent', () => {
   let component: CreativeEditorComponent;
   let fixture: ComponentFixture<CreativeEditorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreativeEditorComponent ]
+      declarations: [ CreativeEditorComponent ],
+      providers: [FilterService]
+
     })
     .compileComponents();
   }));
@@ -19,7 +21,7 @@ describe('CreativeEditorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create creative editor', () => {
+    expect(component.stepinfoBox).toBeTruthy();
   });
 });
