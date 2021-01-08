@@ -23,6 +23,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   customPanel:any;
   canvasHeight:any;
   layerManager:any;
+  commands:any;
   stepinfoBox:boolean = true;
   subscription: Subscription;
   @ViewChild("customid") divView: ElementRef;
@@ -45,6 +46,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
     this.layerManager = this.editor.layerManager;
+    this.commands = this.editor.Command;
     var block1 = this.blockManager.add('image', {
        id: 'image',
        label: '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-image fa-w-16"><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zM128 152c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zM96 352h320v-80l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L192 304l-39.515-39.515c-4.686-4.686-12.284-4.686-16.971 0L96 304v48z" class=""></path></svg>',
@@ -205,7 +207,36 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         this.editor.getSelected().setStyle({...domElement});
       }
     });
- 
+    this.editor.on('component:selected', () => {
+
+      // whenever a component is selected in the editor
+  
+      // set your command and icon here
+      const commandToAdd = 'tlb-setfront';
+      const commandIcon = 'fa fa-clipboard';
+  
+      // get the selected componnet and its default toolbar
+      const selectedComponent = this.editor.getSelected();
+      const defaultToolbar = selectedComponent.get('toolbar');
+  
+      // check if this command already exists on this component toolbar
+      const commandExists = defaultToolbar.some(item => item.command === commandToAdd);
+  
+      // if it doesn't already exist, add it
+      if (!commandExists) {
+        selectedComponent.set({
+          toolbar: [ ...defaultToolbar, {  attributes: {class: commandIcon}, command: commandToAdd }]
+        });
+      }
+      // this.commands.add('tlb-setfront', {
+      //   someFunction1() {
+      //     alert('This is function 1');
+      //   },
+      //   run() {
+      //     this.someFunction1();
+      //   },
+      // });
+    });
     
   }
   
@@ -302,7 +333,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
             id: 'general',
             name: 'General',
             open: true,
-            buildProps: ['width', 'height', 'top', 'left', 'transform'],
+            buildProps: ['width', 'height', 'top', 'left', 'transform','z-index'],
             properties: [
               {
                 property: 'transform',
@@ -315,10 +346,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
                     name: 'Rotate X',
                     property: 'transform-rotate-x',
                   },
-                  // {
-                  //   name:'Rotate Z',
-                  //   property:'transform-rotate-z',
-                  // }
                 ],
               },
             ],
@@ -345,6 +372,21 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
                    { value: 'center', className: 'fa fa-align-center'},
                    { value: 'right', className: 'fa fa-align-right' },
                ],
+            },
+            {
+              property: 'font-size',
+              name: 'SIZE',
+            },
+            {
+              property: 'letter-spacing',
+              name: 'SPACING',
+            },
+            {
+              property: 'color',
+              name: 'COLOR',
+              list: [
+                { name:'HEX' },
+              ],
             },
             {
               property: 'text-transform',
