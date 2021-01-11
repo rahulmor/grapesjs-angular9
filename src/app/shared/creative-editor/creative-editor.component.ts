@@ -39,7 +39,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
 
   ngOnInit(): void {
     this.subscription = this.filterService.getData().subscribe(viewName => {
-      console.log('viewName', viewName);
+  
     });
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
