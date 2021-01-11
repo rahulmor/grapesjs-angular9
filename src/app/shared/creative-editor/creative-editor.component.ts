@@ -3,9 +3,10 @@ import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
 import grapesjsTabs from 'grapesjs-tabs';
+import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
+import rotatePlugin from '../plugins/rotate-plugin';
 import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
-import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
 @Component({
   selector: 'app-creative-editor',
   templateUrl: './creative-editor.component.html',
@@ -48,6 +49,14 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.styleManager = this.editor.StyleManager;
     this.layerManager = this.editor.layerManager;
     this.commands = this.editor.Commands;
+    
+    this.styleManager.addProperty('general', {
+      name: 'Rotate',
+      property: 'rotate',
+      type: 'rotate',
+      units:['deg'],
+      unit:'deg'
+    });
     var block1 = this.blockManager.add('image', {
        id: 'image',
        label: '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-image fa-w-16"><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zM128 152c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zM96 352h320v-80l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L192 304l-39.515-39.515c-4.686-4.686-12.284-4.686-16.971 0L96 304v48z" class=""></path></svg>',
@@ -115,12 +124,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         title: 'Logo',
       }
     });
-    this.filtered.push(block4);
-    this.filtered.push(block5);
-    this.filtered.push(block1);
-    this.filtered.push(block2);
-    this.filtered.push(block6);
-    this.filtered.push(block3);
+    this.filtered = [block4,block5,block1,block2,block6,block3]
     this.canvasHeight = 250;
 
     //To set the base style of the wrapper  
@@ -214,7 +218,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       }
        this.commands.add('tlb-setfront', {
          someFunction1() {
-          alert('This is function 1');
+          // alert('This is function 1');
          },
          run() {
            this.someFunction1();
@@ -225,30 +229,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   }
   
   stepInfoClose(){
-    console.log("closed");
     this.stepinfoBox = false;
   }
   checkCheckBoxvalue(event) {
-  }
-  onClickAlignLeft() {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { "text-align": "left" } });
-  }
-  onClickAlignCenter() {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { "text-align": "center" } });
-  }
-  onClickAlignRight() {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { "text-align": "right" } });
-  }
-  changeHeight(e) {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { "height": e.target.value + "px", "margin": "50px" } });
-  }
-  changeWidth(e) {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { width: e.target.value + "px" } });
   }
   ngAfterViewInit() {
     const newBlocksEl = this.blockManager.render(this.filtered, { external: true });
@@ -262,7 +245,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       container: '#gjs',
       autorender: true,
       forceClass: false,
-      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs],
+      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs,rotatePlugin],
       pluginsOpts: {
         grapesjsTabs: {
           // options
@@ -273,14 +256,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       layerManager: {
         appendTo: '#layers-container',
       },
-      
       commands: {
         defaults: [
           {
             // id and run are mandatory in this case
             id: 'my-command-id',
             run() {
-              alert('This is my command');
+              // alert('This is my command');
             },
           }, {
             id: '...',
@@ -288,7 +270,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
           }
         ],
       },
-        
       // We define a default panel as a sidebar to contain layers
       panels: {
         defaults: [{
@@ -303,29 +284,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         }]
           
       },
-      // plugins: ['gjs-blocks-basic'],
       styleManager: {
         sectors: [
           {
             id: 'general',
             name: 'General',
             open: true,
-            buildProps: ['width', 'height', 'top', 'left', 'transform'],
-            properties: [
-              {
-                property: 'transform',
-                properties: [
-                  {
-                    name: 'Rotate Y',
-                    property: 'transform-rotate-y',
-                  },
-                  {
-                    name: 'Rotate X',
-                    property: 'transform-rotate-x',
-                  },
-                ],
-              },
-            ],
+            buildProps: ['width', 'height', 'top', 'left'],
           },
           {
             name: 'TEXT STYLE',
