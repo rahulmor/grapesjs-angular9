@@ -13,7 +13,10 @@ import { STYLE } from './../constants/builder.constants';
   templateUrl: './creative-editor.component.html',
   styleUrls: ['./creative-editor.component.css']
 })
-export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
+
+  
+  public element;
   private _editor: any;
   filtered: any = [];
   blockManager: any;
@@ -25,22 +28,24 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
   canvasWidth: number = 300;
   layerManager:any;
   commands:any;
-  stepinfoBox: boolean = true;
+  stepinfoBox:boolean = true;
   subscription: Subscription;
   viewLoaded: string = 'basic';
   currentIFrame: any;
   @ViewChild("customid") divView: ElementRef;
-  @ViewChild("styletext") textStyle: ElementRef;
-  constructor(private renderer: Renderer2, private filterService: FilterService) {
+  @ViewChild("styletext") textStyle:ElementRef;
+  constructor(private renderer: Renderer2, private filterService: FilterService, private elemRef: ElementRef) {
 
   }
   get editor() {
     return this._editor;
   }
+  
 
   ngOnInit(): void {
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
+    this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
     this.layerManager = this.editor.layerManager;
@@ -303,7 +308,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
             id: 'general',
             name: 'General',
             open: true,
-            buildProps: ['width', 'height', 'top', 'left', 'transform','z-index'],
+            buildProps: ['width', 'height', 'top', 'left', 'transform'],
             properties: [
               {
                 property: 'transform',
