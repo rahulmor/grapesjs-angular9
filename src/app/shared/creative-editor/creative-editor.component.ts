@@ -11,34 +11,39 @@ import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
   templateUrl: './creative-editor.component.html',
   styleUrls: ['./creative-editor.component.css']
 })
-export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
+
+  
+  public element;
   private _editor: any;
-  filtered: any = [];
-  blockManager: any;
-  styleManager: any;
-  customStyle: any = [];
-  panelManager: any;
-  customPanel: any;
-  canvasHeight: any;
+  filtered:any = [];
+  blockManager:any;
+  styleManager:any;
+  customStyle:any = [];
+  panelManager:any;
+  customPanel:any;
+  canvasHeight:any;
   layerManager:any;
   commands:any;
-  stepinfoBox: boolean = true;
+  stepinfoBox:boolean = true;
   subscription: Subscription;
   @ViewChild("customid") divView: ElementRef;
-  @ViewChild("styletext") textStyle: ElementRef;
-  constructor(private renderer: Renderer2, private filterService: FilterService) {
+  @ViewChild("styletext") textStyle:ElementRef;
+  constructor(private renderer: Renderer2, private filterService: FilterService, private elemRef: ElementRef) {
 
   }
   get editor() {
     return this._editor;
   }
+  
 
   ngOnInit(): void {
     this.subscription = this.filterService.getData().subscribe(viewName => {
-      console.log('viewName', viewName);
+      
     });
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
+    this.editor.getModel().set('dmode', 'absolute');
     this.blockManager = this.editor.BlockManager;
     this.styleManager = this.editor.StyleManager;
     this.layerManager = this.editor.layerManager;
@@ -305,7 +310,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
             id: 'general',
             name: 'General',
             open: true,
-            buildProps: ['width', 'height', 'top', 'left', 'transform','z-index'],
+            buildProps: ['width', 'height', 'top', 'left', 'transform'],
             properties: [
               {
                 property: 'transform',
