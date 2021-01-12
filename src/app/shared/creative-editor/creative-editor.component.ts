@@ -198,10 +198,10 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       // whenever a component is selected in the editor
   
       // set your command and icon here
-      const commandToAdd1 = 'tlb-setfront';
-      const commandIcon1 = 'fa fa-clipboard';
-      const commandToAdd2 = 'tlb-setBack';
-      const commandIcon2 = 'fa fa-paste';
+      const setFrontCommand = 'tlb-setfront';
+      const setFrontCommandIcon = 'fa fa-clipboard';
+      const setBackCommand = 'tlb-setBack';
+      const setBackCommandIcon = 'fa fa-paste';
   
       // get the selected componnet and its default toolbar
 
@@ -211,13 +211,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       const defaultToolbar = selectedComponent.get('toolbar');
   
       // check if this command already exists on this component toolbar
-      const commandExists = defaultToolbar.some(item => item.command === commandToAdd1);
-      const commandExistsback = defaultToolbar.some(item => item.command === commandToAdd2);
+      const commandExists = defaultToolbar.some(item => item.command === setFrontCommand);
+      const commandExistsback = defaultToolbar.some(item => item.command === setBackCommand);
   
       // if it doesn't already exist, add it
       if (!commandExists && !commandExistsback) {
         selectedComponent.set({
-          toolbar: [ ...defaultToolbar, {  attributes: {class: commandIcon1}, command: commandToAdd1 },{  attributes: {class: commandIcon2}, command: commandToAdd2 }]
+          toolbar: [ ...defaultToolbar, {  attributes: {class: setFrontCommandIcon}, command: setFrontCommand },{  attributes: {class: setBackCommandIcon}, command: setBackCommand }]
         });
       }
         this.commands.add('tlb-setfront', {
@@ -229,9 +229,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
             editor.select(null);
         
             components.forEach(component => {
-              component && component.addStyle({ 'z-index': '999' });
+
             });
-        
             return components;
           }
         });
@@ -239,15 +238,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
           run(editor) {
             let components = editor.getSelectedAll();
             components = isArray(components) ? [...components] : [components];
-            // It's important to deselect components first otherwise,
-            // with undo, the component will be set with the wrong `collection`
             editor.select(null);
-        
+
             components.forEach(component => {
-              const selectedComponent1 = component.parent();
-              let emailBlock = component.detach();
-              console.log(selectedComponent1);
-              component && component.addAttributes({ index: '0'});
+              const idx = component.index();
+              const wrl = component.clone();
+              component.remove()
+              editor.getWrapper().append(wrl, { at: idx-1});
             });
             return components;
           }
@@ -313,17 +310,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       },
       commands: {
         defaults: [
-          {
-            // id and run are mandatory in this case
-            id: 'tlb-setfront',
-            name: 'tlb-setfront',
-            run() {
-              alert('This is my command');
-            },
-          }, {
-            id: '...',
-            // ...
-          }
         ],
       },
         
