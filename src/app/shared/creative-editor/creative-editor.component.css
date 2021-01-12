@@ -1,14 +1,12 @@
 /* Reset some default styling */
 
-.gjs-editor-cont {
-  width: 300px !important;
-  height: 250px !important;
-  border: 1px solid gray;
-}
 .gjs-block {
   width: auto;
   height: auto;
   min-height: auto;
+}
+.gjs-cv-canvas {
+  background-color: transparent !important;
 }
 .panel__top {
   padding: 0;
@@ -111,6 +109,7 @@
   line-height: 1.5;
   color: #e6eaed;
 }
+
 .editor {
   /* width: 300px;
   height: 250px; */
@@ -118,6 +117,12 @@
   /* padding: 5px 8px 16px 22px; */
   background-color: #ffffff;
   margin-top: 20%;
+}
+.editor.portrait {
+  margin-top: 10%;
+}
+.editor.basic, .editor.landscape {
+  margin-top: 25%;
 }
 .block-manager {
   width: 240px;
