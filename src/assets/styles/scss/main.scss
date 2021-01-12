@@ -674,28 +674,15 @@ body{
 }
 .rotate-units{
   z-index:1;
-  top:3px!important;
+  top:3px;
 }
-.rotate-clockwise{
-  width: 30px;
-  height: 30px;
-  background-color: #7a808d;
-  color: #e6eaed;
-  border: 1px solid black;
-  border-right: none;
-}
-.rotate-reset{
-  width: 30px;
-  height: 30px;
-  background-color: #7a808d;
-  color: #e6eaed;
+.rotate-btn{
+  width: 2rem;
+  height: 2rem;
+  background-color: $mainColor;
+  color: $bodyBgColor;
   border: 1px solid black;
 }
-.rotate-anticlockwise{
-  width: 30px;
-  height: 30px;
-  background-color: #7a808d;
-  color: #e6eaed;
-  border: 1px solid black;
-  border-left: none;
+.rotate-btn > *{
+  pointer-events: none;
 }
