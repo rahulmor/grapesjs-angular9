@@ -52,7 +52,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.layerManager = this.editor.layerManager;
     this.commands = this.editor.Commands;
 
-    var block1 = this.blockManager.add('image', {
+    var imageBlock = this.blockManager.add('image', {
        id: 'image',
        label: '<i class="far fa-image"></i>',
       //  category: 'Ad Elements',
@@ -69,7 +69,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         // style:'width:40px!important;display:inline'
       },
      });
-     var block2 = this.blockManager.add('text', {
+     var textBlock = this.blockManager.add('text', {
       id: 'text',
       label: `<i class="far fa-text"></i>`,
       content: '<p>Put your title here</p>',
@@ -77,7 +77,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         title: 'Insert text',
       }
     });
-    var block3 = this.blockManager.add('button', {
+    var buttonBlock = this.blockManager.add('button', {
       id: 'button',
       label: '<i class="far fa-rectangle-wide"></i>',
       content:{
@@ -89,7 +89,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         title: 'Button',
       }
     });
-    var block4 = this.blockManager.add('shape', {
+    var shapeBlock = this.blockManager.add('shape', {
       id: 'shape',
       label: 'SHAPE',
       content: {
@@ -100,7 +100,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         title: 'Shape',
       }
     });
-    var block5 = this.blockManager.add('video', {
+    var videoBlock = this.blockManager.add('video', {
       id: 'video',
       label: '<i class="far fa-video"></i>',
       content: '',
@@ -109,7 +109,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         title: 'Video',
       }
     });
-    var block6 = this.blockManager.add('Logo', {
+    var logoBlock = this.blockManager.add('Logo', {
       id: 'Logo',
       label: '<i class="far fa-icons"></i>',
       content: '',
@@ -118,12 +118,12 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         title: 'Logo',
       }
     });
-    this.filtered.push(block4);
-    this.filtered.push(block5);
-    this.filtered.push(block1);
-    this.filtered.push(block2);
-    this.filtered.push(block6);
-    this.filtered.push(block3);
+    this.filtered.push(shapeBlock);
+    this.filtered.push(videoBlock);
+    this.filtered.push(imageBlock);
+    this.filtered.push(textBlock);
+    this.filtered.push(logoBlock);
+    this.filtered.push(buttonBlock);
 
     this.editor.on('component:selected', () => {
 
