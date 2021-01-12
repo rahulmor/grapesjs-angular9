@@ -40,7 +40,14 @@
   <div class="col-md-6">
     <div id="gjs" class="editor {{viewLoaded}}">
       <h1>My Component!</h1>
+      
     </div>
+    <button class="btn" (click)="onClickSetFront()">Front</button>
+    <button class="btn" (click)="onClickSendBack()">Back</button>
+    <button class="btn" (click)="onClickRemoveComponent()">Delete</button>
+    <div *ngIf="applyStyle.BASIC.NAME == 'Basic'">{{applyStyle.BASIC.SIZE.CANVAS_WIDTH}}*{{applyStyle.BASIC.SIZE.CANVAS_HEIGHT}}</div>
+    <div *ngIf="applyStyle.LANDSCAPE.NAME == 'Landscape'">{{applyStyle.LANDSCAPE.SIZE.CANVAS_WIDTH}}*{{applyStyle.LANDSCAPE.SIZE.CANVAS_HEIGHT}}</div>
+    <div *ngIf="applyStyle.PORTRAIT.NAME == 'Portrait'">{{applyStyle.PORTRAIT.SIZE.CANVAS_WIDTH}}*{{applyStyle.PORTRAIT.SIZE.CANVAS_HEIGHT}}</div>
   </div>
   <div class="col-md-3">
     <!--<div class="card block-manager">

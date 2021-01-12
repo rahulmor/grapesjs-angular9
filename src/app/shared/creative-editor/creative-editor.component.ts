@@ -15,8 +15,8 @@ import { STYLE } from './../constants/builder.constants';
   styleUrls: ['./creative-editor.component.css']
 })
 export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
-
-  
+  applyStyle = STYLE;       
+  products: any = [];
   public element;
   private _editor: any;
   filtered: any = [];
@@ -44,6 +44,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   
 
   ngOnInit(): void {
+    
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
     this.editor.getModel().set('dmode', 'absolute');
@@ -125,64 +126,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.filtered.push(logoBlock);
     this.filtered.push(buttonBlock);
 
-    this.editor.on('component:selected', () => {
-
-      // whenever a component is selected in the editor
-  
-      // set your command and icon here
-      const setFrontCommand = 'tlb-setfront';
-      const setFrontCommandIcon = 'fa fa-clipboard';
-      const setBackCommand = 'tlb-setBack';
-      const setBackCommandIcon = 'fa fa-paste';
-  
-      // get the selected componnet and its default toolbar
-
-
-      const selectedComponent = this.editor.getSelected();
-      
-      const defaultToolbar = selectedComponent.get('toolbar');
-  
-      // check if this command already exists on this component toolbar
-      const commandExists = defaultToolbar.some(item => item.command === setFrontCommand);
-      const commandExistsback = defaultToolbar.some(item => item.command === setBackCommand);
-  
-      // if it doesn't already exist, add it
-      if (!commandExists && !commandExistsback) {
-        selectedComponent.set({
-          toolbar: [ ...defaultToolbar, {  attributes: {class: setFrontCommandIcon}, command: setFrontCommand },{  attributes: {class: setBackCommandIcon}, command: setBackCommand }]
-        });
-      }
-        this.commands.add('tlb-setfront', {
-          run(editor) {
-            let components = editor.getSelectedAll();
-            components = isArray(components) ? [...components] : [components];
-            // It's important to deselect components first otherwise,
-            // with undo, the component will be set with the wrong `collection`
-            editor.select(null);
-        
-            components.forEach(component => {
-
-            });
-            return components;
-          }
-        });
-        this.commands.add('tlb-setBack', {
-          run(editor) {
-            let components = editor.getSelectedAll();
-            components = isArray(components) ? [...components] : [components];
-            editor.select(null);
-
-            components.forEach(component => {
-              const idx = component.index();
-              const wrl = component.clone();
-              component.remove()
-              editor.getWrapper().append(wrl, { at: idx-1});
-            });
-            return components;
-          }
-        });
-    });
-
     this.subscription = this.filterService.getData().subscribe(viewName => {
       let wrapperHeight;
       switch (viewName) {
@@ -251,6 +194,44 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     const component = this.editor.getSelected();
     component && component.addAttributes({ style: { width: e.target.value + "px" } });
   }
+
+  onClickSendBack() {
+    let wrapper = this.editor.getWrapper();
+    const component = this.editor.getSelected();
+    // const component = this.editor.getSelected();
+    // console.log('Hi',component);
+    // component.move(wrapper, {at:0});
+    if(this.editor.getSelected()){
+      const idx = component.index();
+      if(idx !== 0){
+        const selectedComponent = component.clone();
+        component.remove();
+        wrapper.append(selectedComponent, { at: 0});
+        this.editor.select(null);
+      }
+    }
+    this.editor.select(null);
+  }
+  onClickSetFront() {
+    let wrapper = this.editor.getWrapper();
+    var wrapperChildren = this.editor.getComponents();
+    let lastIndex = (wrapperChildren.length) - 1;
+    console.log(lastIndex)
+    const component = this.editor.getSelected();
+    if(this.editor.getSelected()){
+      const idx = component.index();
+      if(idx !== lastIndex){
+        const selectedComponent = component.clone();
+        component.remove();
+        wrapper.append(selectedComponent, { at: lastIndex});
+      }
+    }
+    this.editor.select(null);
+  }
+  onClickRemoveComponent() {
+    const component = this.editor.getSelected();
+    component.remove();
+  }
   ngAfterViewInit() {
     const newBlocksEl = this.blockManager.render(this.filtered, { external: true });
     this.renderer.appendChild(this.divView.nativeElement, newBlocksEl);
@@ -265,6 +246,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
 
     // setup drag event
     this.setupDragEvent();
+    console.log(this.viewLoaded);
   }
 
   private initializeEditor(): any {
