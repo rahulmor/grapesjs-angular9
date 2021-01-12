@@ -103,7 +103,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       id: 'shape',
       label: 'SHAPE',
       content: {
-        type:'link',
+        type:'shape',
       },
       // category: 'Ad Elements',
       attributes: {
@@ -113,8 +113,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     var videoBlock = this.blockManager.add('video', {
       id: 'video',
       label: '<i class="far fa-video"></i>',
-      content: '',
-      // category: 'Ad Elements',
+      select: true,
+      content: { type: 'video' },
+      activate: true,
       attributes: {
         title: 'Video',
       }
@@ -122,7 +123,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     var logoBlock = this.blockManager.add('Logo', {
       id: 'Logo',
       label: '<i class="far fa-icons"></i>',
-      content: '',
+      content: { type: 'logo' },
       // category: 'Ad Elements',
       attributes: {
         title: 'Logo',
