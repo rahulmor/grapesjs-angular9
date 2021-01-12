@@ -3,6 +3,7 @@ import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
 import grapesjsTabs from 'grapesjs-tabs';
+import rotatePlugin from '../plugins/rotate-plugin';
 import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
 import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
@@ -51,7 +52,14 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.styleManager = this.editor.StyleManager;
     this.layerManager = this.editor.layerManager;
     this.commands = this.editor.Commands;
-
+    
+    this.styleManager.addProperty('general', {
+      name: 'Rotate',
+      property: 'rotate',
+      type: 'rotate',
+      units:['deg'],
+      unit:'deg'
+    });
     var imageBlock = this.blockManager.add('image', {
        id: 'image',
        label: '<i class="far fa-image"></i>',
@@ -118,13 +126,17 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         title: 'Logo',
       }
     });
-    this.filtered.push(shapeBlock);
-    this.filtered.push(videoBlock);
-    this.filtered.push(imageBlock);
-    this.filtered.push(textBlock);
-    this.filtered.push(logoBlock);
-    this.filtered.push(buttonBlock);
-
+    this.filtered = [shapeBlock,videoBlock,imageBlock,textBlock,logoBlock,buttonBlock];
+    //To set the base style of the wrapper  
+    const $currentIFrame = $('iframe');
+    $currentIFrame.contents().find("body").css('overflow', 'hidden');
+    this.editor.getWrapper().set({ 'badgable': false, 'highlightable': false }).setStyle({
+      overflow: 'hidden',
+      height: '250px'
+    })
+    //This is to update the style in styleManager after drag end in designer mode 
+    this.editor.on('stop:core:component-drag', () => { this.editor.trigger('component:toggled') });
+    this.setupDragEvent();
     this.editor.on('component:selected', () => {
 
       // whenever a component is selected in the editor
@@ -226,30 +238,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   }
 
   stepInfoClose(){
-    console.log("closed");
     this.stepinfoBox = false;
   }
   checkCheckBoxvalue(event) {
-  }
-  onClickAlignLeft() {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { "text-align": "left" } });
-  }
-  onClickAlignCenter() {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { "text-align": "center" } });
-  }
-  onClickAlignRight() {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { "text-align": "right" } });
-  }
-  changeHeight(e) {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { "height": e.target.value + "px", "margin": "50px" } });
-  }
-  changeWidth(e) {
-    const component = this.editor.getSelected();
-    component && component.addAttributes({ style: { width: e.target.value + "px" } });
   }
   ngAfterViewInit() {
     const newBlocksEl = this.blockManager.render(this.filtered, { external: true });
@@ -272,8 +263,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       container: '#gjs',
       autorender: true,
       forceClass: false,
+      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs,rotatePlugin],
       avoidInlineStyle:false,
-      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs],
       pluginsOpts: {
         grapesjsTabs: {
           // options
@@ -320,29 +311,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         }]
           
       },
-      // plugins: ['gjs-blocks-basic'],
       styleManager: {
         sectors: [
           {
             id: 'general',
             name: 'General',
             open: true,
-            buildProps: ['width', 'height', 'top', 'left', 'transform'],
-            properties: [
-              {
-                property: 'transform',
-                properties: [
-                  {
-                    name: 'Rotate Y',
-                    property: 'transform-rotate-y',
-                  },
-                  {
-                    name: 'Rotate X',
-                    property: 'transform-rotate-x',
-                  },
-                ],
-              },
-            ],
+            buildProps: ['width', 'height', 'top', 'left'],
           },
           {
             name: 'TEXT STYLE',
