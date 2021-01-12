@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
 import { isArray } from 'util';
 import { STYLE } from './../constants/builder.constants';
+import { Button } from 'protractor';
 
 @Component({
   selector: 'app-creative-editor',
@@ -62,6 +63,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       units:['deg'],
       unit:'deg'
     });
+
     var imageBlock = this.blockManager.add('image', {
        id: 'image',
        label: '<i class="far fa-image"></i>',
@@ -138,6 +140,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       overflow: 'hidden',
       height: '250px'
     })
+
     //This is to update the style in styleManager after drag end in designer mode 
     this.editor.on('stop:core:component-drag', () => { this.editor.trigger('component:toggled') });
     this.setupDragEvent();
@@ -289,8 +292,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
             bc: 0,
             keyWidth: 'flex-basis',
           },
-        }]
-          
+        }],
       },
       styleManager: {
         sectors: [
@@ -361,6 +363,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       },
     });
   }
+
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();
