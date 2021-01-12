@@ -1,7 +1,7 @@
 <div class="container-fluid">
 <div class="row" style="margin-top: 61px;">
   <div class="col-md-3">
-    <div *ngIf="stepinfoBox" class="step-info">
+    <!-- <div *ngIf="stepinfoBox" class="step-info">
       <span class="step-info-text">LETS GET STARTED</span>
       <p class="step-info-header">The Basic Style</p>
       <p class="step-info-content">
@@ -9,7 +9,6 @@
         your own.
       </p>
       <button class="step-info-button" (click)="stepInfoClose()"><span class="btn-close">Close</span></button>
-      <!-- <div class="form-check close-checkbox"> -->
         <input
           class="check-input"
           type="checkbox"
@@ -19,8 +18,7 @@
         <label class="form-check-label checkbox-text" for="flexCheckDefault">
           Dont show next time
         </label>
-      <!-- </div> -->
-    </div>
+    </div> -->
     <div class="block-manager">
       <p class="block-text">AD ELEMENTS</p>
       <button class="ad-element-button">
@@ -45,9 +43,9 @@
     <button class="btn" (click)="onClickSetFront()">Front</button>
     <button class="btn" (click)="onClickSendBack()">Back</button>
     <button class="btn" (click)="onClickRemoveComponent()">Delete</button>
-    <div *ngIf="applyStyle.BASIC.NAME == 'Basic'">{{applyStyle.BASIC.SIZE.CANVAS_WIDTH}}*{{applyStyle.BASIC.SIZE.CANVAS_HEIGHT}}</div>
-    <div *ngIf="applyStyle.LANDSCAPE.NAME == 'Landscape'">{{applyStyle.LANDSCAPE.SIZE.CANVAS_WIDTH}}*{{applyStyle.LANDSCAPE.SIZE.CANVAS_HEIGHT}}</div>
-    <div *ngIf="applyStyle.PORTRAIT.NAME == 'Portrait'">{{applyStyle.PORTRAIT.SIZE.CANVAS_WIDTH}}*{{applyStyle.PORTRAIT.SIZE.CANVAS_HEIGHT}}</div>
+    <div *ngIf="filterView == 'basic'">{{applyStyle.BASIC.SIZE.CANVAS_WIDTH}}*{{applyStyle.BASIC.SIZE.CANVAS_HEIGHT}}</div>
+    <div *ngIf="filterView == 'landscape'">{{applyStyle.LANDSCAPE.SIZE.CANVAS_WIDTH}}*{{applyStyle.LANDSCAPE.SIZE.CANVAS_HEIGHT}}</div>
+    <div *ngIf="filterView == 'portrait'">{{applyStyle.PORTRAIT.SIZE.CANVAS_WIDTH}}*{{applyStyle.PORTRAIT.SIZE.CANVAS_HEIGHT}}</div>
   </div>
   <div class="col-md-3">
     <!--<div class="card block-manager">

@@ -675,3 +675,18 @@ body{
     }
   }
 }
+.rotate-units{
+  z-index:1;
+  top:3px;
+}
+.rotate-btn{
+  width: 2rem;
+  height: 2rem;
+  background-color: $mainColor;
+  color: $bodyBgColor;
+  border: 1px solid black;
+}
+.rotate-btn > *{
+  pointer-events: none;
+}
+
