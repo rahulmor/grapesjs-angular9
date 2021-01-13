@@ -31,4 +31,7 @@ export class HeaderComponent implements OnInit {
   sendData(viewName) {
     this.filterService.sendData(viewName);
   }
+  messageExit(){
+    alert('Not be able to save unless you "Generate all styles"');
+  }
 }

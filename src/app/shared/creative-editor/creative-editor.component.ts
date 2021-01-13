@@ -178,8 +178,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       myCommand.run();
       this.filterView = viewName;
       const canvas = document.querySelector('.canvas-size');
-      canvas.innerHTML = this.filterView;
-
       if(this.filterView == 'landscape'){
         canvas.innerHTML = '728*90';
       }
@@ -201,37 +199,34 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   }
   checkCheckBoxvalue(event) {
   }
-  onClickSendBack() {
+ 
+  onClickSendBackandFront() {
     let wrapper = this.editor.getWrapper();
-    console.log(wrapper);
     const component = this.editor.getSelected();
+    var wrapperChildren = this.editor.getComponents();
+    let lastIndex = (wrapperChildren.length) - 1;
   // const component = this.editor.getSelected();
   // component.move(wrapper, {at:0});
   if(this.editor.getSelected()){
     const idx = component.index();
-    if(idx !== 0){
+    if(idx !== 0 && idx !== undefined){
       const selectedComponent = component.clone();
       component.remove();
       wrapper.append(selectedComponent, { at: 0});
-    }
-  }
-  this.editor.select(null);
-  }
-  onClickSetFront() {
-    let wrapper = this.editor.getWrapper();
-    var wrapperChildren = this.editor.getComponents();
-    let lastIndex = (wrapperChildren.length) - 1;
-    const component = this.editor.getSelected();
-    if(this.editor.getSelected()){
-      const idx = component.index();
-      if(idx !== lastIndex){
+    }else{
+      if(idx === 0 && idx !== undefined){
         const selectedComponent = component.clone();
         component.remove();
         wrapper.append(selectedComponent, { at: lastIndex});
       }
     }
-    this.editor.select(null);
   }
+  }
+  onClickCopy() {
+    const component = this.editor.getSelected();
+    component.clone();
+  }
+
   onClickRemoveComponent() {
     const component = this.editor.getSelected();
     component.remove();
@@ -479,11 +474,11 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         canvas.innerHTML = '300*250';
       }
 
-      buttonBack.addEventListener('click', (e) =>{
-        this.onClickSendBack();
+      buttonBack.addEventListener('click', (event) =>{
+        this.onClickCopy();
       });
       buttonFront.addEventListener('click', (e) =>{
-        this.onClickSetFront();
+        this.onClickSendBackandFront();
       });
       buttonDelete.addEventListener('click', (e) =>{
         this.onClickRemoveComponent();
