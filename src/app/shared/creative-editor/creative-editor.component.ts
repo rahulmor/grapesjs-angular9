@@ -180,6 +180,13 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       const canvas = document.querySelector('.canvas-size');
       canvas.innerHTML = this.filterView;
 
+      if(this.filterView == 'landscape'){
+        canvas.innerHTML = '728*90';
+      }
+      if(this.filterView == 'portrait'){
+        canvas.innerHTML = '300*600';
+      }
+      
       this.currentIFrame.contents().find("body").css({'overflow':'hidden','height':wrapperHeight});
 
       this.editor.getWrapper().set({'badgable': false, 'highlightable': false}).setStyle({
@@ -235,6 +242,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     const newSector = this.styleManager.render(this.customStyle, { external: true });
     this.renderer.appendChild(this.textStyle.nativeElement, newSector);
 
+    //set buttons to canvas
+    this.setButtonsToCanvas();
+
      // set custom commands
     this.setDeviceToggleCommands();
 
@@ -243,7 +253,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
 
     // setup drag event
     this.setupDragEvent();
-
   }
 
   private initializeEditor(): any {
@@ -453,4 +462,33 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       run: editor => this.editor.setDevice(STYLE.PORTRAIT.NAME)
     });
   }
+
+  setButtonsToCanvas(){
+    const el = document.createElement('div');
+      el.className = 'tool-buttons';
+      el.innerHTML = `
+      <button class="rotate-btn btn-front" title="Set to Front"><i class="fal fa-copy"></i></button>
+      <button class="rotate-btn btn-back"  title="Send to Back"><i class="fal fa-clone"></i></button>
+      <button class="rotate-btn btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
+      <div id="canvas-size" class="canvas-size"></div>`;
+      const buttonBack = el.querySelector('.btn-back');
+      const buttonFront = el.querySelector('.btn-front');
+      const buttonDelete = el.querySelector('.btn-delete');
+      const canvas = el.querySelector('#canvas-size');
+      if(this.filterView == 'basic'){
+        canvas.innerHTML = '300*250';
+      }
+
+      buttonBack.addEventListener('click', (e) =>{
+        this.onClickSendBack();
+      });
+      buttonFront.addEventListener('click', (e) =>{
+        this.onClickSetFront();
+      });
+      buttonDelete.addEventListener('click', (e) =>{
+        this.onClickRemoveComponent();
+      });
+      document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
+  }
 }
+
