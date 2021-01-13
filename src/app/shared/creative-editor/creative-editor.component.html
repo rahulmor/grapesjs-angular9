@@ -1,5 +1,6 @@
+<div class="container-fluid">
 <div class="row" style="margin-top: 61px;">
-  <div class="col-md-2">
+  <div class="col-md-3">
     <div *ngIf="stepinfoBox" class="step-info">
       <span class="step-info-text">LETS GET STARTED</span>
       <p class="step-info-header">The Basic Style</p>
@@ -31,14 +32,17 @@
                 <button class="btn ad-button"><i class="fa fa-circle" style="margin-right:20%;margin-left:-50%;"></i>Circle</button>
                 <button class="btn ad-button"><i class="fa fa-plus" style="margin-right:20%;margin-left:-30%;"></i>CLICK HERE</button>
                 <button class="btn ad-button"><i class="fa fa-plus" style="margin-right:20%;margin-left:-20%;"></i>CREATIVE4LIVE</button> -->
-    </div>
+                <div class="">
+                    <div id="layers-container" class="layers-container"></div>
+                  </div> 
+            </div>
   </div>
-  <div class="col-md-8">
-    <div id="gjs" class="editor">
+  <div class="col-md-6">
+    <div id="gjs" class="editor {{viewLoaded}}">
       <h1>My Component!</h1>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-3">
     <!--<div class="card block-manager">
                 <div class="upper-button">
                     <button class="btn align-button" (click)="onClickAlignLeft()"><i class="fa fa-align-left" aria-hidden="true"></i></button>
@@ -57,31 +61,31 @@
                             <label class="label-style" for="width">Width</label>
                             <input type="number" class="form-control ad-element-input" #width (keyup)="changeWidth($event)" id="width" aria-describedby="width" placeholder="px">
                           </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="label-style" for="height">Height</label>
-                            <input type="number" class="form-control ad-element-input" #height (keyup)="changeHeight($event)" id="height" aria-describedby="height" placeholder="px">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label class="label-style" for="height">Height</label>
+                                  <input type="number" class="form-control ad-element-input" #height (keyup)="changeHeight($event)" id="height" aria-describedby="height" placeholder="px">
+                                </div>
                           </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="label-style" for="top">Top</label>
-                            <input type="number" class="form-control ad-element-input" #top (keyup)="changeTop($event)" id="top" aria-describedby="top" placeholder="px">
+                      </div>
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label class="label-style" for="top">Top</label>
+                                  <input type="number" class="form-control ad-element-input" #top (keyup)="changeTop($event)" id="top" aria-describedby="top" placeholder="px">
+                                </div>
                           </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="label-style" for="left">Left</label>
-                            <input type="number" class="form-control ad-element-input" #left (keyup)="changeLeft($event)" id="left" aria-describedby="left" placeholder="px">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label class="label-style" for="left">Left</label>
+                                  <input type="number" class="form-control ad-element-input" #left (keyup)="changeLeft($event)" id="left" aria-describedby="left" placeholder="px">
+                                </div>
                           </div>
-                    </div>
-                </div>
-            </div>
-            <div id="traits-container"></div>
-            <div id="style-manager-container"></div> -->
-    <div #styletext></div>
-  </div>
+                      </div>
+                  </div>
+                  <div id="traits-container"></div>
+                  <div id="style-manager-container"></div> -->
+          <div #styletext></div>
+        </div>
+      </div>
 </div>
