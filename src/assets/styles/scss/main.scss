@@ -690,3 +690,15 @@ body{
   pointer-events: none;
 }
 
+.tool-buttons{
+  position: absolute;
+  right: -37px;
+  height: 100%;
+}
+.tool-buttons button{
+  display: block;
+}
+.tool-buttons button.btn-delete{
+  top: 87%;
+  position: absolute;
+}

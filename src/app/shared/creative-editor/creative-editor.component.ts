@@ -140,7 +140,6 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       overflow: 'hidden',
       height: '250px'
     })
-
     //This is to update the style in styleManager after drag end in designer mode 
     this.editor.on('stop:core:component-drag', () => { this.editor.trigger('component:toggled') });
     this.setupDragEvent();
@@ -178,6 +177,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       // This command will change view of canvas
       myCommand.run();
       this.filterView = viewName;
+      const canvas = document.querySelector('.canvas-size');
+      canvas.innerHTML = this.filterView;
 
       this.currentIFrame.contents().find("body").css({'overflow':'hidden','height':wrapperHeight});
 
@@ -195,18 +196,19 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   }
   onClickSendBack() {
     let wrapper = this.editor.getWrapper();
+    console.log(wrapper);
     const component = this.editor.getSelected();
-    // const component = this.editor.getSelected();
-    // component.move(wrapper, {at:0});
-    if(this.editor.getSelected()){
-      const idx = component.index();
-      if(idx !== 0){
-        const selectedComponent = component.clone();
-        component.remove();
-        wrapper.append(selectedComponent, { at: 0});
-      }
+  // const component = this.editor.getSelected();
+  // component.move(wrapper, {at:0});
+  if(this.editor.getSelected()){
+    const idx = component.index();
+    if(idx !== 0){
+      const selectedComponent = component.clone();
+      component.remove();
+      wrapper.append(selectedComponent, { at: 0});
     }
-    this.editor.select(null);
+  }
+  this.editor.select(null);
   }
   onClickSetFront() {
     let wrapper = this.editor.getWrapper();
@@ -241,6 +243,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
 
     // setup drag event
     this.setupDragEvent();
+
   }
 
   private initializeEditor(): any {
