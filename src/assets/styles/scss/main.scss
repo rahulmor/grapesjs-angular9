@@ -692,7 +692,7 @@ body{
 
 .tool-buttons{
   position: absolute;
-  right: -58px;
+  right: -40px;
   height: 100%;
 }
 .tool-buttons button{
@@ -714,7 +714,7 @@ body{
 }
 .tool-buttons #canvas-size{
   position: absolute;
-  left: -327px;
+  left: -307px;
   bottom: -21px;
   font-size: 12px;
   font-weight: 600;
@@ -722,4 +722,12 @@ body{
 }
 .tool-buttons .canvas-size-landscape{
   left: -757px;
+}
+
+.editor.landscape{
+  .tool-buttons{
+    #canvas-size{
+      left: -733px;
+    }
+  } 
 }

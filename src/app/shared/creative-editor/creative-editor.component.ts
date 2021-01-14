@@ -7,19 +7,16 @@ import rotatePlugin from '../plugins/rotate-plugin';
 import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
 import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
-import { isArray } from 'util';
 import { STYLE } from './../constants/builder.constants';
-import { Button } from 'protractor';
 
 @Component({
   selector: 'app-creative-editor',
   templateUrl: './creative-editor.component.html',
   styleUrls: ['./creative-editor.component.css']
 })
-export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  {
+export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+  
   public filterView: string = 'basic';
-  applyStyle = STYLE;       
-  products: any = [];
   public element;
   private _editor: any;
   filtered: any = [];
@@ -30,24 +27,24 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   customPanel: any;
   canvasHeight: number = 250;
   canvasWidth: number = 300;
-  layerManager:any;
-  commands:any;
-  stepinfoBox:boolean = true;
+  layerManager: any;
+  commands: any;
+  stepinfoBox: boolean = true;
   subscription: Subscription;
   viewLoaded: string = 'basic';
   currentIFrame: any;
   @ViewChild("customid") divView: ElementRef;
-  @ViewChild("styletext") textStyle:ElementRef;
+  @ViewChild("styletext") textStyle: ElementRef;
   constructor(private renderer: Renderer2, private filterService: FilterService, private elemRef: ElementRef) {
 
   }
   get editor() {
     return this._editor;
   }
-  
+
 
   ngOnInit(): void {
-    
+
     this._editor = this.initializeEditor();
     this.editor.DomComponents.clear();
     this.editor.getModel().set('dmode', 'absolute');
@@ -55,34 +52,34 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     this.styleManager = this.editor.StyleManager;
     this.layerManager = this.editor.layerManager;
     this.commands = this.editor.Commands;
-    
+
     this.styleManager.addProperty('general', {
       name: 'Rotate',
       property: 'rotate',
       type: 'rotate',
-      units:['deg'],
-      unit:'deg'
+      units: ['deg'],
+      unit: 'deg'
     });
 
     var imageBlock = this.blockManager.add('image', {
-       id: 'image',
-       label: '<i class="far fa-image"></i>',
+      id: 'image',
+      label: '<i class="far fa-image"></i>',
       //  category: 'Ad Elements',
-       // Select the component once it's dropped
-       select: true,
-       // You can pass components as a JSON instead of a simple HTML string,
-       // in this case we also use a defined component type `image`
-       content: { type: 'image' },
-       // This triggers `active` event on dropped components and the `image`
-       // reacts by opening the AssetManager
-       activate: true,
-       copyable:true,
-       attributes: {
+      // Select the component once it's dropped
+      select: true,
+      // You can pass components as a JSON instead of a simple HTML string,
+      // in this case we also use a defined component type `image`
+      content: { type: 'image' },
+      // This triggers `active` event on dropped components and the `image`
+      // reacts by opening the AssetManager
+      activate: true,
+      copyable: true,
+      attributes: {
         title: 'Image',
         // style:'width:40px!important;display:inline'
       },
-     });
-     var textBlock = this.blockManager.add('text', {
+    });
+    var textBlock = this.blockManager.add('text', {
       id: 'text',
       label: `<i class="far fa-text"></i>`,
       content: '<p>Put your title here</p>',
@@ -93,9 +90,9 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     var buttonBlock = this.blockManager.add('button', {
       id: 'button',
       label: '<i class="far fa-rectangle-wide"></i>',
-      content:{
-        type:'link',
-        content:'<button>Button</button>',
+      content: {
+        type: 'link',
+        content: '<button>Button</button>',
       },
       // category: 'Ad Elements',
       attributes: {
@@ -106,7 +103,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       id: 'shape',
       label: 'SHAPE',
       content: {
-        type:'shape',
+        type: 'shape',
       },
       // category: 'Ad Elements',
       attributes: {
@@ -132,8 +129,8 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
         title: 'Logo',
       }
     });
-    this.filtered = [shapeBlock,videoBlock,imageBlock,textBlock,logoBlock,buttonBlock];
-    
+    this.filtered = [shapeBlock, videoBlock, imageBlock, textBlock, logoBlock, buttonBlock];
+
     //To set the base style of the wrapper  
     const $currentIFrame = $('iframe');
     $currentIFrame.contents().find("body").css('overflow', 'hidden');
@@ -144,33 +141,33 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     //This is to update the style in styleManager after drag end in designer mode 
     this.editor.on('stop:core:component-drag', () => { this.editor.trigger('component:toggled') });
     this.setupDragEvent();
-    
+
     this.subscription = this.filterService.getData().subscribe(viewName => {
       let wrapperHeight;
       switch (viewName) {
         case "basic":
-            this.viewLoaded = STYLE.BASIC.VIEW_NAME;
-            this.canvasHeight = STYLE.BASIC.SIZE.CANVAS_HEIGHT;
-            this.canvasWidth = STYLE.BASIC.SIZE.CANVAS_WIDTH;
-            wrapperHeight = STYLE.BASIC.SIZE.HEIGHT;
+          this.viewLoaded = STYLE.BASIC.VIEW_NAME;
+          this.canvasHeight = STYLE.BASIC.SIZE.CANVAS_HEIGHT;
+          this.canvasWidth = STYLE.BASIC.SIZE.CANVAS_WIDTH;
+          wrapperHeight = STYLE.BASIC.SIZE.HEIGHT;
           break;
         case "landscape":
-            this.viewLoaded = STYLE.LANDSCAPE.VIEW_NAME;
-            this.canvasHeight = STYLE.LANDSCAPE.SIZE.CANVAS_HEIGHT;
-            this.canvasWidth = STYLE.LANDSCAPE.SIZE.CANVAS_WIDTH;
-            wrapperHeight = STYLE.LANDSCAPE.SIZE.HEIGHT;
+          this.viewLoaded = STYLE.LANDSCAPE.VIEW_NAME;
+          this.canvasHeight = STYLE.LANDSCAPE.SIZE.CANVAS_HEIGHT;
+          this.canvasWidth = STYLE.LANDSCAPE.SIZE.CANVAS_WIDTH;
+          wrapperHeight = STYLE.LANDSCAPE.SIZE.HEIGHT;
           break;
-          case "portrait":
-            this.viewLoaded = STYLE.PORTRAIT.VIEW_NAME;
-            this.canvasHeight = STYLE.PORTRAIT.SIZE.CANVAS_HEIGHT;
-            this.canvasWidth = STYLE.PORTRAIT.SIZE.CANVAS_WIDTH;
-            wrapperHeight = STYLE.PORTRAIT.SIZE.HEIGHT;
+        case "portrait":
+          this.viewLoaded = STYLE.PORTRAIT.VIEW_NAME;
+          this.canvasHeight = STYLE.PORTRAIT.SIZE.CANVAS_HEIGHT;
+          this.canvasWidth = STYLE.PORTRAIT.SIZE.CANVAS_WIDTH;
+          wrapperHeight = STYLE.PORTRAIT.SIZE.HEIGHT;
           break;
         default:
-            this.viewLoaded = STYLE.BASIC.VIEW_NAME;
-            this.canvasHeight = STYLE.BASIC.SIZE.CANVAS_HEIGHT;
-            this.canvasWidth = STYLE.BASIC.SIZE.CANVAS_WIDTH;
-            wrapperHeight = STYLE.BASIC.SIZE.HEIGHT;
+          this.viewLoaded = STYLE.BASIC.VIEW_NAME;
+          this.canvasHeight = STYLE.BASIC.SIZE.CANVAS_HEIGHT;
+          this.canvasWidth = STYLE.BASIC.SIZE.CANVAS_WIDTH;
+          wrapperHeight = STYLE.BASIC.SIZE.HEIGHT;
           break;
       }
 
@@ -179,67 +176,72 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       myCommand.run();
       this.filterView = viewName;
       const canvas = document.querySelector('.canvas-size');
-      if(this.filterView == 'landscape'){
-        canvas.innerHTML = '728*90';
+      if (this.filterView == STYLE.LANDSCAPE.VIEW_NAME) {
+        canvas.innerHTML = STYLE.LANDSCAPE.SIZE.CANVAS_WIDTH + '*' + STYLE.LANDSCAPE.SIZE.CANVAS_HEIGHT;
+      } else {
+        if (this.filterView == STYLE.PORTRAIT.VIEW_NAME) {
+          canvas.innerHTML = STYLE.PORTRAIT.SIZE.CANVAS_WIDTH + '*' + STYLE.PORTRAIT.SIZE.CANVAS_HEIGHT;
+        }
       }
-      if(this.filterView == 'portrait'){
-        canvas.innerHTML = '300*600';
-      }
-      
-      this.currentIFrame.contents().find("body").css({'overflow':'hidden','height':wrapperHeight});
 
-      this.editor.getWrapper().set({'badgable': false, 'highlightable': false}).setStyle({
+      this.currentIFrame.contents().find("body").css({ 'overflow': 'hidden', 'height': wrapperHeight });
+
+      this.editor.getWrapper().set({ 'badgable': false, 'highlightable': false }).setStyle({
         overflow: 'hidden',
         height: wrapperHeight
       });
     });
   }
 
-  stepInfoClose(){
+  stepInfoClose() {
     this.stepinfoBox = false;
   }
   checkCheckBoxvalue(event) {
   }
- 
+
+  // This is for Send back/front component
   onClickSendBackandFront() {
     let wrapper = this.editor.getWrapper();
     const component = this.editor.getSelected();
     var wrapperChildren = this.editor.getComponents();
     let lastIndex = (wrapperChildren.length) - 1;
-  // const component = this.editor.getSelected();
-  // component.move(wrapper, {at:0});
-    if(this.editor.getSelected()){
+    // commented code for move the component for specific index
+    // const component = this.editor.getSelected();
+    // component.move(wrapper, {at:0});
+    if (this.editor.getSelected()) {
       const idx = component.index();
-      if(idx !== 0 && idx !== undefined){
+      if (idx !== 0 && idx !== undefined) {
         const selectedComponent = component.clone();
         component.remove();
-        wrapper.append(selectedComponent, { at: 0});
+        wrapper.append(selectedComponent, { at: 0 });
         let SelectCollection = this.editor.getComponents();
-        let selectOne = SelectCollection.models[0]
+        let selectOne = SelectCollection.models[0];
         this.editor.select(selectOne);
-      }else{
-        if(idx === 0 && idx !== undefined){
+      } else {
+        if (idx === 0 && idx !== undefined) {
           const selectedComponent = component.clone();
           component.remove();
-          wrapper.append(selectedComponent, { at: lastIndex});
+          wrapper.append(selectedComponent, { at: lastIndex });
           let SelectCollection = this.editor.getComponents();
           let selectLastIndex = (SelectCollection.length) - 1;
-          let selectOne = SelectCollection.models[selectLastIndex]
+          let selectOne = SelectCollection.models[selectLastIndex];
           this.editor.select(selectOne);
         }
       }
     }
-    
+
   }
+
+  // This is for copy the component from canvas
   onClickCopy() {
     const component = this.editor.getSelected();
-    component.clone();
     const em = this.editor.getModel();
     const models = [...this.editor.getSelectedAll()];
     models.length && em.set('clipboard', models);
     this.editor.select(component);
   }
 
+  // This is for remove the component from canvas
   onClickRemoveComponent() {
     const component = this.editor.getSelected();
     component.remove();
@@ -253,7 +255,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     //set buttons to canvas
     this.setButtonsToCanvas();
 
-     // set custom commands
+    // set custom commands
     this.setDeviceToggleCommands();
 
     // set Basic style
@@ -268,31 +270,31 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       container: '#gjs',
       autorender: true,
       forceClass: false,
-      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs,rotatePlugin],
-      avoidInlineStyle:false,
+      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs, rotatePlugin],
+      avoidInlineStyle: false,
       pluginsOpts: {
         grapesjsTabs: {
           // options
         }
       },
-      
+
       components: '',
       style: '',
       deviceManager: {
         devices: [{
-            name: STYLE.BASIC.NAME,
-            width: STYLE.BASIC.SIZE.WIDTH, // default size
-            height: STYLE.BASIC.SIZE.HEIGHT
-        }, 
-        {
-            name: STYLE.LANDSCAPE.NAME,
-            width: STYLE.LANDSCAPE.SIZE.WIDTH, // this value will be used on canvas width
-            height: STYLE.LANDSCAPE.SIZE.HEIGHT
+          name: STYLE.BASIC.NAME,
+          width: STYLE.BASIC.SIZE.WIDTH, // default size
+          height: STYLE.BASIC.SIZE.HEIGHT
         },
         {
-            name: STYLE.PORTRAIT.NAME,
-            width: STYLE.PORTRAIT.SIZE.WIDTH, // this value will be used on canvas width
-            height: STYLE.PORTRAIT.SIZE.HEIGHT
+          name: STYLE.LANDSCAPE.NAME,
+          width: STYLE.LANDSCAPE.SIZE.WIDTH, // this value will be used on canvas width
+          height: STYLE.LANDSCAPE.SIZE.HEIGHT
+        },
+        {
+          name: STYLE.PORTRAIT.NAME,
+          width: STYLE.PORTRAIT.SIZE.WIDTH, // this value will be used on canvas width
+          height: STYLE.PORTRAIT.SIZE.HEIGHT
         }]
       },
       layerManager: {
@@ -334,41 +336,41 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
               'text-align',
               'text-transform',
               'color',
-              
+
             ],
             properties: [
               {
-               property: 'text-align',
-               list: [
-                   { value: 'left', className: 'far fa-align-left' },
-                   { value: 'center', className: 'far fa-align-center'},
-                   { value: 'right', className: 'far fa-align-right' },
-               ],
-            },
-            {
-              property: 'font-size',
-              name: 'SIZE',
-            },
-            {
-              property: 'letter-spacing',
-              name: 'SPACING',
-            },
-            {
-              property: 'color',
-              name: 'COLOR',
-              list: [
-                { name:'HEX' },
-              ],
-            },
-            {
-              property: 'text-transform',
-              type: 'radio',
-              name: 'TEXT STYLE',
-              list: [
-                  { value: 'capitalize', name:'Aa' },
-                  { value: 'uppercase', name:'AA'}
-              ],
-            }],
+                property: 'text-align',
+                list: [
+                  { value: 'left', className: 'far fa-align-left' },
+                  { value: 'center', className: 'far fa-align-center' },
+                  { value: 'right', className: 'far fa-align-right' },
+                ],
+              },
+              {
+                property: 'font-size',
+                name: 'SIZE',
+              },
+              {
+                property: 'letter-spacing',
+                name: 'SPACING',
+              },
+              {
+                property: 'color',
+                name: 'COLOR',
+                list: [
+                  { name: 'HEX' },
+                ],
+              },
+              {
+                property: 'text-transform',
+                type: 'radio',
+                name: 'TEXT STYLE',
+                list: [
+                  { value: 'capitalize', name: 'Aa' },
+                  { value: 'uppercase', name: 'AA' }
+                ],
+              }],
           },
         ],
       },
@@ -392,65 +394,65 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
   setDefaultView() {
     this.commands.run(STYLE.BASIC.VIEW_NAME);
     this.currentIFrame = $('iframe');
-    this.currentIFrame.contents().find("body").css({'overflow':'hidden','height':STYLE.BASIC.SIZE.HEIGHT});
+    this.currentIFrame.contents().find("body").css({ 'overflow': 'hidden', 'height': STYLE.BASIC.SIZE.HEIGHT });
   }
 
   setupDragEvent() {
     //Track Drag Event of component
     this.editor.on('component:drag', (component) => {
-        var domElement = this.editor.getSelected();
-        let selectedEleWidth = this.currentIFrame.contents().find("body #wrapper .gjs-selected").width();
+      var domElement = this.editor.getSelected();
+      let selectedEleWidth = this.currentIFrame.contents().find("body #wrapper .gjs-selected").width();
 
-        if(domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
-            var domElementStyle = this.editor.getSelected().getStyle();
-            domElementStyle.left = '0px'
-            this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
-          var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.top = '0px'
-          this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().left) > this.canvasWidth) {
-          var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.left = (this.canvasWidth - 15) + 'px'; //'245px'
-         this.editor.getSelected().setStyle({...domElementStyle});
-        }
-        if(domElement !== undefined && parseInt(domElement.getStyle().top) > (this.canvasHeight - 20)) {
-         var domElementStyle = this.editor.getSelected().getStyle();
-          domElementStyle.top = (this.canvasHeight - 22) + 'px'; //'228px'
-          this.editor.getSelected().setStyle({...domElementStyle});
-        }
-      });
+      if (domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.left = '0px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
+      }
+      if (domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.top = '0px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
+      }
+      if (domElement !== undefined && parseInt(domElement.getStyle().left) > this.canvasWidth) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.left = (this.canvasWidth - 15) + 'px'; //'245px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
+      }
+      if (domElement !== undefined && parseInt(domElement.getStyle().top) > (this.canvasHeight - 20)) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.top = (this.canvasHeight - 22) + 'px'; //'228px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
+      }
+    });
 
     //Drag End Event of component 
     this.editor.on('component:drag:end', (component) => {
       var domElement = this.editor.getSelected().getStyle();
       //const style = window.getComputedStyle(domElement)
-     const wrapperHeight = this.currentIFrame.contents().find("body #wrapper").height();
+      const wrapperHeight = this.currentIFrame.contents().find("body #wrapper").height();
 
       // To check if the element is going out of canvas from bottom limit
-      if(parseInt(domElement.top) > this.canvasHeight ) {
-         domElement.top = this.canvasHeight*95/100;
-         this.editor.getSelected().setStyle({...domElement})
+      if (parseInt(domElement.top) > this.canvasHeight) {
+        domElement.top = this.canvasHeight * 95 / 100;
+        this.editor.getSelected().setStyle({ ...domElement })
       }
 
       // To check if the element is going out of canvas from left limit
-      if(domElement !== undefined && parseInt(domElement.left) < 0) {
+      if (domElement !== undefined && parseInt(domElement.left) < 0) {
         domElement.left = '0px'
-        this.editor.getSelected().setStyle({...domElement});
+        this.editor.getSelected().setStyle({ ...domElement });
       }
-      if(domElement !== undefined && parseInt(domElement.top) < 0) {
+      if (domElement !== undefined && parseInt(domElement.top) < 0) {
         domElement.top = '0px'
-        this.editor.getSelected().setStyle({...domElement});
+        this.editor.getSelected().setStyle({ ...domElement });
       }
-      if(domElement !== undefined && parseInt(domElement.left) > this.canvasWidth) {
+      if (domElement !== undefined && parseInt(domElement.left) > this.canvasWidth) {
         domElement.left = (this.canvasWidth - 5) + 'px' //'245px'
-        this.editor.getSelected().setStyle({...domElement});
+        this.editor.getSelected().setStyle({ ...domElement });
       }
-      if(domElement !== undefined && parseInt(domElement.top) > (this.canvasHeight - 15)) {
+      if (domElement !== undefined && parseInt(domElement.top) > (this.canvasHeight - 15)) {
         domElement.top = (this.canvasHeight - 22) + 'px' //'228px'
-        this.editor.getSelected().setStyle({...domElement});
+        this.editor.getSelected().setStyle({ ...domElement });
       }
     });
   }
@@ -461,7 +463,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     /*Custom Commands added to toggle view of ad sizes*/
     this.commands.add(STYLE.BASIC.VIEW_NAME, {
       run: editor => this.editor.setDevice(STYLE.BASIC.NAME)
-      
+
     });
     this.commands.add(STYLE.LANDSCAPE.VIEW_NAME, {
       run: editor => this.editor.setDevice(STYLE.LANDSCAPE.NAME)
@@ -471,32 +473,34 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     });
   }
 
-  setButtonsToCanvas(){
+  // This is for adding the buttons copy, delete and send front/back and canvas size in canvas 
+  setButtonsToCanvas() {
     const el = document.createElement('div');
-      el.className = 'tool-buttons';
-      el.innerHTML = `
+    el.className = 'tool-buttons';
+    el.innerHTML = `
       <button class="rotate-btn btn-front" title="Set to Front"><i class="fal fa-copy"></i></button>
       <button class="rotate-btn btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
       <button class="rotate-btn btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
       <div id="canvas-size" class="canvas-size"></div>`;
-      const buttonBack = el.querySelector('.btn-back');
-      const buttonFront = el.querySelector('.btn-front');
-      const buttonDelete = el.querySelector('.btn-delete');
-      const canvas = el.querySelector('#canvas-size');
-      if(this.filterView == 'basic'){
-        canvas.innerHTML = '300*250';
-      }
+    const buttonBack = el.querySelector('.btn-back');
+    const buttonFront = el.querySelector('.btn-front');
+    const buttonDelete = el.querySelector('.btn-delete');
+    const canvas = el.querySelector('#canvas-size');
 
-      buttonBack.addEventListener('click', (event) =>{
-        this.onClickCopy();
-      });
-      buttonFront.addEventListener('click', (e) =>{
-        this.onClickSendBackandFront();
-      });
-      buttonDelete.addEventListener('click', (e) =>{
-        this.onClickRemoveComponent();
-      });
-      document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
+    if (this.filterView == STYLE.BASIC.VIEW_NAME) {
+      canvas.innerHTML = STYLE.BASIC.SIZE.CANVAS_WIDTH + '*' + STYLE.BASIC.SIZE.CANVAS_HEIGHT;
+    }
+
+    buttonBack.addEventListener('click', (event) => {
+      this.onClickCopy();
+    });
+    buttonFront.addEventListener('click', (e) => {
+      this.onClickSendBackandFront();
+    });
+    buttonDelete.addEventListener('click', (e) => {
+      this.onClickRemoveComponent();
+    });
+    document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
   }
 }
 
