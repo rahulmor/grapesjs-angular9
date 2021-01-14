@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
+import { FilterService } from './../../services/filter.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -8,7 +9,9 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ HomeComponent ],
+      providers: [FilterService],
     })
     .compileComponents();
   }));
