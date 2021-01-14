@@ -689,3 +689,45 @@ body{
 .rotate-btn > *{
   pointer-events: none;
 }
+
+.tool-buttons{
+  position: absolute;
+  right: -40px;
+  height: 100%;
+}
+.tool-buttons button{
+  display: block;
+  font-size: 16px;
+  color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 3px 6px 0 #555a67;
+  background-color: #7a808d;
+  margin-bottom: 5px;
+  border: none;
+  i{
+    opacity: 0.5;
+  }
+}
+.tool-buttons button.btn-delete{
+  bottom: 0px;
+  position: absolute;
+}
+.tool-buttons #canvas-size{
+  position: absolute;
+  left: -307px;
+  bottom: -21px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #56bce5;
+}
+.tool-buttons .canvas-size-landscape{
+  left: -757px;
+}
+
+.editor.landscape{
+  .tool-buttons{
+    #canvas-size{
+      left: -733px;
+    }
+  } 
+}
