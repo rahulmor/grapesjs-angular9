@@ -7,6 +7,7 @@ import { FilterService } from './../../services/filter.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  showDiv = false;
   public filterView: string = 'basic';
   public style_nav: boolean = false;
   constructor(private filterService: FilterService) {}
@@ -32,6 +33,9 @@ export class HeaderComponent implements OnInit {
     this.filterService.sendData(viewName);
   }
   messageExit(){
-    alert('Not be able to save unless you "Generate all styles"');
+    this.showDiv = true;
+  }
+  messageDismiss(){
+    this.showDiv = false;
   }
 }

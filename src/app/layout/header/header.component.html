@@ -15,6 +15,9 @@
     </div>
     <button class="btn button-exit" (click)="messageExit()">Exit</button>
 </nav>
-<!-- <div class="alert alert-primary" role="alert">
-    This is a primary alert—check it out!
-  </div> -->
+<div *ngIf='showDiv == true'>
+    <div class="alert alert-primary" role="alert">
+        <button type="button" class="close" data-dismiss="alert" (click)="messageDismiss()">&times;</button>
+        Not be able to save unless you "Generate all styles
+    </div>
+</div>

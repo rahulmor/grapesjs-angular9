@@ -95,3 +95,8 @@
     color: #40b541;
     margin-right: 12px;
 }
+
+.alert{
+    top: -50%; /*Put it on the very top*/
+    transition: all .5s ease-in-out; /*make it smooth*/
+}

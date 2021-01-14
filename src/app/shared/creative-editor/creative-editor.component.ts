@@ -76,6 +76,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
        // This triggers `active` event on dropped components and the `image`
        // reacts by opening the AssetManager
        activate: true,
+       copyable:true,
        attributes: {
         title: 'Image',
         // style:'width:40px!important;display:inline'
@@ -207,24 +208,36 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
     let lastIndex = (wrapperChildren.length) - 1;
   // const component = this.editor.getSelected();
   // component.move(wrapper, {at:0});
-  if(this.editor.getSelected()){
-    const idx = component.index();
-    if(idx !== 0 && idx !== undefined){
-      const selectedComponent = component.clone();
-      component.remove();
-      wrapper.append(selectedComponent, { at: 0});
-    }else{
-      if(idx === 0 && idx !== undefined){
+    if(this.editor.getSelected()){
+      const idx = component.index();
+      if(idx !== 0 && idx !== undefined){
         const selectedComponent = component.clone();
         component.remove();
-        wrapper.append(selectedComponent, { at: lastIndex});
+        wrapper.append(selectedComponent, { at: 0});
+        let SelectCollection = this.editor.getComponents();
+        let selectOne = SelectCollection.models[0]
+        this.editor.select(selectOne);
+      }else{
+        if(idx === 0 && idx !== undefined){
+          const selectedComponent = component.clone();
+          component.remove();
+          wrapper.append(selectedComponent, { at: lastIndex});
+          let SelectCollection = this.editor.getComponents();
+          let selectLastIndex = (SelectCollection.length) - 1;
+          let selectOne = SelectCollection.models[selectLastIndex]
+          this.editor.select(selectOne);
+        }
       }
     }
-  }
+    
   }
   onClickCopy() {
     const component = this.editor.getSelected();
     component.clone();
+    const em = this.editor.getModel();
+    const models = [...this.editor.getSelectedAll()];
+    models.length && em.set('clipboard', models);
+    this.editor.select(component);
   }
 
   onClickRemoveComponent() {
@@ -463,7 +476,7 @@ export class CreativeEditorComponent implements OnInit,AfterViewInit,OnDestroy  
       el.className = 'tool-buttons';
       el.innerHTML = `
       <button class="rotate-btn btn-front" title="Set to Front"><i class="fal fa-copy"></i></button>
-      <button class="rotate-btn btn-back"  title="Send to Back"><i class="fal fa-clone"></i></button>
+      <button class="rotate-btn btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
       <button class="rotate-btn btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
       <div id="canvas-size" class="canvas-size"></div>`;
       const buttonBack = el.querySelector('.btn-back');
