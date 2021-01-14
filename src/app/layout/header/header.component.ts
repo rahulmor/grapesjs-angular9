@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   showDiv = false;
   public filterView: string = 'basic';
   public style_nav: boolean = false;
-  constructor(private filterService: FilterService) {}
+  constructor(private filterService: FilterService) { }
 
   ngOnInit(): void {
     this.filterService.data.subscribe((data) => {
@@ -32,10 +32,13 @@ export class HeaderComponent implements OnInit {
   sendData(viewName) {
     this.filterService.sendData(viewName);
   }
-  messageExit(){
+  //Exit button message Div
+  messageExit() {
     this.showDiv = true;
   }
-  messageDismiss(){
+
+  //delete message Div on click of cross
+  messageDismiss() {
     this.showDiv = false;
   }
 }
