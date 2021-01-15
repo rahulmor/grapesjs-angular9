@@ -711,6 +711,7 @@ body{
 .tool-buttons button.btn-delete{
   bottom: 0px;
   position: absolute;
+  right: 0px;
 }
 .tool-buttons #canvas-size{
   position: absolute;
@@ -727,7 +728,44 @@ body{
 .editor.landscape{
   .tool-buttons{
     #canvas-size{
-      left: -733px;
+      left: -727px;
+    }
+    .btn-front{
+      left: -766px;
+      position: absolute;
+    }
+    .btn-back{
+      position: absolute;
+      display: block;
+      left: -766px;
+      top: 40px;
+    }
+    .btn-delete{
+      position: absolute;
+      right: -41px;
+      top: 0;
+    }
+  } 
+  .gjs-frame-wrapper{
+    iframe{
+      left: 41px;
+    }
+  }
+}
+.editor.portrait{
+  .tool-buttons{
+    .btn-front{
+      left: -380px;
+      position: absolute;
+    }
+    .btn-back{
+      position: absolute;
+      display: block;
+      left: -380px;
+      top: 40px;
+    }
+    #canvas-size{
+      left: -337px;
     }
   } 
 }

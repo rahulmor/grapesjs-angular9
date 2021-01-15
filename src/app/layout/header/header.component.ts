@@ -36,7 +36,6 @@ export class HeaderComponent implements OnInit {
   messageExit() {
     this.showDiv = true;
   }
-
   //delete message Div on click of cross
   messageDismiss() {
     this.showDiv = false;
