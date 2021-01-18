@@ -103,13 +103,13 @@
   border: dashed 2px #555a67;
 }
 .dropzone-desc {
-  position: absolute;
+  position: relative;
   margin: 0 auto;
   left: 0;
   right: 0;
   text-align: center;
   width: 40%;
-  top: 200px;
+  top: 100px;
   font-size: 16px;
 }
 .dropzone,
@@ -124,5 +124,31 @@
 
 .dropzone-wrapper:hover,
 .dropzone-wrapper.dragover {
-  background: #ecf0f5;
+  background: $mainColor;
+}
+.upload-icon{
+  font-size: 3em;
+  color:#3f434c;
+}
+.upload-text{
+  color:#3f434c;
+}
+.select-image{
+  width: 215px;
+  height: 40px;
+  margin: 10px 0 0;
+  padding: 9px 59px 10px 58px;
+  opacity: 0.5;
+  border-radius: 3px;
+  border: solid 1px #50545e;
+  background-color: #a2a7b3;
+  font-family: IBM Plex Sans;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: $secondaryColor;
 }
