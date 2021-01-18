@@ -267,7 +267,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     // setup drag event
     this.setupDragEvent();
 
-    //Decimal Point
+    //Decimal Point validation
     const decimalContainer = document.querySelector('#gjs-sm-left');
     const decimalInput = decimalContainer.querySelector('input');
     decimalInput.addEventListener('keyup', (e) => {
