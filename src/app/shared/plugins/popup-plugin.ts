@@ -87,10 +87,10 @@ export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options)
         </button>
       </div>
       </div>`;
-      const inputEl = el.querySelectorAll('.my-input');
-      for (let i = 0; i < inputEl.length; ++i) {
+      const buttonEl = el.querySelectorAll('.my-input');
+      for (let i = 0; i < buttonEl.length; ++i) {
         // click will trigger the emit
-        inputEl[i].addEventListener('click', event => {
+        buttonEl[i].addEventListener('click', event => {
           if (editor.getSelected() == undefined) {
             console.log('no item selected', event);
             return;
@@ -105,8 +105,8 @@ export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options)
     emit: ({ props, updateStyle }, { event, complete }) => {
       const { dataset } = event.target;
       const valueRes = dataset.value;
-      let width = editor.getSelected().view.$el[0].offsetWidth;
-      let height = editor.getSelected().view.$el[0].offsetHeight;
+      let elWidth = editor.getSelected().view.$el[0].offsetWidth;
+      let elHeight = editor.getSelected().view.$el[0].offsetHeight;
       // Pass a string value for the exact CSS property or an object containing multiple properties
       // eg. updateStyle({ [props.property]: valueRes, color: 'red' });
 
@@ -116,32 +116,32 @@ export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options)
       switch (valueRes) {
         case 'left':
           editor.getSelected().setStyle({ ...style });
-          updateStyle({ left: '0px', width: width + 'px', height: height + 'px' }, { complete });
+          updateStyle({ left: '0px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
         case 'center':
-          sideVal = (300 - width) / 2;
+          sideVal = (300 - elWidth) / 2;
           editor.getSelected().setStyle({ ...style });
-          updateStyle({ left: sideVal + 'px', width: width + 'px', height: height + 'px', margin: 'auto' }, { complete });
+          updateStyle({ left: sideVal + 'px', width: elWidth + 'px', height: elHeight + 'px', margin: 'auto' }, { complete });
           break;
         case 'right':
-          sideVal = (300 - width);
+          sideVal = (300 - elWidth);
           editor.getSelected().setStyle({ ...style });
-          updateStyle({ left: sideVal + 'px', width: width + 'px', height: height + 'px' }, { complete });
+          updateStyle({ left: sideVal + 'px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
         case 'top':
-          sideVal = (250 - height);
+          sideVal = (250 - elWidth);
           editor.getSelected().setStyle({ ...style });
-          updateStyle({ top: '0px', width: width + 'px', height: height + 'px' }, { complete });
+          updateStyle({ top: '0px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
         case 'middle':
-          sideVal = (250 - height) / 2;
+          sideVal = (250 - elHeight) / 2;
           editor.getSelected().setStyle({ ...style });
-          updateStyle({ top: sideVal + 'px', width: width + 'px', height: height + 'px' }, { complete });
+          updateStyle({ top: sideVal + 'px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
         case 'bottom':
-          sideVal = (250 - height);
+          sideVal = (250 - elHeight);
           editor.getSelected().setStyle({ ...style });
-          updateStyle({ top: sideVal + 'px', width: width + 'px', height: height + 'px' }, { complete });
+          updateStyle({ top: sideVal + 'px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
       }
     },
