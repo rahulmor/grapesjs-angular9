@@ -260,3 +260,9 @@ $layerNameSpacing: 5px !default;
     display: none !important;
   }
 } 
+.gjs-layer.gjs-selected .gjs-layer-title{
+  padding-left: 30px !important;
+}
+.gjs-layer-children .gjs-layer .gjs-layer-title{
+  padding-left: 30px !important;
+}
