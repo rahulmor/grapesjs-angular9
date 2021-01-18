@@ -249,3 +249,20 @@ $layerNameSpacing: 5px !default;
     }
   }
 }
+.gjs-layer__t-wrapper .gjs-layer-children{
+  .gjs-layer-caret{
+    display: none;
+  }
+  .gjs-layer-count{
+    display: none;
+  }
+  .gjs-layer-children{
+    display: none !important;
+  }
+} 
+.gjs-layer.gjs-selected .gjs-layer-title{
+  padding-left: 30px !important;
+}
+.gjs-layer-children .gjs-layer .gjs-layer-title{
+  padding-left: 30px !important;
+}
