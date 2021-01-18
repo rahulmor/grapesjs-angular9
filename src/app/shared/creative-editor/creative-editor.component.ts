@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Renderer2, OnDestroy, HostListener } from '@angular/core';
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
@@ -15,7 +15,7 @@ import { STYLE } from './../constants/builder.constants';
   styleUrls: ['./creative-editor.component.css']
 })
 export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
-  
+
   public filterView: string = 'basic';
   public element;
   private _editor: any;
@@ -41,7 +41,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
   get editor() {
     return this._editor;
   }
-
+ 
 
   ngOnInit(): void {
 
@@ -92,7 +92,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       label: '<i class="far fa-rectangle-wide"></i>',
       content: {
         type: 'link',
-        content: '<button>Button</button>',
+        content: '<button> Button</button>',
       },
       // category: 'Ad Elements',
       attributes: {
@@ -183,13 +183,17 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
           canvas.innerHTML = STYLE.PORTRAIT.SIZE.CANVAS_WIDTH + '*' + STYLE.PORTRAIT.SIZE.CANVAS_HEIGHT;
         }
       }
-
       this.currentIFrame.contents().find("body").css({ 'overflow': 'hidden', 'height': wrapperHeight });
 
       this.editor.getWrapper().set({ 'badgable': false, 'highlightable': false }).setStyle({
         overflow: 'hidden',
         height: wrapperHeight
       });
+    });
+    this.editor.on('component:selected', () => {
+      const component = this.editor.getSelected();
+      const element = component.getEl();
+      console.log(element.innerHTML);
     });
   }
 
@@ -263,6 +267,30 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
 
     // setup drag event
     this.setupDragEvent();
+    this.decimalValidate();
+
+    
+    const buttonBack = document.querySelector('#gjs-sm-left');
+    const b = buttonBack.querySelector('input');
+    const c = b.value;
+    console.log(c);
+  
+    b.addEventListener('keyup', (e) => {
+      const c = b.value;
+      console.log(c);
+      var unicode = e.charCode ? e.charCode : e.keyCode;
+      console.log(c.indexOf("."));
+      if (c.indexOf(".") != -1){
+        if (unicode == 46){
+          return false;
+        }
+      }
+      if (unicode != 8){
+        if ((unicode < 48 || unicode > 57) && unicode != 46){
+          return false;
+        }
+      }
+    });
   }
 
   private initializeEditor(): any {
@@ -475,10 +503,11 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
 
   // This is for adding the buttons copy, delete and send front/back and canvas size in canvas 
   setButtonsToCanvas() {
+   
     const el = document.createElement('div');
     el.className = 'tool-buttons';
     el.innerHTML = `
-      <button class="rotate-btn btn-front" title="Set to Front"><i class="fal fa-copy"></i></button>
+      <button class="rotate-btn btn-front" title="Set to Front/Back"><i class="fal fa-copy"></i></button>
       <button class="rotate-btn btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
       <button class="rotate-btn btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
       <div id="canvas-size" class="canvas-size"></div>`;
@@ -501,6 +530,14 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       this.onClickRemoveComponent();
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
+    }
+
+    checkDecimal(e, value){
+     
+    }
+  decimalValidate(){
+     
   }
 }
+
 

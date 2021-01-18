@@ -249,3 +249,14 @@ $layerNameSpacing: 5px !default;
     }
   }
 }
+.gjs-layer__t-wrapper .gjs-layer-children{
+  .gjs-layer-caret{
+    display: none;
+  }
+  .gjs-layer-count{
+    display: none;
+  }
+  .gjs-layer-children{
+    display: none !important;
+  }
+} 
