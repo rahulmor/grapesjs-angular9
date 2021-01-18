@@ -1,37 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+  loginData = [];
 
-  private API_SERVER = "https://api-test.plista.com/se/authorization/login_check";
+  // private API_SERVER = "https://api-test.plista.com/se/authorization/login_check";
+
+  private API_SERVER = "http://localhost:3000/login_check";
+  
   private USER_SERVER = "https://api-test.plista.com/se/users/me";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router,) { }
 
   public sendGetRequest(){
-    return this.http.get(this.API_SERVER);
+    return this.http.get(this.API_SERVER,{withCredentials:true});
   }
   public sendGetRequestUser(){
     return this.http.get(this.USER_SERVER);
   }
 
   login_check(){
-    const data =  this.http.get<any>(this.API_SERVER).subscribe(resp=>{
-      console.log("resp==",resp);
-      return resp;
-    });
-    console.log("resp data==",data);
-    return data;
+    return this.http.get<any>(this.API_SERVER);
   }
   users_login(){
-    const data =  this.http.get<any>(this.USER_SERVER).subscribe(resp1=>{
-      console.log("user resp==",resp1);
+    const data =  this.http.get(this.USER_SERVER).subscribe(resp1=>{
       return resp1;
     });
-    console.log("resp user data==",data);
     return data;
   }
 }

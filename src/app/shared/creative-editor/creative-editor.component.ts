@@ -193,7 +193,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     this.editor.on('component:selected', () => {
       const component = this.editor.getSelected();
       const element = component.getEl();
-      console.log(element.innerHTML);
     });
   }
 
@@ -267,20 +266,14 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
 
     // setup drag event
     this.setupDragEvent();
-    this.decimalValidate();
 
-    
-    const buttonBack = document.querySelector('#gjs-sm-left');
-    const b = buttonBack.querySelector('input');
-    const c = b.value;
-    console.log(c);
-  
-    b.addEventListener('keyup', (e) => {
-      const c = b.value;
-      console.log(c);
+    //Decimal Point
+    const decimalContainer = document.querySelector('#gjs-sm-left');
+    const decimalInput = decimalContainer.querySelector('input');
+    decimalInput.addEventListener('keyup', (e) => {
+      const inputValue = decimalInput.value;
       var unicode = e.charCode ? e.charCode : e.keyCode;
-      console.log(c.indexOf("."));
-      if (c.indexOf(".") != -1){
+      if (inputValue.indexOf(".") != -1){
         if (unicode == 46){
           return false;
         }
@@ -531,13 +524,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
     }
-
-    checkDecimal(e, value){
-     
-    }
-  decimalValidate(){
-     
-  }
 }
 
 
