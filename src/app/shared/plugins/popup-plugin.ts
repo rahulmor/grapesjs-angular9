@@ -103,6 +103,8 @@ export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options)
       return el;
     },
     emit: ({ props, updateStyle }, { event, complete }) => {
+      const canvasWrapperHtml = document.getElementById("gjs");
+      let canvasWrapper = canvasWrapperHtml.querySelectorAll(".gjs-frame-wrapper");
       const { dataset } = event.target;
       const valueRes = dataset.value;
       let elWidth = editor.getSelected().view.$el[0].offsetWidth;
@@ -119,22 +121,22 @@ export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options)
           updateStyle({ left: '0px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
         case 'center':
-          sideVal = (300 - elWidth) / 2;
+          sideVal = (canvasWrapper[0].clientWidth - elWidth) / 2;
           editor.getSelected().setStyle({ ...style });
           updateStyle({ left: sideVal + 'px', width: elWidth + 'px', height: elHeight + 'px', margin: 'auto' }, { complete });
           break;
         case 'right':
-          sideVal = (300 - elWidth);
+          sideVal = (canvasWrapper[0].clientWidth - elWidth);
           editor.getSelected().setStyle({ ...style });
           updateStyle({ left: sideVal + 'px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
         case 'top':
-          sideVal = (250 - elWidth);
+          sideVal = (canvasWrapper[0].clientHeight - elHeight);
           editor.getSelected().setStyle({ ...style });
           updateStyle({ top: '0px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
         case 'middle':
-          sideVal = (250 - elHeight) / 2;
+          sideVal = (canvasWrapper[0].clientHeight - elHeight) / 2;
           editor.getSelected().setStyle({ ...style });
           updateStyle({ top: sideVal + 'px', width: elWidth + 'px', height: elHeight + 'px' }, { complete });
           break;
