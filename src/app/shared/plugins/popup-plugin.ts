@@ -97,15 +97,15 @@ export default grapesjs.plugins.add(
       // modalContent.setAttribute("style", `.active { background-color: #7a808d; }`);
       modalContent.innerHTML = `<div>
       <ul class="nav nav-tabs image-upload-modal" role="tablist">
-        <li role="presentation" class="tab-menu active" >
+        <li role="presentation" class="tab-menu active" id="default-image" >
             <a href="#image" aria-controls="image" id="tab-image" role="tab" data-toggle="tab"><i class="far fa-image"></i>&nbsp;&nbsp;SELECT IMAGE</a>     </li>
-        <li role="presentation" class="tab-menu" >
+        <li role="presentation" class="tab-menu" id="insta-image">
             <a href="#instagram" id="tab-insta" aria-controls="instagram" role="tab" data-toggle="tab">Instagram</a>
         </li>
-        <li role="presentation" class="tab-menu" >
+        <li role="presentation" class="tab-menu" id="unsplash-image">
             <a href="#unsplash" id="tab-unsplash" aria-controls="unsplash" role="tab" data-toggle="tab">Unsplash</a>
         </li>
-        <li role="presentation" class="tab-menu" >
+        <li role="presentation" class="tab-menu" id="shutter-image">
             <a href="#shutterstock" id="tab-shutterstock" aria-controls="shutterstock" role="tab" data-toggle="tab">Shutterstock</a>
         </li>
       </ul>
@@ -120,7 +120,7 @@ export default grapesjs.plugins.add(
               </div>
               <input type="file" name="img_logo" class="dropzone"></div>
         </div>
-        <div role="tabpanel" class="tab-pane " id="instagram">Instagram</div>
+        <div role="tabpanel" class="tab-pane" id="instagram">Instagram</div>
         <div role="tabpanel" class="tab-pane" id="unsplash">Unsplash</div>
         <div role="tabpanel" class="tab-pane" id="shutterstock">Shutterstock</div>
       </div>
@@ -128,24 +128,15 @@ export default grapesjs.plugins.add(
     `;
     const tab_menu = modalContent.querySelectorAll('.image-upload-modal > li');
     const tab = modalContent.querySelector('.tab-menu')
-    console.log("tab menu=",tab_menu);
     tab.classList.remove('active');
+    tab_menu[0].classList.add('active');
     tab_menu.forEach(currenttab => {
-      console.log("currenttab=",currenttab);
-      
+      let curTab = currenttab.querySelectorAll('a');
       currenttab.addEventListener("click", event => {
-        tab.classList.remove('active');
-        currenttab.classList.remove('active');
-        console.log("id=",(<HTMLElement>event.target).id)
-        tab.classList.add('active');
+        tab_menu.forEach(removeClassEle => {
+          removeClassEle.classList.remove('active');
+        });
         currenttab.classList.add('active');
-        // document.getElementById((<HTMLElement>event.target).id).classList.toggle('active');
-        // if (currenttab.classList.contains('active') ){
-        //   console.log("is active=")
-        //   currenttab.classList.remove('active');
-        // }
-        //   console.log("not active");
-        //   currenttab.classList.add('active');
       });
     });
     
