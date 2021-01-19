@@ -100,3 +100,6 @@
     top: -50%; /*Put it on the very top*/
     transition: all .5s ease-in-out; /*make it smooth*/
 }
+.navbar{
+    padding: .5rem 1.5rem;
+}

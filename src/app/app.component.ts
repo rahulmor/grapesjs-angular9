@@ -19,6 +19,6 @@ export class AppComponent {
           window.location.href = 'https://login-test.plista.com/de/';
         }
       });
-     }, 15000);
+     }, 150000);
   }
 }
