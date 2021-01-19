@@ -19,16 +19,6 @@
     border-radius: 5px;
     box-shadow: 0 3px 10px 6px rgba(48, 52, 60, 0.4);
     background-color: $mainColor;
-    // text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.05);
-    // animation: #{$app-prefix}slide-down 0.215s;
-    // margin: auto;
-    // max-width: 850px;
-    // width: 90%;
-    // border-radius: 3px;
-    // font-weight: lighter;
-    // position: relative;
-    // z-index: 2;
-    // background-color: #7a808d;
   }
 
   &title {
@@ -55,7 +45,6 @@
 
   &header {
     position: relative;
-    // border-bottom: 1px solid $mainDkColor;
     padding: 0px;
   }
 }
@@ -92,7 +81,6 @@
       letter-spacing: normal;
       color: $bodyBgColor;
       text-decoration: none;
-      // pointer-events: none;
     }
   }
 }

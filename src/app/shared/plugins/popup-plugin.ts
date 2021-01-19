@@ -56,7 +56,6 @@ export default grapesjs.plugins.add(
       tab.classList.remove('active');
       tab_menu[0].classList.add('active');
       tab_menu.forEach((currenttab) => {
-        // let curTab = currenttab.querySelectorAll('a');
         currenttab.addEventListener('click', (event) => {
           tab_menu.forEach((removeClassEle) => {
             removeClassEle.classList.remove('active');
