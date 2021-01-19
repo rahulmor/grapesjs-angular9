@@ -1,7 +1,7 @@
 <div class="container-fluid">
-<div class="row" style="margin-top: 61px;">
-  <div class="col-md-3">
-    <div *ngIf="stepinfoBox" class="step-info">
+    <div class="row" style="margin-top: 61px;">
+        <div class="col-md-3">
+            <!-- <div *ngIf="stepinfoBox" class="step-info">
       <span class="step-info-text">LETS GET STARTED</span>
       <p class="step-info-header">The Basic Style</p>
       <p class="step-info-content">
@@ -9,7 +9,6 @@
         your own.
       </p>
       <button class="step-info-button" (click)="stepInfoClose()"><span class="btn-close">Close</span></button>
-      <!-- <div class="form-check close-checkbox"> -->
         <input
           class="check-input"
           type="checkbox"
@@ -19,31 +18,31 @@
         <label class="form-check-label checkbox-text" for="flexCheckDefault">
           Dont show next time
         </label>
-      <!-- </div> -->
-    </div>
-    <div class="block-manager">
-      <p class="block-text">AD ELEMENTS</p>
-      <button class="ad-element-button">
+    </div> -->
+            <div class="block-manager">
+                <!--Commented as per client feedback, can be use in future -->
+                <p class="block-text">AD ELEMENTS</p>
+      <!-- <button class="ad-element-button">
         <i class="fa fa-plus" style="margin-right: 20%;margin-left: -20%;"></i><span class="ad-element-btn-text">Add Element</span>
-      </button>
-      <div #customid class="block-manager-gjs"></div>
-      <!-- <hr style="border:1px solid #626875;width:114%;">  -->
-      <!-- <button class="btn ad-button"><i class="fa fa-plus" style="margin-right:20%;margin-left:-45%;"></i>Square</button>
+      </button> -->
+                <div #customid class="block-manager-gjs"></div>
+                <!-- <hr style="border:1px solid #626875;width:114%;">  -->
+                <!-- <button class="btn ad-button"><i class="fa fa-plus" style="margin-right:20%;margin-left:-45%;"></i>Square</button>
                 <button class="btn ad-button"><i class="fa fa-circle" style="margin-right:20%;margin-left:-50%;"></i>Circle</button>
                 <button class="btn ad-button"><i class="fa fa-plus" style="margin-right:20%;margin-left:-30%;"></i>CLICK HERE</button>
                 <button class="btn ad-button"><i class="fa fa-plus" style="margin-right:20%;margin-left:-20%;"></i>CREATIVE4LIVE</button> -->
                 <div class="">
                     <div id="layers-container" class="layers-container"></div>
-                  </div> 
+                </div>
             </div>
-  </div>
-  <div class="col-md-6">
-    <div id="gjs" class="editor {{viewLoaded}}">
-      <h1>My Component!</h1>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <!--<div class="card block-manager">
+        </div>
+        <div class="col-md-6">
+            <div id="gjs" class="editor {{viewLoaded}}">
+                <h1>My Component!</h1>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <!--<div class="card block-manager">
                 <div class="upper-button">
                     <button class="btn align-button" (click)="onClickAlignLeft()"><i class="fa fa-align-left" aria-hidden="true"></i></button>
                     <button class="btn align-button" (click)="onClickAlignCenter()"><i class="fa fa-align-center" aria-hidden="true"></i></button>
@@ -85,7 +84,7 @@
                   </div>
                   <div id="traits-container"></div>
                   <div id="style-manager-container"></div> -->
-          <div #styletext></div>
+            <div #styletext></div>
         </div>
-      </div>
+    </div>
 </div>

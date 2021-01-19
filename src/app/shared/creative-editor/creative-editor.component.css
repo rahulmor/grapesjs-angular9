@@ -191,3 +191,7 @@
   background-color: #424752;
   height: 10%;
 }
+.button-tool .btn{
+    border: 1px solid #000;
+    background: #ddd;
+}

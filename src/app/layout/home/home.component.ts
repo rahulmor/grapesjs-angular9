@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { FilterService } from './../../services/filter.service';
 @Component({
   selector: 'app-home',
@@ -9,13 +9,11 @@ import { FilterService } from './../../services/filter.service';
 export class HomeComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private filterService: FilterService) { }
 
   ngOnInit(): void {
     const userAgent = window.navigator.userAgent;
-    console.log(userAgent);
     console.log("cookie==",this.getCookies());
     this.filterService.setCurrentUrl({url:'home'});
   }

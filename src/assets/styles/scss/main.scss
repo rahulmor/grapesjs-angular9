@@ -643,6 +643,9 @@ body{
     width: 18px;
     height: 24px;
   }
+  i{
+    font-size: 16px;
+  }
 }
 .gjs-block:hover{
   .gjs-block-label{
@@ -671,4 +674,98 @@ body{
       }
     }
   }
+}
+.rotate-units{
+  z-index:1;
+  top:3px;
+}
+.rotate-btn{
+  width: 2rem;
+  height: 2rem;
+  background-color: $mainColor;
+  color: $bodyBgColor;
+  border: 1px solid black;
+}
+.rotate-btn > *{
+  pointer-events: none;
+}
+
+.tool-buttons{
+  position: absolute;
+  right: -40px;
+  height: 100%;
+}
+.tool-buttons button{
+  display: block;
+  font-size: 16px;
+  color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 3px 6px 0 #555a67;
+  background-color: #7a808d;
+  margin-bottom: 5px;
+  border: none;
+  i{
+    opacity: 0.5;
+  }
+}
+.tool-buttons button.btn-delete{
+  bottom: 0px;
+  position: absolute;
+  right: 0px;
+}
+.tool-buttons #canvas-size{
+  position: absolute;
+  left: -307px;
+  bottom: -21px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #56bce5;
+}
+.tool-buttons .canvas-size-landscape{
+  left: -757px;
+}
+
+.editor.landscape{
+  .tool-buttons{
+    #canvas-size{
+      left: -727px;
+    }
+    .btn-front{
+      left: -766px;
+      position: absolute;
+    }
+    .btn-back{
+      position: absolute;
+      display: block;
+      left: -766px;
+      top: 40px;
+    }
+    .btn-delete{
+      position: absolute;
+      right: -41px;
+      top: 0;
+    }
+  } 
+  .gjs-frame-wrapper{
+    iframe{
+      left: 41px;
+    }
+  }
+}
+.editor.portrait{
+  .tool-buttons{
+    .btn-front{
+      left: -380px;
+      position: absolute;
+    }
+    .btn-back{
+      position: absolute;
+      display: block;
+      left: -380px;
+      top: 40px;
+    }
+    #canvas-size{
+      left: -337px;
+    }
+  } 
 }
