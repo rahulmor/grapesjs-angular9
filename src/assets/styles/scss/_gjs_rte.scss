@@ -43,3 +43,13 @@
     }
   }
 }
+.gjs-rte-actionbar{
+    background: #7a808d;
+    font-size: 14px;
+    span.gjs-rte-action{
+      padding: 2px 5px;
+      span{
+        font-size: 12px;
+      }
+    }
+}
