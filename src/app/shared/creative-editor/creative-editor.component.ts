@@ -286,6 +286,23 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
         }
       }
     });
+
+
+    this.editor.on('component:selected', () => {
+      const component = this.editor.getSelected();
+      const element = component.getEl();
+    });
+    
+    this.editor.on('change:changesCount',() => {
+      var wrapperChildren = this.editor.getComponents();
+      let length = wrapperChildren.length;
+      const selectedDiv = document.querySelector('.tool-buttons');
+      if (length > 0) {
+        selectedDiv.setAttribute('style','display:block');
+      } else {
+        selectedDiv.setAttribute('style','display:none');
+      }
+    });
   }
 
   private initializeEditor(): any {
