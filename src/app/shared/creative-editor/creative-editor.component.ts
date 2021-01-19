@@ -73,7 +73,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       // This triggers `active` event on dropped components and the `image`
       // reacts by opening the AssetManager
       activate: true,
-      copyable: true,
       attributes: {
         title: 'Image',
         // style:'width:40px!important;display:inline'
