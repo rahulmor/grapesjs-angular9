@@ -775,3 +775,15 @@ body{
     padding-right: 10px;
   }
 }
+.gjs-image{
+    width: 96px;
+    height: 56px;
+    background-color: $inputBgColor;
+    border-radius: 3px;
+    text-indent: -10000px;
+}
+.image-edit-icon{
+  position:absolute;
+  right: 45px;
+  top: 15px;
+}

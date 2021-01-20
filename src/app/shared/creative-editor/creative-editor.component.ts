@@ -4,6 +4,7 @@ import 'grapesjs-preset-webpage';
 import * as $ from 'jquery';
 import grapesjsTabs from 'grapesjs-tabs';
 import rotatePlugin from '../plugins/rotate-plugin';
+import imageEditPlugin from '../plugins/image-edit-plugin';
 import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
 import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
@@ -192,10 +193,29 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
         height: wrapperHeight
       });
     });
-    this.editor.on('component:selected', () => {
+    this.editor.on('component:selected', (comp) => {
       const component = this.editor.getSelected();
       const element = component.getEl();
+      this.showStyleManager(comp);
     });
+    this.editor.on('component:deselected', function(component) {
+      console.log("component deselected=",component.attributes.type);
+      var componentType = component.attributes.type;
+      // if(component.attributes.tagName == 'div') {
+        // const styleManager = this.editor.StyleManager;
+      //   styleManager.removeSector('div-only-sector');
+      // }
+      switch(componentType){
+        case 'text':{
+          this.editor.StyleManager.removeSector("ImageStyle");
+          break;
+        }
+        case 'image':{
+          this.editor.StyleManager.removeSector("TextStyle");
+          break;
+        }
+      }
+    })
   }
 
   stepInfoClose() {
@@ -293,7 +313,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       container: '#gjs',
       autorender: true,
       forceClass: false,
-      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs, rotatePlugin],
+      plugins: [plistaAdbuilderPresetPlugin, grapesjsTabs, rotatePlugin,imageEditPlugin],
       avoidInlineStyle: false,
       pluginsOpts: {
         grapesjsTabs: {
@@ -346,55 +366,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
             name: 'General',
             open: true,
             buildProps: ['width', 'height', 'top', 'left'],
-          },
-          {
-            name: 'TEXT STYLE',
-            open: true,
-            buildProps: [
-              'font-family',
-              'font-weight',
-              'font-size',
-              'line-height',
-              'letter-spacing',
-              'text-align',
-              'text-transform',
-              'color',
-
-            ],
-            properties: [
-              {
-                property: 'text-align',
-                list: [
-                  { value: 'left', className: 'far fa-align-left' },
-                  { value: 'center', className: 'far fa-align-center' },
-                  { value: 'right', className: 'far fa-align-right' },
-                ],
-              },
-              {
-                property: 'font-size',
-                name: 'SIZE',
-              },
-              {
-                property: 'letter-spacing',
-                name: 'SPACING',
-              },
-              {
-                property: 'color',
-                name: 'COLOR',
-                list: [
-                  { name: 'HEX' },
-                ],
-              },
-              {
-                property: 'text-transform',
-                type: 'radio',
-                name: 'TEXT STYLE',
-                list: [
-                  { value: 'capitalize', name: 'Aa' },
-                  { value: 'uppercase', name: 'AA' }
-                ],
-              }],
-          },
+          }
         ],
       },
       canvas: {
@@ -546,6 +518,77 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       this.onClickRemoveComponent();
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
+    }
+    //This function is used for show dynamic style manager boxes
+    showStyleManager(component){
+      var type = component.attributes.type;
+      switch(type){
+        case 'text':{
+          this.editor.StyleManager.addSector('TextStyle', {
+            name: 'TEXT STYLE',
+            open: true,
+            buildProps: [
+              'font-family',
+              'font-weight',
+              'font-size',
+              'line-height',
+              'letter-spacing',
+              'text-align',
+              'text-transform',
+              'color',
+
+            ],
+            properties: [
+              {
+                property: 'text-align',
+                list: [
+                  { value: 'left', className: 'far fa-align-left' },
+                  { value: 'center', className: 'far fa-align-center' },
+                  { value: 'right', className: 'far fa-align-right' },
+                ],
+              },
+              {
+                property: 'font-size',
+                name: 'SIZE',
+              },
+              {
+                property: 'letter-spacing',
+                name: 'SPACING',
+              },
+              {
+                property: 'color',
+                name: 'COLOR',
+                list: [
+                  { name: 'HEX' },
+                ],
+              },
+              {
+                property: 'text-transform',
+                type: 'radio',
+                name: 'TEXT STYLE',
+                list: [
+                  { value: 'capitalize', name: 'Aa' },
+                  { value: 'uppercase', name: 'AA' }
+                ],
+              }],
+              }, { at: 1 });
+          break;
+        }
+        case 'image':{
+          this.editor.StyleManager.addSector('ImageStyle', {
+            name: 'IMAGE STYLE',
+            open: true,
+          })
+          this.styleManager.addProperty('ImageStyle', {
+            name:"Image",
+            property: 'image-edit',
+            type: 'image-edit',
+          });
+          break;
+        }
+        default:
+          break;
+      }
     }
 }
 
