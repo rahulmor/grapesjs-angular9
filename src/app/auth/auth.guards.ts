@@ -12,25 +12,6 @@ export class AuthGuard implements CanActivate {
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        // setInterval(()=>{
-        //     this.loginService.login_check();
-        // },3000)
-        
-        // .subscribe(
-        //   data => {
-        //     // this.router.navigate([this.returnUrl]);
-        //     console.log("data==",data);
-        //     return data;
-        //   },
-        //   error => {
-        //     // this.error = error;
-        //     // this.loading = false;
-        //   });
-        // console.log("user==",this.user);
-        // if (this.user) {
-        //     return true;
-        // }
-        // window.location.href = "https://login-test.plista.com/de/";
         return true;
     }
 }

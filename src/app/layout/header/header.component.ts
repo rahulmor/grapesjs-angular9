@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.filterService.data.subscribe((data) => {
       //do what ever needs doing when data changes
-      console.log('url=', data);
       if (data.url == 'ad-builder') {
         this.style_nav = true;
       } else if (data.url == 'home') {

@@ -8,11 +8,11 @@ describe('CreativeEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreativeEditorComponent ],
+      declarations: [CreativeEditorComponent],
       providers: [FilterService]
 
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -23,7 +23,7 @@ import { LoginService } from './services/login.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},FilterService,LoginService],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }, FilterService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

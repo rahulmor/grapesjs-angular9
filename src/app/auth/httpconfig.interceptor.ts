@@ -12,15 +12,15 @@ export class BasicAuthInterceptor implements HttpInterceptor {
         // add authorization header with basic auth credentials if available
         const currentUserLogged = this.loginService.sendGetRequest();
         const userAgent = window.navigator.userAgent;
-            if (request.headers) {
-                const duplicate = request.clone({
-                    withCredentials:true,
-                    setHeaders: { 
-                        'User-Agent': userAgent,
-                    }
-                });
-                return next.handle(duplicate);
-              }
-            }
-    
+        if (request.headers) {
+            const duplicate = request.clone({
+                withCredentials: true,
+                setHeaders: {
+                    'User-Agent': userAgent,
+                }
+            });
+            return next.handle(duplicate);
+        }
+    }
+
 }
