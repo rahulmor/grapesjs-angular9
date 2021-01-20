@@ -290,3 +290,38 @@ app-creative-editor{
       margin-left: 72px;
     }
   }
+  /* Modal exit style */
+  .modal-exit p{
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .modal-exit .modal-dialog .modal-content{
+    border: none;
+  }
+  .modal-exit h1{
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #ed3221;
+    font-weight: 900;
+  }
+  .modal-exit .modal-footer{
+    background-color: #f3f4f6;
+    justify-content: space-between;
+    border-top: none;
+    font-size: 14px;
+  }
+  .modal-exit .modal-footer .btn-close{
+    border: 1px solid #d3d4d6;
+  }
+  .modal-exit .modal-footer .btn{
+    font-size: 14px;
+    min-width: 115px;
+    border-radius: 2px;
+  }
+  .modal-exit .modal-footer .btn-continue{
+    background-color: #ed3221;
+    color: #fff;
+    box-shadow: 0px 1px 6px #c12715;
+  }
+
+ 

@@ -8,6 +8,7 @@ import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
 import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
 import { STYLE } from './../constants/builder.constants';
+import { ModalPopupComponent } from './../modal-popup/modal-popup.component';
 
 @Component({
   selector: 'app-creative-editor',
@@ -275,32 +276,15 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     decimalInput.addEventListener('keyup', (e) => {
       const inputValue = decimalInput.value;
       var unicode = e.charCode ? e.charCode : e.keyCode;
-      if (inputValue.indexOf(".") != -1){
-        if (unicode == 46){
+      if (inputValue.indexOf(".") != -1) {
+        if (unicode == 46) {
           return false;
         }
       }
-      if (unicode != 8){
-        if ((unicode < 48 || unicode > 57) && unicode != 46){
+      if (unicode != 8) {
+        if ((unicode < 48 || unicode > 57) && unicode != 46) {
           return false;
         }
-      }
-    });
-
-
-    this.editor.on('component:selected', () => {
-      const component = this.editor.getSelected();
-      const element = component.getEl();
-    });
-    
-    this.editor.on('change:changesCount',() => {
-      var wrapperChildren = this.editor.getComponents();
-      let length = wrapperChildren.length;
-      const selectedDiv = document.querySelector('.tool-buttons');
-      if (length > 0) {
-        selectedDiv.setAttribute('style','display:block');
-      } else {
-        selectedDiv.setAttribute('style','display:none');
       }
     });
   }
@@ -465,26 +449,26 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       }
     });
     /// Can be removed in future as this was conflict in merging.
-      // if (domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
-      //   var domElementStyle = this.editor.getSelected().getStyle();
-      //   domElementStyle.left = '0px'
-      //   this.editor.getSelected().setStyle({ ...domElementStyle });
-      // }
-      // if (domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
-      //   var domElementStyle = this.editor.getSelected().getStyle();
-      //   domElementStyle.top = '0px'
-      //   this.editor.getSelected().setStyle({ ...domElementStyle });
-      // }
-      // if (domElement !== undefined && parseInt(domElement.getStyle().left) > this.canvasWidth) {
-      //   var domElementStyle = this.editor.getSelected().getStyle();
-      //   domElementStyle.left = (this.canvasWidth - 15) + 'px'; //'245px'
-      //   this.editor.getSelected().setStyle({ ...domElementStyle });
-      // }
-      // if (domElement !== undefined && parseInt(domElement.getStyle().top) > (this.canvasHeight - 20)) {
-      //   var domElementStyle = this.editor.getSelected().getStyle();
-      //   domElementStyle.top = (this.canvasHeight - 22) + 'px'; //'228px'
-      //   this.editor.getSelected().setStyle({ ...domElementStyle });
-      // }
+    // if (domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
+    //   var domElementStyle = this.editor.getSelected().getStyle();
+    //   domElementStyle.left = '0px'
+    //   this.editor.getSelected().setStyle({ ...domElementStyle });
+    // }
+    // if (domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
+    //   var domElementStyle = this.editor.getSelected().getStyle();
+    //   domElementStyle.top = '0px'
+    //   this.editor.getSelected().setStyle({ ...domElementStyle });
+    // }
+    // if (domElement !== undefined && parseInt(domElement.getStyle().left) > this.canvasWidth) {
+    //   var domElementStyle = this.editor.getSelected().getStyle();
+    //   domElementStyle.left = (this.canvasWidth - 15) + 'px'; //'245px'
+    //   this.editor.getSelected().setStyle({ ...domElementStyle });
+    // }
+    // if (domElement !== undefined && parseInt(domElement.getStyle().top) > (this.canvasHeight - 20)) {
+    //   var domElementStyle = this.editor.getSelected().getStyle();
+    //   domElementStyle.top = (this.canvasHeight - 22) + 'px'; //'228px'
+    //   this.editor.getSelected().setStyle({ ...domElementStyle });
+    // }
     // });
     //Drag End Event of component 
     this.editor.on('component:drag:end', (component) => {
@@ -536,13 +520,13 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
 
   // This is for adding the buttons copy, delete and send front/back and canvas size in canvas 
   setButtonsToCanvas() {
-   
+
     const el = document.createElement('div');
     el.className = 'tool-buttons';
     el.innerHTML = `
-      <button class="rotate-btn btn-front" title="Set to Front/Back"><i class="fal fa-copy"></i></button>
-      <button class="rotate-btn btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
-      <button class="rotate-btn btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
+      <button class="rotate-btn btn-tool btn-front" title="Set to Front/Back"><i class="fal fa-copy"></i></button>
+      <button class="rotate-btn btn-tool btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
+      <button class="rotate-btn btn-tool btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
       <div id="canvas-size" class="canvas-size"></div>`;
     const buttonBack = el.querySelector('.btn-back');
     const buttonFront = el.querySelector('.btn-front');
@@ -563,7 +547,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       this.onClickRemoveComponent();
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
-    }
+  }
 }
 
 
