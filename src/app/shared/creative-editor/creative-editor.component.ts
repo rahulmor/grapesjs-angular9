@@ -198,20 +198,27 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       const element = component.getEl();
       this.showStyleManager(comp);
     });
-    this.editor.on('component:deselected', function(component) {
-      console.log("component deselected=",component.attributes.type);
+    this.editor.on('component:deselected', (component)=> {
       var componentType = component.attributes.type;
-      // if(component.attributes.tagName == 'div') {
-        // const styleManager = this.editor.StyleManager;
-      //   styleManager.removeSector('div-only-sector');
-      // }
       switch(componentType){
         case 'text':{
-          this.editor.StyleManager.removeSector("ImageStyle");
+          this.editor.StyleManager.removeSector("TextStyle");
           break;
         }
         case 'image':{
-          this.editor.StyleManager.removeSector("TextStyle");
+          this.editor.StyleManager.removeSector("ImageStyle");
+          break;
+        }
+        case 'logo':{
+          // this.editor.StyleManager.removeSector("logo");
+          break;
+        }
+        case 'video':{
+          // this.editor.StyleManager.removeSector("video");
+          break;
+        }
+        case 'shape':{
+          // this.editor.StyleManager.removeSector("shape");
           break;
         }
       }
@@ -580,7 +587,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
             open: true,
           })
           this.styleManager.addProperty('ImageStyle', {
-            name:"Image",
+            name:"Opacity",
             property: 'image-edit',
             type: 'image-edit',
           });

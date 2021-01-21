@@ -787,3 +787,29 @@ body{
   right: 45px;
   top: 15px;
 }
+.ratio-icons{
+  margin-left: 1em;
+}
+.ratio-btn{
+  width: 40px;
+  height: 28px;
+  background-color: #7a808d;
+  color: #e6eaed;
+  border: 1px solid black;
+  border-radius: 2px;
+  &:focus{
+    background-color: #99a0ad;
+    outline: none;
+  }
+}
+.image-edit-opacity{
+  background-color: $mainColor !important;
+  border: none !important;
+  width: 150px !important;
+}
+input[type='range'] {
+  overflow: hidden;
+  width: 80px;
+  -webkit-appearance: none;
+  background-color: #9a905d;
+}
