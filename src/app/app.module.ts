@@ -10,13 +10,15 @@ import { BasicAuthInterceptor } from '../app/auth/httpconfig.interceptor';
 import { AdEditorComponent } from './layout/ad-editor/ad-editor.component';
 import { FilterService } from './services/filter.service';
 import { LoginService } from './services/login.service';
+import { ModalPopupComponent } from './shared/modal-popup/modal-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
     CreativeEditorComponent,
     HomeComponent,
     HeaderComponent,
-    AdEditorComponent
+    AdEditorComponent,
+    ModalPopupComponent
   ],
   imports: [
     BrowserModule,

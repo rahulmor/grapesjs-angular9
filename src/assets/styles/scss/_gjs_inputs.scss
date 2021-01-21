@@ -407,3 +407,20 @@
     }
   }
 }
+.gjs-sm-color{
+  .gjs-field-color{
+    .gjs-input-holder{
+      position: relative;
+        &::before{
+          content: "Hex";
+          text-transform: uppercase;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 10px;
+          color: #e0e4ec;
+          position: absolute;
+          width: 100%;
+          top: -22px;
+        }
+    }
+  }
+}

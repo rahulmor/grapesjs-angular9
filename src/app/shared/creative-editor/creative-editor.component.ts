@@ -8,6 +8,8 @@ import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
 import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
 import { STYLE } from './../constants/builder.constants';
+import { ModalPopupComponent } from './../modal-popup/modal-popup.component';
+import { isArray, contains } from 'underscore';
 
 @Component({
   selector: 'app-creative-editor',
@@ -239,6 +241,26 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     const models = [...this.editor.getSelectedAll()];
     models.length && em.set('clipboard', models);
     this.editor.select(component);
+    const clp = em.get('clipboard');
+    const selected = this.editor.getSelected();
+
+    if (clp && selected) {
+      this.editor.getSelectedAll().forEach(comp => {
+        if (!comp) return;
+        const coll = comp.collection;
+        const at = coll.indexOf(comp) + 1;
+        const copyable = clp.filter(cop => cop.get('copyable'));
+        let added;
+        if (contains(clp, comp) && comp.get('copyable')) {
+          added = coll.add(comp.clone(), { at });
+        } else {
+          added = coll.add(copyable.map(cop => cop.clone()), { at });
+        }
+        added = isArray(added) ? added : [added];
+        added.forEach(add => this.editor.trigger('component:paste', add));
+      });
+      selected.emitUpdate();
+    }
   }
 
   // This is for remove the component from canvas
@@ -442,7 +464,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
         this.editor.getSelected().setStyle({ ...domElementStyle });
       }
     });
-
     //Drag End Event of component 
     this.editor.on('component:drag:end', (component) => {
       var domElement = this.editor.getSelected().getStyle();
@@ -497,9 +518,9 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     const el = document.createElement('div');
     el.className = 'tool-buttons';
     el.innerHTML = `
-      <button class="rotate-btn btn-front" title="Set to Front/Back"><i class="fal fa-copy"></i></button>
-      <button class="rotate-btn btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
-      <button class="rotate-btn btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
+      <button class="rotate-btn btn-tool btn-front" title="Set to Front/Back"><i class="fal fa-copy"></i></button>
+      <button class="rotate-btn btn-tool btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
+      <button class="rotate-btn btn-tool btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
       <div id="canvas-size" class="canvas-size"></div>`;
     const buttonBack = el.querySelector('.btn-back');
     const buttonFront = el.querySelector('.btn-front');
@@ -520,6 +541,11 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       this.onClickRemoveComponent();
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
+  }
+
+  getHtmlCss(){
+    const editorHtml = this.editor.getHtml();
+    let editorCss = this.editor.getCss();
   }
 }
 
