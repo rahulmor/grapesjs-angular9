@@ -542,12 +542,10 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
   }
-  
+
   getHtmlCss(){
     const editorHtml = this.editor.getHtml();
-    let editorCss = this.editor.getCss()
-    console.log("HTML",editorHtml);
-    console.log('CSS',editorCss);
+    let editorCss = this.editor.getCss();
   }
 }
 
