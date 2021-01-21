@@ -9,14 +9,14 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ],
+      declarations: [HeaderComponent],
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
       ],
       providers: [FilterService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

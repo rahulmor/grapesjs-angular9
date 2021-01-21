@@ -9,16 +9,17 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 })
 export class AppComponent {
   title = 'grapes-angular';
+  loginUrl = 'https://login-test.plista.com/de/';
   constructor(public loginService: LoginService, private router: Router) {
-    
+
   }
   ngOnInit() {
-    setInterval(()=>{ 
-      this.loginService.login_check().subscribe(resp =>{
-        if(resp.data === false){
-          window.location.href = 'https://login-test.plista.com/de/';
+    setInterval(() => {
+      this.loginService.login_check().subscribe(resp => {
+        if (resp.data === false) {
+          window.location.href = this.loginUrl;
         }
       });
-     }, 150000);
+    }, 150000);
   }
 }

@@ -10,7 +10,7 @@ export class AdEditorComponent implements OnInit {
   constructor(private filterService: FilterService) { }
 
   ngOnInit(): void {
-    this.filterService.setCurrentUrl({url:'ad-builder'});
+    this.filterService.setCurrentUrl({ url: 'ad-builder' });
   }
 
 }

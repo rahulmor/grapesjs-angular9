@@ -140,3 +140,12 @@
   text-align: center;
   color: $secondaryColor;
 }
+.gjs-mdl-container{
+  .gjs-mdl-dialog.img-modal{
+    .gjs-mdl-header{
+      .gjs-mdl-title{
+        display: none;
+      }
+    }
+  }
+}

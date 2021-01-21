@@ -12,36 +12,36 @@ export default grapesjs.plugins.add('rotate-plugin', (editor, options) => {
       inputEl2.addEventListener('change', (event) => change({ event })); // change will trigger the emit
       inputEl2.addEventListener('input', (event) => change({ event }));
       inputEl2.addEventListener("keyup", event => {
-        if(parseInt((<HTMLInputElement>event.target).value)>360){
-            change({ event,restrict:true })
+        if (parseInt((<HTMLInputElement>event.target).value) > 360) {
+          change({ event, restrict: true })
         }
       });
       const buttons = el.querySelectorAll('.rotate-btn');
       buttons.forEach(function (currentBtn) {
-        currentBtn.addEventListener('click', (event) =>{
+        currentBtn.addEventListener('click', (event) => {
           change({ event, reset_value: parseInt((<HTMLInputElement>event.target).id) })
         })
       });
       return el;
     },
-    emit({ props, updateStyle, el }, { event, reset_value,restrict }) {
+    emit({ props, updateStyle, el }, { event, reset_value, restrict }) {
       const { value } = event.target;
       var selectedElement = editor.getSelected();
       if (selectedElement !== undefined) {
-          if(restrict){
-            el.querySelector('.rotate-type').value = 0;
-          }
+        if (restrict) {
+          el.querySelector('.rotate-type').value = 0;
+        }
         var current_angle =
           editor
             .getSelectedToStyle()
             .attributes.style.hasOwnProperty('transform') == false
             ? 0
             : parseInt(
-                editor
-                  .getSelectedToStyle()
-                  .attributes.style.transform.replace(/[^-?0-9\.]/g, ''),
-                10
-              );
+              editor
+                .getSelectedToStyle()
+                .attributes.style.transform.replace(/[^-?0-9\.]/g, ''),
+              10
+            );
         if (reset_value !== undefined) {
           switch (reset_value) {
             case 0:
@@ -51,13 +51,13 @@ export default grapesjs.plugins.add('rotate-plugin', (editor, options) => {
               clockwiseRotate = 0;
               break;
             case 2:
-              clockwiseRotate =(clockwiseRotate == -360 || current_angle <- 360) ? 0 : (current_angle -= 45);
+              clockwiseRotate = (clockwiseRotate == -360 || current_angle < - 360) ? 0 : (current_angle -= 45);
               break;
-             default:
-                 break; 
+            default:
+              break;
           }
-        }else{
-            clockwiseRotate = 0;   
+        } else {
+          clockwiseRotate = 0;
         }
         const valueRes = reset_value !== undefined ? clockwiseRotate : value;
         // Pass a string value for the exact CSS property or an object containing multiple properties
