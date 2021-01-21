@@ -9,6 +9,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { BasicAuthInterceptor } from '../app/auth/httpconfig.interceptor';
 import { AdEditorComponent } from './layout/ad-editor/ad-editor.component';
 import { FilterService } from './services/filter.service';
+import { LoginService } from './services/login.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,7 @@ import { FilterService } from './services/filter.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},FilterService],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},FilterService,LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     const userAgent = window.navigator.userAgent;
-    console.log(userAgent);
     console.log("cookie==",this.getCookies());
     this.filterService.setCurrentUrl({url:'home'});
   }
