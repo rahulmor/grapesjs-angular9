@@ -190,11 +190,13 @@ ngOnInit(): void {
       height: wrapperHeight
     });
   });
+  //This is used for when component selected
   this.editor.on('component:selected', (comp) => {
     const component = this.editor.getSelected();
     const element = component.getEl();
     this.showStyleManager(comp);
   });
+  //This is used for component deselected
   this.editor.on('component:deselected', (component)=> {
     var componentType = component.attributes.type;
     switch(componentType){
@@ -207,15 +209,15 @@ ngOnInit(): void {
         break;
       }
       case 'logo':{
-        // this.editor.StyleManager.removeSector("logo");
+        // this.editor.StyleManager.removeSector("logo"); //This is replace by actual implementation in future
         break;
       }
       case 'video':{
-        // this.editor.StyleManager.removeSector("video");
+        // this.editor.StyleManager.removeSector("video"); //This is replace by actual implementation in future
         break;
       }
       case 'shape':{
-        // this.editor.StyleManager.removeSector("shape");
+        // this.editor.StyleManager.removeSector("shape"); //This is replace by actual implementation in future
         break;
       }
     }
