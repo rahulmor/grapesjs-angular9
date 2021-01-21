@@ -69,7 +69,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     var imageBlock = this.blockManager.add('image', {
       id: 'image',
       label: '<i class="far fa-image"></i>',
-      //  category: 'Ad Elements',
       // Select the component once it's dropped
       select: true,
       // You can pass components as a JSON instead of a simple HTML string,
@@ -80,7 +79,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       activate: true,
       attributes: {
         title: 'Image',
-        // style:'width:40px!important;display:inline'
       },
     });
     var textBlock = this.blockManager.add('text', {
@@ -98,7 +96,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
         type: 'link',
         content: '<button> Button</button>',
       },
-      // category: 'Ad Elements',
       attributes: {
         title: 'Button',
       }
@@ -109,7 +106,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       content: {
         type: 'shape',
       },
-      // category: 'Ad Elements',
       attributes: {
         title: 'Shape',
       }
@@ -128,7 +124,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       id: 'Logo',
       label: '<i class="far fa-icons"></i>',
       content: { type: 'logo' },
-      // category: 'Ad Elements',
       attributes: {
         title: 'Logo',
       }
@@ -469,28 +464,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
         this.editor.getSelected().setStyle({ ...domElementStyle });
       }
     });
-    /// Can be removed in future as this was conflict in merging.
-    // if (domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
-    //   var domElementStyle = this.editor.getSelected().getStyle();
-    //   domElementStyle.left = '0px'
-    //   this.editor.getSelected().setStyle({ ...domElementStyle });
-    // }
-    // if (domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
-    //   var domElementStyle = this.editor.getSelected().getStyle();
-    //   domElementStyle.top = '0px'
-    //   this.editor.getSelected().setStyle({ ...domElementStyle });
-    // }
-    // if (domElement !== undefined && parseInt(domElement.getStyle().left) > this.canvasWidth) {
-    //   var domElementStyle = this.editor.getSelected().getStyle();
-    //   domElementStyle.left = (this.canvasWidth - 15) + 'px'; //'245px'
-    //   this.editor.getSelected().setStyle({ ...domElementStyle });
-    // }
-    // if (domElement !== undefined && parseInt(domElement.getStyle().top) > (this.canvasHeight - 20)) {
-    //   var domElementStyle = this.editor.getSelected().getStyle();
-    //   domElementStyle.top = (this.canvasHeight - 22) + 'px'; //'228px'
-    //   this.editor.getSelected().setStyle({ ...domElementStyle });
-    // }
-    // });
     //Drag End Event of component 
     this.editor.on('component:drag:end', (component) => {
       var domElement = this.editor.getSelected().getStyle();
@@ -569,7 +542,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
   }
-
+  
   getHtmlCss(){
     const editorHtml = this.editor.getHtml();
     let editorCss = this.editor.getCss()

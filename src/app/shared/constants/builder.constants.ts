@@ -2,7 +2,6 @@
 /*BACKEND SERVICE URL*/
 export const SERVICE_URL = {
 }
-
 /*STYLE CONFIG */
 export const STYLE = {
 	BASIC: {

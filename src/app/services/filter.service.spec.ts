@@ -1,6 +1,5 @@
-import { TestBed, async, getTestBed  } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {HttpClientModule} from '@angular/common/http';
+import { TestBed, async, getTestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { FilterService } from './filter.service';
 
 describe('FilterService', () => {
@@ -20,8 +19,8 @@ describe('FilterService', () => {
   });
 
   afterEach(() => {
-      httpMock.verify();
-    });
+    httpMock.verify();
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
