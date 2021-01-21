@@ -5,9 +5,10 @@ import * as $ from 'jquery';
 import grapesjsTabs from 'grapesjs-tabs';
 import rotatePlugin from '../plugins/rotate-plugin';
 import { FilterService } from './../../services/filter.service';
+import { UtilityService } from './../../services/utility.service';
 import { Subscription } from 'rxjs';
 import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
-import { STYLE } from './../constants/builder.constants';
+import { STYLE, EDITOR_IDENTIFIER } from './../constants/builder.constants';
 
 @Component({
   selector: 'app-creative-editor',
@@ -81,7 +82,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     var textBlock = this.blockManager.add('text', {
       id: 'text',
       label: `<i class="far fa-text"></i>`,
-      content: '<p>Put your title here</p>',
+      content: '<p style="white-space:nowrap">Put your title here</p>',
       attributes: {
         title: 'Insert text',
       }
@@ -171,7 +172,9 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       }
 
       let myCommand = this.commands.get(this.viewLoaded);
+      this.manageElementsDuringResizing();
       // This command will change view of canvas
+      this.setCanvasSize(this.viewLoaded);
       myCommand.run();
       this.filterView = viewName;
       const canvas = document.querySelector('.canvas-size');
@@ -412,6 +415,7 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   setDefaultView() {
+    this.setCanvasSize(STYLE.BASIC.VIEW_NAME);
     this.commands.run(STYLE.BASIC.VIEW_NAME);
     this.currentIFrame = $('iframe');
     this.currentIFrame.contents().find("body").css({ 'overflow': 'hidden', 'height': STYLE.BASIC.SIZE.HEIGHT });
@@ -420,37 +424,43 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
   setupDragEvent() {
     //Track Drag Event of component
     this.editor.on('component:drag', (component) => {
-      var domElement = this.editor.getSelected();
-      let selectedEleWidth = this.currentIFrame.contents().find("body #wrapper .gjs-selected").width();
+      let domElement = this.editor.getSelected();
+      if(!UtilityService.isUndefinedOrNull(domElement))
+      {
+        const el =  domElement.getEl();
 
-      if (domElement !== undefined && parseInt(domElement.getStyle().left) < 0) {
-        var domElementStyle = this.editor.getSelected().getStyle();
-        domElementStyle.left = '0px'
-        this.editor.getSelected().setStyle({ ...domElementStyle });
+        if (parseInt(domElement.getStyle().left) < 0) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.left = '0px'
+          this.editor.getSelected().setStyle({ ...domElementStyle });
+        }
+        if (parseInt(domElement.getStyle().top) < 0) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.top = '0px'
+          this.editor.getSelected().setStyle({ ...domElementStyle });
+        }
+        
+        if ((parseInt(domElement.getStyle().left) + el.offsetWidth) > this.canvasWidth) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.left = (this.canvasWidth - el.offsetWidth) + 'px'; 
+          this.editor.getSelected().setStyle({ ...domElementStyle });
+        }
+        if ((parseInt(domElement.getStyle().top) + el.offsetHeight) > (this.canvasHeight - 2)) {
+          var domElementStyle = this.editor.getSelected().getStyle();
+          domElementStyle.top = (this.canvasHeight - el.offsetHeight) + 'px';
+          this.editor.getSelected().setStyle({ ...domElementStyle });
+        }
       }
-      if (domElement !== undefined && parseInt(domElement.getStyle().top) < 0) {
-        var domElementStyle = this.editor.getSelected().getStyle();
-        domElementStyle.top = '0px'
-        this.editor.getSelected().setStyle({ ...domElementStyle });
-      }
-      if (domElement !== undefined && parseInt(domElement.getStyle().left) > this.canvasWidth) {
-        var domElementStyle = this.editor.getSelected().getStyle();
-        domElementStyle.left = (this.canvasWidth - 15) + 'px'; //'245px'
-        this.editor.getSelected().setStyle({ ...domElementStyle });
-      }
-      if (domElement !== undefined && parseInt(domElement.getStyle().top) > (this.canvasHeight - 20)) {
-        var domElementStyle = this.editor.getSelected().getStyle();
-        domElementStyle.top = (this.canvasHeight - 22) + 'px'; //'228px'
-        this.editor.getSelected().setStyle({ ...domElementStyle });
-      }
+      
     });
 
     //Drag End Event of component 
     this.editor.on('component:drag:end', (component) => {
       var domElement = this.editor.getSelected().getStyle();
+      const el =  this.editor.getSelected().getEl();
       //const style = window.getComputedStyle(domElement)
       const wrapperHeight = this.currentIFrame.contents().find("body #wrapper").height();
-
+      
       // To check if the element is going out of canvas from bottom limit
       if (parseInt(domElement.top) > this.canvasHeight) {
         domElement.top = this.canvasHeight * 95 / 100;
@@ -466,13 +476,15 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
         domElement.top = '0px'
         this.editor.getSelected().setStyle({ ...domElement });
       }
-      if (domElement !== undefined && parseInt(domElement.left) > this.canvasWidth) {
-        domElement.left = (this.canvasWidth - 5) + 'px' //'245px'
-        this.editor.getSelected().setStyle({ ...domElement });
+      if (domElement !== undefined && (parseInt(domElement.left) + el.offsetWidth) > this.canvasWidth) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.left = (this.canvasWidth - el.offsetWidth) + 'px'; //'245px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
       }
-      if (domElement !== undefined && parseInt(domElement.top) > (this.canvasHeight - 15)) {
-        domElement.top = (this.canvasHeight - 22) + 'px' //'228px'
-        this.editor.getSelected().setStyle({ ...domElement });
+      if (domElement !== undefined && (parseInt(domElement.top) + el.offsetHeight) > (this.canvasHeight - 2)) {
+        var domElementStyle = this.editor.getSelected().getStyle();
+        domElementStyle.top = (this.canvasHeight - el.offsetHeight) + 'px'; //'228px'
+        this.editor.getSelected().setStyle({ ...domElementStyle });
       }
     });
   }
@@ -523,6 +535,49 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
     }
+
+  setCanvasSize(viewName) {
+    switch (viewName) {
+      case STYLE.BASIC.VIEW_NAME:
+          $(EDITOR_IDENTIFIER.ID).width(STYLE.BASIC.SIZE.CANVAS_WIDTH).height(STYLE.BASIC.SIZE.CANVAS_HEIGHT);
+        break;
+      case STYLE.LANDSCAPE.VIEW_NAME:
+          $(EDITOR_IDENTIFIER.ID).width(STYLE.LANDSCAPE.SIZE.CANVAS_WIDTH).height(STYLE.LANDSCAPE.SIZE.CANVAS_HEIGHT);
+        break;
+      case STYLE.PORTRAIT.VIEW_NAME:
+          $(EDITOR_IDENTIFIER.ID).width(STYLE.PORTRAIT.SIZE.CANVAS_WIDTH).height(STYLE.PORTRAIT.SIZE.CANVAS_HEIGHT);
+        break;
+      default:
+          $(EDITOR_IDENTIFIER.ID).width(STYLE.BASIC.SIZE.CANVAS_WIDTH).height(STYLE.BASIC.SIZE.CANVAS_HEIGHT);
+        break;
+    }
+    this.editor.refresh();
+  }
+
+  manageElementsDuringResizing() {
+    const allBlocks = this.editor.getComponents();
+    const models = allBlocks.models;
+   
+    let current = this; 
+    models.forEach(function(element){
+      let elementStyle = element.getStyle();
+
+      //reset if it is extending canvas
+      if((UtilityService.convertPixelToInt(elementStyle.left) + element.view.$el[0].offsetWidth) > current.canvasWidth)
+      {
+        elementStyle.left = (current.canvasWidth - element.view.$el[0].offsetWidth) + 'px';
+      }
+
+      if((UtilityService.convertPixelToInt(elementStyle.top) + element.view.$el[0].offsetHeight) > current.canvasHeight)
+      {
+        elementStyle.top = (current.canvasHeight - element.view.$el[0].offsetHeight) + 'px';
+      }
+
+      element.setStyle(elementStyle);
+
+    });
+    
+  }
 }
 
 

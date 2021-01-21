@@ -36,3 +36,8 @@ export const STYLE = {
 		}
 	}
 }
+
+/*GLOBAL IDENTIFIER*/
+export const EDITOR_IDENTIFIER = {
+	ID: '#gjs'
+}
