@@ -29,6 +29,7 @@ export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options)
         modalTitle: "Select Video",
         content: "Work in progress...",
       });
+      
     } else if (model && model.is('logo')) {
       modal.open({
         title: 'Select Logo',
@@ -162,6 +163,12 @@ export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options)
         const assettarget = opts.target;
         // code to open your own modal goes here.
         openModal(assettarget);
+        const content1 = document.querySelector('.gjs-mdl-dialog');
+        if(assettarget.attributes.type === 'image'){
+          content1.classList.add('img-modal');
+        }else{
+          content1.classList.remove('img-modal');
+        }
       },
     });
     function openModal(assettarget) {
@@ -204,6 +211,7 @@ export default grapesjs.plugins.add('plista-adbuilder-preset', (editor, options)
       </div>
     </div>
     `;
+
       const tab_menu = modalContent.querySelectorAll(
         '.image-upload-modal > li'
       );
