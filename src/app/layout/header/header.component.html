@@ -16,11 +16,5 @@
     <div *ngIf="filterView == 'get_all'">
         <button class="btn button-save">Save as draft</button>
     </div>
-    <button class="btn button-exit" (click)="messageExit()">Exit</button>
+    <button class="btn button-exit"  data-toggle="modal" data-target="#myModal">Exit</button>
 </nav>
-<div *ngIf='showDiv == true'>
-    <div class="alert alert-primary" role="alert">
-        <button type="button" class="close" data-dismiss="alert" (click)="messageDismiss()">&times;</button>
-        Not be able to save unless you "Generate all styles
-    </div>
-</div>

@@ -1,28 +1,10 @@
 <div class="container-fluid">
     <div class="row" style="margin-top: 61px;">
         <div class="col-md-3">
-            <!-- <div *ngIf="stepinfoBox" class="step-info">
-      <span class="step-info-text">LETS GET STARTED</span>
-      <p class="step-info-header">The Basic Style</p>
-      <p class="step-info-content">
-        Click the placeholder shape on the template and replace the image with
-        your own.
-      </p>
-      <button class="step-info-button" (click)="stepInfoClose()"><span class="btn-close">Close</span></button>
-        <input
-          class="check-input"
-          type="checkbox"
-          (change)="checkCheckBoxvalue($event)"
-          id="flexCheckDefault"
-        />
-        <label class="form-check-label checkbox-text" for="flexCheckDefault">
-          Dont show next time
-        </label>
-    </div> -->
             <div class="block-manager">
                 <!--Commented as per client feedback, can be use in future -->
                 <p class="block-text">AD ELEMENTS</p>
-      <!-- <button class="ad-element-button">
+                <!-- <button class="ad-element-button">
         <i class="fa fa-plus" style="margin-right: 20%;margin-left: -20%;"></i><span class="ad-element-btn-text">Add Element</span>
       </button> -->
                 <div #customid class="block-manager-gjs"></div>
@@ -41,50 +23,15 @@
                 <h1>My Component!</h1>
             </div>
         </div>
-        <div class="col-md-3">
-            <!--<div class="card block-manager">
-                <div class="upper-button">
-                    <button class="btn align-button" (click)="onClickAlignLeft()"><i class="fa fa-align-left" aria-hidden="true"></i></button>
-                    <button class="btn align-button" (click)="onClickAlignCenter()"><i class="fa fa-align-center" aria-hidden="true"></i></button>
-                    <button class="btn align-button" (click)="onClickAlignRight()"><i class="fa fa-align-right" aria-hidden="true"></i></button>
-                    <button class="btn align-button"><i class="fa fa-align-left" aria-hidden="true"></i></button>
-                    <button class="btn align-button"><i class="fa fa-align-center" aria-hidden="true"></i></button>
-                    <button class="btn align-button"><i class="fa fa-align-right" aria-hidden="true"></i></button>
+        <div class="col-md-3 style-manager-block">
 
-                    <button class="btn align-button align-center"><i class="fa fa-align-right" aria-hidden="true"></i></button>
-                    <button class="btn align-button"><i class="fa fa-align-right" aria-hidden="true"></i></button>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="label-style" for="width">Width</label>
-                            <input type="number" class="form-control ad-element-input" #width (keyup)="changeWidth($event)" id="width" aria-describedby="width" placeholder="px">
-                          </div>
-                          <div class="col-md-6">
-                              <div class="form-group">
-                                  <label class="label-style" for="height">Height</label>
-                                  <input type="number" class="form-control ad-element-input" #height (keyup)="changeHeight($event)" id="height" aria-describedby="height" placeholder="px">
-                                </div>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-md-6">
-                              <div class="form-group">
-                                  <label class="label-style" for="top">Top</label>
-                                  <input type="number" class="form-control ad-element-input" #top (keyup)="changeTop($event)" id="top" aria-describedby="top" placeholder="px">
-                                </div>
-                          </div>
-                          <div class="col-md-6">
-                              <div class="form-group">
-                                  <label class="label-style" for="left">Left</label>
-                                  <input type="number" class="form-control ad-element-input" #left (keyup)="changeLeft($event)" id="left" aria-describedby="left" placeholder="px">
-                                </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div id="traits-container"></div>
-                  <div id="style-manager-container"></div> -->
             <div #styletext></div>
         </div>
     </div>
 </div>
+<button class="btn" (click)="getHtmlCss()">Get HTML</button>
+<div id="myiframe">
+    <head></head>
+    <body></body>
+</div>
+<app-modal-popup></app-modal-popup>

@@ -5,7 +5,7 @@ import { AdEditorComponent } from './layout/ad-editor/ad-editor.component';
 import { AuthGuard } from './auth/auth.guards';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   {
     path: 'home',
     component: HomeComponent,

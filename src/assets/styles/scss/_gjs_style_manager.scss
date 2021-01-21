@@ -517,3 +517,26 @@
 #gjs-sm-font-size,#gjs-sm-line-height,#gjs-sm-letter-spacing{
   width:33%!important;
 }
+
+.#{$app-prefix}button-item {
+  background: $smButtonBgColor;
+  border: 0;
+  border-right: 1px solid $smButtonborderColor;
+  width: 1.75rem;
+  height: 2rem;
+  padding: 0;
+  outline: none;
+
+  &:active, &:visited, &:focus {
+    outline: 0;
+    border: 0;
+    border-right: 1px solid $smButtonborderColor;
+  }
+  
+  &:last-child {
+    border-right: 0;
+  }
+  svg {
+    pointer-events: none;
+  }
+}

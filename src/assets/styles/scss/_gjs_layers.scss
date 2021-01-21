@@ -193,6 +193,15 @@ $layerNameSpacing: 5px !default;
 
 //icons for layer
 .gjs-layer{
+  .gjs-layer-move{
+    font-size: 14px;
+    opacity: 0.6;
+    .fa.fa-arrows{
+      &::before{
+        content: "\f58e";
+       }
+    }
+  }
   .fa.fa-eye{
     pointer-events: none;
     cursor: none;
@@ -201,7 +210,7 @@ $layerNameSpacing: 5px !default;
   .gjs-layer__t-text{
     .fa.fa-eye{
       &::before{
-       content: "\f035";
+       content: "\f893";
       }
     }
   }
@@ -215,12 +224,25 @@ $layerNameSpacing: 5px !default;
   .gjs-layer__t-link{
     .fa.fa-eye{
       &::before{
-       content: "\f096";
+       content: "\f2fc";
+      }
+    }
+  }
+  .gjs-layer__t-shape{
+    .fa.fa-eye{
+      &::before{
+       content: "\f61f";
+      }
+    }
+  }
+  .gjs-layer__t-video{
+    .fa.fa-eye{
+      &::before{
+       content: "\f03d";
       }
     }
   }
 }
-
 .gjs-layer.open > .gjs-layer-children{
   display: block !important;
 }

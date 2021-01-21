@@ -8,6 +8,8 @@ import { FilterService } from './../../services/filter.service';
 import { Subscription } from 'rxjs';
 import plistaAdbuilderPresetPlugin from '../plugins/popup-plugin';
 import { STYLE } from './../constants/builder.constants';
+import { ModalPopupComponent } from './../modal-popup/modal-popup.component';
+import { isArray, contains } from 'underscore';
 
 @Component({
   selector: 'app-creative-editor',
@@ -41,7 +43,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
   get editor() {
     return this._editor;
   }
- 
 
   ngOnInit(): void {
 
@@ -60,11 +61,14 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       units: ['deg'],
       unit: 'deg'
     });
-
+    this.styleManager.addProperty('general', {
+      property: 'position',
+      type: 'align',
+      full: 1,
+    }, { at: 0 });
     var imageBlock = this.blockManager.add('image', {
       id: 'image',
       label: '<i class="far fa-image"></i>',
-      //  category: 'Ad Elements',
       // Select the component once it's dropped
       select: true,
       // You can pass components as a JSON instead of a simple HTML string,
@@ -75,7 +79,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       activate: true,
       attributes: {
         title: 'Image',
-        // style:'width:40px!important;display:inline'
       },
     });
     var textBlock = this.blockManager.add('text', {
@@ -93,7 +96,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
         type: 'link',
         content: '<button> Button</button>',
       },
-      // category: 'Ad Elements',
       attributes: {
         title: 'Button',
       }
@@ -104,7 +106,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       content: {
         type: 'shape',
       },
-      // category: 'Ad Elements',
       attributes: {
         title: 'Shape',
       }
@@ -123,7 +124,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       id: 'Logo',
       label: '<i class="far fa-icons"></i>',
       content: { type: 'logo' },
-      // category: 'Ad Elements',
       attributes: {
         title: 'Logo',
       }
@@ -241,6 +241,26 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     const models = [...this.editor.getSelectedAll()];
     models.length && em.set('clipboard', models);
     this.editor.select(component);
+    const clp = em.get('clipboard');
+    const selected = this.editor.getSelected();
+
+    if (clp && selected) {
+      this.editor.getSelectedAll().forEach(comp => {
+        if (!comp) return;
+        const coll = comp.collection;
+        const at = coll.indexOf(comp) + 1;
+        const copyable = clp.filter(cop => cop.get('copyable'));
+        let added;
+        if (contains(clp, comp) && comp.get('copyable')) {
+          added = coll.add(comp.clone(), { at });
+        } else {
+          added = coll.add(copyable.map(cop => cop.clone()), { at });
+        }
+        added = isArray(added) ? added : [added];
+        added.forEach(add => this.editor.trigger('component:paste', add));
+      });
+      selected.emitUpdate();
+    }
   }
 
   // This is for remove the component from canvas
@@ -272,13 +292,13 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
     decimalInput.addEventListener('keyup', (e) => {
       const inputValue = decimalInput.value;
       var unicode = e.charCode ? e.charCode : e.keyCode;
-      if (inputValue.indexOf(".") != -1){
-        if (unicode == 46){
+      if (inputValue.indexOf(".") != -1) {
+        if (unicode == 46) {
           return false;
         }
       }
-      if (unicode != 8){
-        if ((unicode < 48 || unicode > 57) && unicode != 46){
+      if (unicode != 8) {
+        if ((unicode < 48 || unicode > 57) && unicode != 46) {
           return false;
         }
       }
@@ -444,7 +464,6 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
         this.editor.getSelected().setStyle({ ...domElementStyle });
       }
     });
-
     //Drag End Event of component 
     this.editor.on('component:drag:end', (component) => {
       var domElement = this.editor.getSelected().getStyle();
@@ -495,13 +514,13 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
 
   // This is for adding the buttons copy, delete and send front/back and canvas size in canvas 
   setButtonsToCanvas() {
-   
+
     const el = document.createElement('div');
     el.className = 'tool-buttons';
     el.innerHTML = `
-      <button class="rotate-btn btn-front" title="Set to Front/Back"><i class="fal fa-copy"></i></button>
-      <button class="rotate-btn btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
-      <button class="rotate-btn btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
+      <button class="rotate-btn btn-tool btn-front" title="Set to Front/Back"><i class="fal fa-copy"></i></button>
+      <button class="rotate-btn btn-tool btn-back"  title="Copy"><i class="fal fa-clone"></i></button>
+      <button class="rotate-btn btn-tool btn-delete" title="Delete"><i class="fal fa-trash"></i></button>
       <div id="canvas-size" class="canvas-size"></div>`;
     const buttonBack = el.querySelector('.btn-back');
     const buttonFront = el.querySelector('.btn-front');
@@ -522,7 +541,12 @@ export class CreativeEditorComponent implements OnInit, AfterViewInit, OnDestroy
       this.onClickRemoveComponent();
     });
     document.getElementsByClassName('gjs-frame-wrapper')[0].appendChild(el);
-    }
+  }
+
+  getHtmlCss(){
+    const editorHtml = this.editor.getHtml();
+    let editorCss = this.editor.getCss();
+  }
 }
 
 
